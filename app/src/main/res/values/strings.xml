@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Homework Android Academy</string>
+    <string name="open_movie_details_screen">Open \n Movie Details Screen</string>
 </resources>
