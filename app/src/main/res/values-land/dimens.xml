@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#191926</color>
+    <dimen name="actor_image_size">140dp</dimen>
 </resources>
