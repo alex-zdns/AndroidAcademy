@@ -10,7 +10,7 @@
     <color name="background">#191926</color>
     <color name="film_title">#ECECEC</color>
     <color name="cast_name">#D8D8D8</color>
-    <color name="back_button_text">#6D6D80</color>
+    <color name="back_button_text">#FFFFFF</color>
     <color name="genres">#FF3466</color>
     <color name="reviews_count">#6D6D80</color>
     <color name="storyline_heading">#ECECEC</color>
