@@ -1,19 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MovieDetailsActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MovieDetailsActivity">
+    android:background="@color/background">
 
-    <TextView
-        android:id="@+id/ma_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Movie Details Screen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/ivMovieBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_avengers_background" />
+
+        <TextView
+            android:id="@+id/tvAgeRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvMovieTitle"
+
+            android:text="13+"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="12dp"/>
+
+        <TextView
+            android:id="@+id/tvMovieTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivMovieBanner"
+            app:layout_constraintBottom_toBottomOf="@+id/ivMovieBanner"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Avengers:\nEnd Game"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:textColor="@color/title"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            />
+
+        <TextView
+            android:id="@+id/tvMovieGenres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle"
+
+            android:text="Action, Adventure, Fantasy"
+            android:textColor="#FF3466"
+            android:textSize="14sp"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="4dp"
+            />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/RatingBar"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMovieGenres"
+            app:layout_constraintEnd_toStartOf="@+id/tvReviewsCount"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+
+            tools:rating="4"
+            />
+
+        <TextView
+            android:id="@+id/tvReviewsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@id/tvMovieGenres"
+            app:layout_constraintStart_toEndOf="@+id/ratingBar"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+
+            android:text="125 Reviews"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#6D6D80"/>
+
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
