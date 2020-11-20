@@ -17,5 +17,7 @@
     <color name="storyline">#ECECEC</color>
     <color name="cast_heading">#ECECEC</color>
     <color name="age_rating">#FFFFFF</color>
+    <color name="rating_bar_activated">#FF3365</color>
+    <color name="rating_bar_normal">#6D6D80</color>
 
 </resources>

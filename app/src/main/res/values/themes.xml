@@ -13,16 +13,4 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-
-    <style name="RatingBarMovie" parent="android:style/Widget.Material.RatingBar.Small">
-        <item name="colorControlNormal">#6D6D80</item>
-        <item name="colorControlActivated">#FF3365</item>
-    </style>
-
-    <style name="cast_name">
-    <item name="android:textSize">12sp</item>
-    <item name="android:textStyle">bold</item>
-    <item name="android:textColor">@color/cast_name</item>
-    </style>
-
 </resources>

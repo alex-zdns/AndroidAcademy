@@ -32,22 +32,24 @@
             android:background="@drawable/gradient_mask"
             app:layout_constraintBottom_toBottomOf="@id/md_iv_movie_banner"
             app:layout_constraintEnd_toEndOf="@id/md_iv_movie_banner"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/md_iv_movie_banner"
-            app:layout_constraintTop_toTopOf="@id/md_iv_movie_banner"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@id/md_iv_movie_banner" />
 
         <TextView
             android:id="@+id/md_tv_back_button"
             style="bold"
-            android:layout_width="wrap_content"
-
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/back_button_margin_start"
+            android:layout_marginTop="40dp"
 
-            android:layout_marginTop="@dimen/back_button_margin_top"
-            android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
 
+            android:clickable="true"
+
+            android:gravity="center_vertical"
             android:text="@string/back"
             android:textColor="@color/back_button_text"
             android:alpha="0.5"
@@ -62,7 +64,7 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="@dimen/md_margin_side"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="8dp"
 
             android:text="@string/age_rating_for_avengers"
             android:textColor="@color/age_rating"
@@ -106,28 +108,25 @@
             app:layout_constraintTop_toBottomOf="@+id/md_tv_movie_title" />
 
         <RatingBar
-            android:id="@+id/md_ratingBar"
+            android:id="@+id/md_rating_bar"
             style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/md_margin_side"
 
-            android:layout_marginTop="4dp"
             android:rating="4"
-            android:theme="@style/RatingBarMovie"
-            app:layout_constraintBottom_toTopOf="@+id/md_barrier_after_film_title"
-            app:layout_constraintEnd_toStartOf="@+id/md_tv_reviews_count"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/md_tv_movie_genres"
+            android:theme="@style/Widget.MyApp.RatingBar.Small"
 
-            tools:rating="4" />
+            app:layout_constraintBottom_toBottomOf="@+id/md_tv_reviews_count"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/md_tv_reviews_count" />
 
         <TextView
             android:id="@+id/md_tv_reviews_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginStart="@dimen/md_rating_bar_reviews_count_margin"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
 
             android:text="@string/avengers_reviews_count"
@@ -135,15 +134,8 @@
 
             android:textSize="@dimen/reviews_count_text_size"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/md_ratingBar"
+            app:layout_constraintStart_toEndOf="@+id/md_rating_bar"
             app:layout_constraintTop_toBottomOf="@id/md_tv_movie_genres" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/md_barrier_after_film_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="md_tv_reviews_count, md_ratingBar" />
 
         <TextView
             android:id="@+id/md_tv_storyline_heading"
@@ -160,7 +152,7 @@
             android:textSize="@dimen/storyline_heading_text_size"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/md_barrier_after_film_title" />
+            app:layout_constraintTop_toBottomOf="@id/md_tv_reviews_count" />
 
         <TextView
             android:id="@+id/md_tv_storyline"
@@ -181,13 +173,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/md_tv_storyline_heading" />
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/md_barrier_after_storyline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="md_tv_storyline" />
-
         <TextView
             android:id="@+id/md_tv_cast_heading"
             android:layout_width="match_parent"
@@ -203,13 +188,13 @@
             android:textSize="@dimen/cast_heading_text_size"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/md_barrier_after_storyline" />
+            app:layout_constraintTop_toBottomOf="@id/md_tv_storyline" />
 
         <ImageView
             android:id="@+id/md_iv_downey"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/img_downey_jr"
             app:layout_constraintEnd_toStartOf="@id/md_iv_evans"
@@ -226,7 +211,7 @@
             android:id="@+id/md_iv_evans"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/img_evans"
             app:layout_constraintEnd_toStartOf="@id/md_iv_ruffalo"
@@ -242,7 +227,7 @@
             android:id="@+id/md_iv_ruffalo"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/img_ruffalo"
             app:layout_constraintEnd_toStartOf="@id/md_iv_Hemsworth"
@@ -258,7 +243,7 @@
             android:id="@+id/md_iv_Hemsworth"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/img_hemsworth"
             app:layout_constraintEnd_toEndOf="parent"
@@ -274,9 +259,9 @@
             android:id="@+id/md_tv_downey"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="6dp"
+            android:paddingTop="8dp"
 
-            style="@style/cast_name"
+            style="@style/TextAppearance.Caption.CastName"
             android:text="@string/robert_down"
 
             app:layout_constraintStart_toStartOf="@id/md_iv_downey"
@@ -287,9 +272,9 @@
             android:id="@+id/md_tv_evans"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="6dp"
+            android:paddingTop="8dp"
 
-            style="@style/cast_name"
+            style="@style/TextAppearance.Caption.CastName"
             android:text="@string/evans"
 
             app:layout_constraintStart_toStartOf="@id/md_iv_evans"
@@ -300,9 +285,9 @@
             android:id="@+id/md_tv_ruffalo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="6dp"
+            android:paddingTop="8dp"
 
-            style="@style/cast_name"
+            style="@style/TextAppearance.Caption.CastName"
             android:text="@string/ruffalo"
 
             app:layout_constraintStart_toStartOf="@id/md_iv_ruffalo"
@@ -313,9 +298,9 @@
             android:id="@+id/md_tv_hemsworth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="6dp"
+            android:paddingTop="8dp"
 
-            style="@style/cast_name"
+            style="@style/TextAppearance.Caption.CastName"
             android:text="@string/hemsworth"
 
             app:layout_constraintStart_toStartOf="@id/md_iv_Hemsworth"
