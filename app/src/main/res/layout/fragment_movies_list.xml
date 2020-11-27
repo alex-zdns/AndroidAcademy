@@ -46,9 +46,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginStart="1dp"
-                android:layout_marginEnd="2dp"
-
 
                 android:src="@drawable/img_avengers_movie"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +56,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
 
-                android:background="@drawable/fml_gradient_mask"
+                android:scaleType="centerCrop"
+
+                android:background="@drawable/mlf_gradient_mask"
                 app:layout_constraintBottom_toBottomOf="@id/mlf_iv_film_banner"
                 app:layout_constraintEnd_toEndOf="@id/mlf_iv_film_banner"
                 app:layout_constraintStart_toStartOf="@id/mlf_iv_film_banner"
@@ -86,8 +85,10 @@
                 android:id="@+id/mlf_iv_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
 
                 android:alpha="0.75"
 

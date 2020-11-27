@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            android:background="@drawable/fmd_gradient_mask"
+            android:background="@drawable/mdf_gradient_mask"
             app:layout_constraintBottom_toBottomOf="@id/mdf_iv_movie_banner"
             app:layout_constraintEnd_toEndOf="@id/mdf_iv_movie_banner"
             app:layout_constraintStart_toStartOf="@id/mdf_iv_movie_banner"
