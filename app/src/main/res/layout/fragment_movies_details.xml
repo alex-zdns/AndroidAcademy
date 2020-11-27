@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".MovieDetailsActivity">
+    tools:context=".MovieDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/md_iv_movie_banner"
+            android:id="@+id/mdf_iv_movie_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
@@ -25,18 +25,18 @@
             android:contentDescription="@string/avengers_end_game_banner" />
 
         <View
-            android:id="@+id/md_gradient_mask"
+            android:id="@+id/mdf_gradient_mask"
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            android:background="@drawable/gradient_mask"
-            app:layout_constraintBottom_toBottomOf="@id/md_iv_movie_banner"
-            app:layout_constraintEnd_toEndOf="@id/md_iv_movie_banner"
-            app:layout_constraintStart_toStartOf="@id/md_iv_movie_banner"
-            app:layout_constraintTop_toTopOf="@id/md_iv_movie_banner" />
+            android:background="@drawable/fmd_gradient_mask"
+            app:layout_constraintBottom_toBottomOf="@id/mdf_iv_movie_banner"
+            app:layout_constraintEnd_toEndOf="@id/mdf_iv_movie_banner"
+            app:layout_constraintStart_toStartOf="@id/mdf_iv_movie_banner"
+            app:layout_constraintTop_toTopOf="@id/mdf_iv_movie_banner" />
 
         <TextView
-            android:id="@+id/md_tv_back_button"
+            android:id="@+id/mdf_tv_back_button"
             style="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/md_tv_age_rating"
+            android:id="@+id/mdf_tv_age_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -70,11 +70,11 @@
             android:textColor="@color/age_rating"
             android:textSize="@dimen/age_rating_for_avengers_text_size"
 
-            app:layout_constraintBottom_toTopOf="@+id/md_tv_movie_title"
+            app:layout_constraintBottom_toTopOf="@+id/mdf_tv_movie_title"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/md_tv_movie_title"
+            android:id="@+id/mdf_tv_movie_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -87,12 +87,12 @@
             android:textColor="@color/film_title"
             android:textSize="@dimen/film_title_text_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/md_iv_movie_banner"
+            app:layout_constraintBottom_toBottomOf="@+id/mdf_iv_movie_banner"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/md_iv_movie_banner" />
+            app:layout_constraintTop_toBottomOf="@+id/mdf_iv_movie_banner" />
 
         <TextView
-            android:id="@+id/md_tv_movie_genres"
+            android:id="@+id/mdf_tv_movie_genres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -105,10 +105,10 @@
 
             android:textSize="@dimen/genres_text_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/md_tv_movie_title" />
+            app:layout_constraintTop_toBottomOf="@+id/mdf_tv_movie_title" />
 
         <RatingBar
-            android:id="@+id/md_rating_bar"
+            android:id="@+id/mdf_rating_bar"
             style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,12 +117,12 @@
             android:rating="4"
             android:theme="@style/Widget.MyApp.RatingBar.Small"
 
-            app:layout_constraintBottom_toBottomOf="@+id/md_tv_reviews_count"
+            app:layout_constraintBottom_toBottomOf="@+id/mdf_tv_reviews_count"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/md_tv_reviews_count" />
+            app:layout_constraintTop_toTopOf="@+id/mdf_tv_reviews_count" />
 
         <TextView
-            android:id="@+id/md_tv_reviews_count"
+            android:id="@+id/mdf_tv_reviews_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -134,11 +134,11 @@
 
             android:textSize="@dimen/reviews_count_text_size"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/md_rating_bar"
-            app:layout_constraintTop_toBottomOf="@id/md_tv_movie_genres" />
+            app:layout_constraintStart_toEndOf="@+id/mdf_rating_bar"
+            app:layout_constraintTop_toBottomOf="@id/mdf_tv_movie_genres" />
 
         <TextView
-            android:id="@+id/md_tv_storyline_heading"
+            android:id="@+id/mdf_tv_storyline_heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -152,10 +152,10 @@
             android:textSize="@dimen/storyline_heading_text_size"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/md_tv_reviews_count" />
+            app:layout_constraintTop_toBottomOf="@id/mdf_tv_reviews_count" />
 
         <TextView
-            android:id="@+id/md_tv_storyline"
+            android:id="@+id/mdf_tv_storyline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -171,10 +171,10 @@
             android:textColor="@color/storyline"
             android:textSize="@dimen/storyline_text_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/md_tv_storyline_heading" />
+            app:layout_constraintTop_toBottomOf="@id/mdf_tv_storyline_heading" />
 
         <TextView
-            android:id="@+id/md_tv_cast_heading"
+            android:id="@+id/mdf_tv_cast_heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -188,18 +188,18 @@
             android:textSize="@dimen/cast_heading_text_size"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/md_tv_storyline" />
+            app:layout_constraintTop_toBottomOf="@id/mdf_tv_storyline" />
 
         <ImageView
-            android:id="@+id/md_iv_downey"
+            android:id="@+id/mdf_iv_downey"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/img_downey_jr"
-            app:layout_constraintEnd_toStartOf="@id/md_iv_evans"
+            app:layout_constraintEnd_toStartOf="@id/mdf_iv_evans"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/md_tv_cast_heading"
+            app:layout_constraintTop_toBottomOf="@id/mdf_tv_cast_heading"
 
             android:layout_marginStart="@dimen/md_margin_side"
             android:layout_marginEnd="@dimen/md_padding_between_actor_photo"
@@ -208,15 +208,15 @@
             android:contentDescription="@string/actor_photo" />
 
         <ImageView
-            android:id="@+id/md_iv_evans"
+            android:id="@+id/mdf_iv_evans"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/img_evans"
-            app:layout_constraintEnd_toStartOf="@id/md_iv_ruffalo"
-            app:layout_constraintStart_toEndOf="@id/md_iv_downey"
-            app:layout_constraintTop_toBottomOf="@id/md_tv_cast_heading"
+            app:layout_constraintEnd_toStartOf="@id/mdf_iv_ruffalo"
+            app:layout_constraintStart_toEndOf="@id/mdf_iv_downey"
+            app:layout_constraintTop_toBottomOf="@id/mdf_tv_cast_heading"
 
             android:layout_marginEnd="@dimen/md_padding_between_actor_photo"
             android:layout_marginStart="@dimen/md_padding_between_actor_photo"
@@ -224,31 +224,31 @@
             android:contentDescription="@string/actor_photo" />
 
         <ImageView
-            android:id="@+id/md_iv_ruffalo"
+            android:id="@+id/mdf_iv_ruffalo"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/img_ruffalo"
-            app:layout_constraintEnd_toStartOf="@id/md_iv_Hemsworth"
-            app:layout_constraintStart_toEndOf="@id/md_iv_evans"
+            app:layout_constraintEnd_toStartOf="@id/mdf_iv_Hemsworth"
+            app:layout_constraintStart_toEndOf="@id/mdf_iv_evans"
 
             android:layout_marginEnd="@dimen/md_padding_between_actor_photo"
             android:layout_marginStart="@dimen/md_padding_between_actor_photo"
 
-            app:layout_constraintTop_toBottomOf="@id/md_tv_cast_heading"
+            app:layout_constraintTop_toBottomOf="@id/mdf_tv_cast_heading"
             android:contentDescription="@string/actor_photo" />
 
         <ImageView
-            android:id="@+id/md_iv_Hemsworth"
+            android:id="@+id/mdf_iv_Hemsworth"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/img_hemsworth"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/md_iv_ruffalo"
-            app:layout_constraintTop_toBottomOf="@id/md_tv_cast_heading"
+            app:layout_constraintStart_toEndOf="@id/mdf_iv_ruffalo"
+            app:layout_constraintTop_toBottomOf="@id/mdf_tv_cast_heading"
 
             android:layout_marginEnd="@dimen/md_margin_side"
             android:layout_marginStart="@dimen/md_padding_between_actor_photo"
@@ -256,7 +256,7 @@
             android:contentDescription="@string/actor_photo" />
 
         <TextView
-            android:id="@+id/md_tv_downey"
+            android:id="@+id/mdf_tv_downey"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
@@ -264,12 +264,12 @@
             style="@style/TextAppearance.Caption.CastName"
             android:text="@string/robert_down"
 
-            app:layout_constraintStart_toStartOf="@id/md_iv_downey"
-            app:layout_constraintEnd_toEndOf="@id/md_iv_downey"
-            app:layout_constraintTop_toBottomOf="@id/md_iv_downey" />
+            app:layout_constraintStart_toStartOf="@id/mdf_iv_downey"
+            app:layout_constraintEnd_toEndOf="@id/mdf_iv_downey"
+            app:layout_constraintTop_toBottomOf="@id/mdf_iv_downey" />
 
         <TextView
-            android:id="@+id/md_tv_evans"
+            android:id="@+id/mdf_tv_evans"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
@@ -277,12 +277,12 @@
             style="@style/TextAppearance.Caption.CastName"
             android:text="@string/evans"
 
-            app:layout_constraintStart_toStartOf="@id/md_iv_evans"
-            app:layout_constraintEnd_toEndOf="@id/md_iv_evans"
-            app:layout_constraintTop_toBottomOf="@id/md_iv_evans" />
+            app:layout_constraintStart_toStartOf="@id/mdf_iv_evans"
+            app:layout_constraintEnd_toEndOf="@id/mdf_iv_evans"
+            app:layout_constraintTop_toBottomOf="@id/mdf_iv_evans" />
 
         <TextView
-            android:id="@+id/md_tv_ruffalo"
+            android:id="@+id/mdf_tv_ruffalo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
@@ -290,12 +290,12 @@
             style="@style/TextAppearance.Caption.CastName"
             android:text="@string/ruffalo"
 
-            app:layout_constraintStart_toStartOf="@id/md_iv_ruffalo"
-            app:layout_constraintEnd_toEndOf="@id/md_iv_ruffalo"
-            app:layout_constraintTop_toBottomOf="@id/md_iv_ruffalo" />
+            app:layout_constraintStart_toStartOf="@id/mdf_iv_ruffalo"
+            app:layout_constraintEnd_toEndOf="@id/mdf_iv_ruffalo"
+            app:layout_constraintTop_toBottomOf="@id/mdf_iv_ruffalo" />
 
         <TextView
-            android:id="@+id/md_tv_hemsworth"
+            android:id="@+id/mdf_tv_hemsworth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
@@ -303,10 +303,8 @@
             style="@style/TextAppearance.Caption.CastName"
             android:text="@string/hemsworth"
 
-            app:layout_constraintStart_toStartOf="@id/md_iv_Hemsworth"
-            app:layout_constraintEnd_toEndOf="@id/md_iv_Hemsworth"
-            app:layout_constraintTop_toBottomOf="@id/md_iv_Hemsworth" />
-
-
+            app:layout_constraintStart_toStartOf="@id/mdf_iv_Hemsworth"
+            app:layout_constraintEnd_toEndOf="@id/mdf_iv_Hemsworth"
+            app:layout_constraintTop_toBottomOf="@id/mdf_iv_Hemsworth" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

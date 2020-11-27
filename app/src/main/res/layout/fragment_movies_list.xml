@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".MovieListFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/mlf_tv_movies_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+
+            android:paddingBottom="8dp"
+            android:text="@string/movies_list"
+            android:textColor="@color/white"
+            android:textSize="@dimen/back_button_text_size"
+            android:textStyle="bold"
+            app:drawableLeftCompat="@drawable/ic_target"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mlf_cl_film_item"
+            android:layout_width="168dp"
+            android:layout_height="296dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/img_film_background_item"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mlf_tv_movies_list">
+
+            <ImageView
+                android:id="@+id/mlf_iv_film_banner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="2dp"
+
+
+                android:src="@drawable/img_avengers_movie"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/mlf_gradient_mask"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:background="@drawable/fml_gradient_mask"
+                app:layout_constraintBottom_toBottomOf="@id/mlf_iv_film_banner"
+                app:layout_constraintEnd_toEndOf="@id/mlf_iv_film_banner"
+                app:layout_constraintStart_toStartOf="@id/mlf_iv_film_banner"
+                app:layout_constraintTop_toTopOf="@id/mlf_iv_film_banner" />
+
+            <TextView
+                android:id="@+id/mlf_tv_age_rating"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ic_age_rating_background"
+
+                android:gravity="center"
+                android:text="@string/age_rating_for_avengers"
+                android:textColor="@color/white"
+
+                android:textSize="12sp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/mlf_iv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+
+                android:alpha="0.75"
+
+                android:clickable="true"
+                android:src="@drawable/ic_like"
+
+                app:layout_constraintEnd_toEndOf="@id/mlf_iv_film_banner"
+                app:layout_constraintTop_toTopOf="@id/mlf_iv_film_banner" />
+
+            <RatingBar
+                android:id="@+id/mlf_flm_rating_bar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+
+                android:rating="4"
+                android:theme="@style/Widget.MyApp.RatingBar.Small"
+
+                app:layout_constraintBottom_toBottomOf="@+id/mlf_tv_reviews_count"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/mlf_tv_reviews_count" />
+
+            <TextView
+                android:id="@+id/mlf_tv_reviews_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+
+                android:text="@string/avengers_reviews_count"
+                android:textColor="@color/reviews_count"
+
+                android:textSize="8sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/mlf_iv_film_banner"
+                app:layout_constraintStart_toEndOf="@+id/mlf_flm_rating_bar" />
+
+            <TextView
+                android:id="@+id/mlf_tv_movie_genres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+
+                android:text="@string/genres_of_avengers"
+                android:textColor="@color/genres"
+
+                android:textSize="8sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/mlf_tv_reviews_count" />
+
+            <TextView
+                android:id="@+id/mlf_tv_film_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+
+                android:text="@string/film_title"
+                android:textColor="#ECECEC"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
+
+                app:layout_constraintEnd_toEndOf="@id/mlf_iv_film_banner"
+                app:layout_constraintStart_toStartOf="@id/mlf_iv_film_banner"
+                app:layout_constraintTop_toBottomOf="@id/mlf_iv_film_banner" />
+
+            <TextView
+                android:id="@+id/mlf_film_running_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/avengers_running_time"
+                android:textColor="#565665"
+                android:textSize="8sp"
+                android:textStyle="bold"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+
+                app:layout_constraintStart_toStartOf="@id/mlf_iv_film_banner"
+                app:layout_constraintTop_toBottomOf="@id/mlf_tv_film_title"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
