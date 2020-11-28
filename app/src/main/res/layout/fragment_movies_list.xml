@@ -178,7 +178,7 @@
                 android:layout_marginEnd="8dp"
 
                 android:text="@string/film_title"
-                android:textColor="#ECECEC"
+                android:textColor="@color/film_title"
                 android:textSize="14sp"
                 android:textStyle="bold"
 
@@ -193,7 +193,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="@string/avengers_running_time"
-                android:textColor="#565665"
+                android:textColor="@color/film_running_time"
                 android:textSize="8sp"
                 android:textStyle="bold"
 

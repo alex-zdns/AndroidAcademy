@@ -6,40 +6,27 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity(),
     MovieListFragment.MovieListClickListener,
     MovieDetailsFragment.MovieDetailsClickListener {
-    private var movieListFragment : MovieListFragment? = null
+    private var movieListFragment: MovieListFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            movieListFragment = MovieListFragment().apply { setListener(this@MainActivity)}
+            movieListFragment = MovieListFragment()
             supportFragmentManager.beginTransaction()
-                .add(R.id.ma_main_container, movieListFragment!!, MOVIE_LIST_FRAGMENT)
+                .add(android.R.id.content, MovieListFragment())
                 .commit()
-        } else {
-            movieListFragment = supportFragmentManager.findFragmentByTag(MOVIE_LIST_FRAGMENT) as? MovieListFragment
         }
     }
 
     override fun openMovieDetailsFragment() {
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
-            .add(
-                R.id.ma_main_container,
-                MovieDetailsFragment().apply { setListener(this@MainActivity) })
+            .add(android.R.id.content, MovieDetailsFragment())
             .commit()
     }
 
     override fun removeMovieDetailsFragment() {
-        val lastFragment = supportFragmentManager.fragments.last()
-
-        supportFragmentManager.beginTransaction()
-            .remove(lastFragment)
-            .commit()
-    }
-
-    companion object {
-        const val MOVIE_LIST_FRAGMENT = "movieListFragment"
+        supportFragmentManager.popBackStack()
     }
 }

@@ -12,9 +12,7 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MovieDetailsClickListener) {
-            listenerMovieDetails = context
-        }
+        listenerMovieDetails = context as? MovieDetailsClickListener
     }
 
     override fun onCreateView(
@@ -30,10 +28,6 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
         backButton.setOnClickListener {
             listenerMovieDetails?.removeMovieDetailsFragment()
         }
-    }
-
-    fun setListener(listener: MovieDetailsClickListener) {
-        listenerMovieDetails = listener
     }
 
     override fun onDetach() {

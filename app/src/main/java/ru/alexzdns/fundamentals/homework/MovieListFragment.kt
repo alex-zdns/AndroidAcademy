@@ -13,9 +13,7 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MovieListClickListener) {
-            listenerMovieList = context
-        }
+        listenerMovieList = context as? MovieListClickListener
     }
 
     override fun onCreateView(
@@ -36,10 +34,6 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
         filmItem.setOnClickListener {
             listenerMovieList?.openMovieDetailsFragment()
         }
-    }
-
-    fun setListener(listener: MovieListClickListener) {
-        listenerMovieList = listener
     }
 
     override fun onDetach() {
