@@ -1,20 +1,30 @@
 package ru.alexzdns.fundamentals.homework
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    MovieListFragment.MovieListClickListener,
+    MovieDetailsFragment.MovieDetailsClickListener {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        val button = findViewById<Button>(R.id.ma_button)
-
-        button.setOnClickListener {
-            val intent = Intent(this, MovieDetailsActivity::class.java)
-            startActivity(intent)
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .add(android.R.id.content, MovieListFragment())
+                .commit()
         }
+    }
+
+    override fun openMovieDetailsFragment() {
+        supportFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .add(android.R.id.content, MovieDetailsFragment())
+            .commit()
+    }
+
+    override fun removeMovieDetailsFragment() {
+        supportFragmentManager.popBackStack()
     }
 }

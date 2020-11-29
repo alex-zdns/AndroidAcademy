@@ -19,5 +19,7 @@
     <color name="age_rating">#FFFFFF</color>
     <color name="rating_bar_activated">#FF3365</color>
     <color name="rating_bar_normal">#6D6D80</color>
-
+    <color name="mlf_gradient_mask_start">#00191926</color>
+    <color name="mlf_gradient_mask_end">#191926</color>
+    <color name="film_running_time">#565665</color>
 </resources>
