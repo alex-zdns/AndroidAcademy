@@ -12,11 +12,12 @@
     <string name="avengers_reviews_count">125 Reviews</string>
     <string name="storyline_heading">Storyline</string>
     <string name="cast_heading">Cast</string>
-    <string name="avengers_end_game_banner">Avengers: End Game banner</string>
+    <string name="movie_banner">Avengers: End Game banner</string>
     <string name="actor_photo">Actor photo</string>
     <string name="movies_list">Movies list</string>
     <string name="film_title">Avengers: End Game</string>
     <string name="avengers_running_time">137 MIN</string>
     <string name="target_icon">target icon</string>
     <string name="like_icon">like icon</string>
+    <string name="view_holder_movie_age_rating">$d+</string>
 </resources>

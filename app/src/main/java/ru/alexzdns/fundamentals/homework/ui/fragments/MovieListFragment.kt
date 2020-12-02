@@ -1,12 +1,14 @@
-package ru.alexzdns.fundamentals.homework
+package ru.alexzdns.fundamentals.homework.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import ru.alexzdns.fundamentals.homework.R
+import ru.alexzdns.fundamentals.homework.domain.MovieDataSource
+import ru.alexzdns.fundamentals.homework.ui.adapters.MovieAdapter
 
 class MovieListFragment : androidx.fragment.app.Fragment() {
     private var listenerMovieList: MovieListClickListener? = null
@@ -25,13 +27,13 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val likeButton = view.findViewById<ImageView>(R.id.mlf_iv_like)
-        likeButton.setOnClickListener {
-            Toast.makeText(context, "Like", Toast.LENGTH_SHORT).show()
-        }
+        val movieList = view.findViewById<RecyclerView>(R.id.mlf_movie_list)
+        val movies = MovieDataSource.getMovie()
+        val adapter = MovieAdapter(view.context, movies)
+        movieList.adapter = adapter
 
-        val filmItem = view.findViewById<View>(R.id.mlf_cl_film_item)
-        filmItem.setOnClickListener {
+        val temp = view.findViewById<View>(R.id.mlf_tv_movies_list)
+        temp.setOnClickListener {
             listenerMovieList?.openMovieDetailsFragment()
         }
     }

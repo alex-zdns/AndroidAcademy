@@ -1,7 +1,9 @@
-package ru.alexzdns.fundamentals.homework
+package ru.alexzdns.fundamentals.homework.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import ru.alexzdns.fundamentals.homework.ui.fragments.MovieDetailsFragment
+import ru.alexzdns.fundamentals.homework.ui.fragments.MovieListFragment
 
 class MainActivity : AppCompatActivity(),
     MovieListFragment.MovieListClickListener,

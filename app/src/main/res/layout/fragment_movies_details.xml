@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".MovieDetailsFragment">
+    tools:context=".ui.fragments.MovieDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:id="@+id/mdf_iv_movie_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/avengers_end_game_banner"
+            android:contentDescription="@string/movie_banner"
 
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -190,121 +190,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mdf_tv_storyline" />
 
-        <ImageView
-            android:id="@+id/mdf_iv_downey"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mdf_actors_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
             android:layout_marginStart="@dimen/md_margin_side"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/md_padding_between_actor_photo"
-            android:contentDescription="@string/actor_photo"
-            android:src="@drawable/img_downey_jr"
-            app:layout_constraintDimensionRatio="1:1"
-
-            app:layout_constraintEnd_toStartOf="@id/mdf_iv_evans"
-            app:layout_constraintStart_toStartOf="parent"
-
-
-            app:layout_constraintTop_toBottomOf="@id/mdf_tv_cast_heading" />
-
-        <ImageView
-            android:id="@+id/mdf_iv_evans"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/md_padding_between_actor_photo"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/md_padding_between_actor_photo"
-            android:contentDescription="@string/actor_photo"
-            android:src="@drawable/img_evans"
-            app:layout_constraintDimensionRatio="1:1"
-
-            app:layout_constraintEnd_toStartOf="@id/mdf_iv_ruffalo"
-            app:layout_constraintStart_toEndOf="@id/mdf_iv_downey"
-
-            app:layout_constraintTop_toBottomOf="@id/mdf_tv_cast_heading" />
-
-        <ImageView
-            android:id="@+id/mdf_iv_ruffalo"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/md_padding_between_actor_photo"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/md_padding_between_actor_photo"
-            android:contentDescription="@string/actor_photo"
-            android:src="@drawable/img_ruffalo"
-
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@id/mdf_iv_Hemsworth"
-
-            app:layout_constraintStart_toEndOf="@id/mdf_iv_evans"
-            app:layout_constraintTop_toBottomOf="@id/mdf_tv_cast_heading" />
-
-        <ImageView
-            android:id="@+id/mdf_iv_Hemsworth"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/md_padding_between_actor_photo"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="@dimen/md_margin_side"
-            android:contentDescription="@string/actor_photo"
-            android:src="@drawable/img_hemsworth"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/mdf_iv_ruffalo"
-
-            app:layout_constraintTop_toBottomOf="@id/mdf_tv_cast_heading" />
-
-        <TextView
-            android:id="@+id/mdf_tv_downey"
-            style="@style/TextAppearance.Caption.CastName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
-            android:paddingTop="8dp"
-            android:text="@string/robert_down"
-
-            app:layout_constraintEnd_toEndOf="@id/mdf_iv_downey"
-            app:layout_constraintStart_toStartOf="@id/mdf_iv_downey"
-            app:layout_constraintTop_toBottomOf="@id/mdf_iv_downey" />
-
-        <TextView
-            android:id="@+id/mdf_tv_evans"
-            style="@style/TextAppearance.Caption.CastName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
-            android:paddingTop="8dp"
-            android:text="@string/evans"
-
-            app:layout_constraintEnd_toEndOf="@id/mdf_iv_evans"
-            app:layout_constraintStart_toStartOf="@id/mdf_iv_evans"
-            app:layout_constraintTop_toBottomOf="@id/mdf_iv_evans" />
-
-        <TextView
-            android:id="@+id/mdf_tv_ruffalo"
-            style="@style/TextAppearance.Caption.CastName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
-            android:paddingTop="8dp"
-            android:text="@string/ruffalo"
-
-            app:layout_constraintEnd_toEndOf="@id/mdf_iv_ruffalo"
-            app:layout_constraintStart_toStartOf="@id/mdf_iv_ruffalo"
-            app:layout_constraintTop_toBottomOf="@id/mdf_iv_ruffalo" />
-
-        <TextView
-            android:id="@+id/mdf_tv_hemsworth"
-            style="@style/TextAppearance.Caption.CastName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
-            android:paddingTop="8dp"
-            android:text="@string/hemsworth"
-
-            app:layout_constraintEnd_toEndOf="@id/mdf_iv_Hemsworth"
-            app:layout_constraintStart_toStartOf="@id/mdf_iv_Hemsworth"
-            app:layout_constraintTop_toBottomOf="@id/mdf_iv_Hemsworth" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mdf_tv_cast_heading"
+            tools:listitem="@layout/view_holder_actor"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
