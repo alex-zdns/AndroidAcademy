@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.models.Movie
@@ -30,7 +29,7 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recycler= view.findViewById<RecyclerView>(R.id.mlf_movie_list)
+        recycler = view.findViewById<RecyclerView>(R.id.mlf_movie_list)
         val movies = MovieDataSource.getMovie()
         val adapter = MovieAdapter(movies, clickListener)
         recycler?.adapter = adapter
@@ -43,17 +42,17 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
     }
 
     private val clickListener = object : MovieAdapter.OnRecyclerMovieItemClicked {
-        override fun onBannerClick(movie: Movie) {
-            listenerMovieList?.openMovieDetailsFragment()
+        override fun onBannerClick(position: Int) {
+            listenerMovieList?.openMovieDetailsFragment(position)
         }
 
-        override fun onLikeClick(movie: Movie) {
+        override fun onLikeClick(movie: Movie, position: Int) {
             movie.isLike = !movie.isLike
-            Toast.makeText(context, movie.isLike.toString(), Toast.LENGTH_SHORT).show()
+            recycler?.adapter?.notifyItemChanged(position)
         }
     }
 
     interface MovieListClickListener {
-        fun openMovieDetailsFragment()
+        fun openMovieDetailsFragment(moviePosition: Int)
     }
 }

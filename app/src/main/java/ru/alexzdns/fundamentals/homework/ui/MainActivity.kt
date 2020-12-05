@@ -19,10 +19,10 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun openMovieDetailsFragment() {
+    override fun openMovieDetailsFragment(moviePosition: Int) {
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
-            .add(android.R.id.content, MovieDetailsFragment())
+            .add(android.R.id.content, MovieDetailsFragment.newInstance(moviePosition))
             .commit()
     }
 

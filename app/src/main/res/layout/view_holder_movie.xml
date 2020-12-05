@@ -18,7 +18,7 @@
         android:id="@+id/vhm_cl_film_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#222232"
+        android:background="@color/movie_card_background"
         android:padding="1dp">
 
         <ImageView

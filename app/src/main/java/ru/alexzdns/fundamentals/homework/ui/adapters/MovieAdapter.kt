@@ -25,11 +25,11 @@ class MovieAdapter(
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(getItem(position))
         holder.itemView.setOnClickListener {
-            clickListener.onBannerClick(movies[position])
+            clickListener.onBannerClick(position)
         }
 
         holder.itemView.findViewById<ImageView>(R.id.vhm_iv_like).setOnClickListener {
-            clickListener.onLikeClick(movies[position])
+            clickListener.onLikeClick(movies[position], position)
         }
     }
 
@@ -66,7 +66,7 @@ class MovieAdapter(
     }
 
     interface OnRecyclerMovieItemClicked {
-        fun onBannerClick(movie: Movie)
-        fun onLikeClick(movie: Movie)
+        fun onBannerClick(position: Int)
+        fun onLikeClick(movie: Movie, position: Int)
     }
 }
