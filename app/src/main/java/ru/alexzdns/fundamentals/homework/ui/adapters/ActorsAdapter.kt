@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.models.Actor
 
+
 class ActorsAdapter(
-    context: Context,
+    val context: Context,
     var actors: List<Actor>
 ) : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
 
@@ -19,9 +20,12 @@ class ActorsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder =
         ActorsViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_actor, parent, false)
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.view_holder_actor,
+                parent,
+                false
+            )
         )
-
 
     override fun onBindViewHolder(holder: ActorsViewHolder, position: Int) {
         holder.bind(getItem(position))

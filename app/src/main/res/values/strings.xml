@@ -19,5 +19,13 @@
     <string name="avengers_running_time">137 MIN</string>
     <string name="target_icon">target icon</string>
     <string name="like_icon">like icon</string>
-    <string name="view_holder_movie_age_rating">$d+</string>
+
+    <string name="movie_age_rating">%d+</string>
+    <string name="movie_duration">%d min</string>
+
+    <plurals name="reviews_count">
+        <item quantity="one">%d review</item>
+        <item quantity="other">%d reviews</item>
+    </plurals>
+
 </resources>

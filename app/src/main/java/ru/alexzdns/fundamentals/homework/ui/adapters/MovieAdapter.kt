@@ -1,6 +1,5 @@
 package ru.alexzdns.fundamentals.homework.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,8 @@ import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.models.Movie
 
 class MovieAdapter(
-    context: Context,
-    var movies: List<Movie>
+    var movies: List<Movie>,
+    private val clickListener: OnRecyclerMovieItemClicked
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     private fun getItem(position: Int): Movie = movies[position]
@@ -25,6 +24,13 @@ class MovieAdapter(
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.setOnClickListener {
+            clickListener.onBannerClick(movies[position])
+        }
+
+        holder.itemView.findViewById<ImageView>(R.id.vhm_iv_like).setOnClickListener {
+            clickListener.onLikeClick(movies[position])
+        }
     }
 
     override fun getItemCount(): Int = movies.size
@@ -43,7 +49,7 @@ class MovieAdapter(
         fun bind(movie: Movie) {
             banner.setImageResource(movie.banner)
             title.text = movie.title
-            ageRating.text = "${movie.ageRating}+"
+            ageRating.text = itemView.resources.getString(R.string.movie_age_rating, movie.ageRating)
 
             like.setImageResource(
                 if (movie.isLike)
@@ -53,9 +59,14 @@ class MovieAdapter(
             )
 
             ratingBar.rating = movie.rating
-            reviewsCount.text = "${movie.reviewsCount} Reviews"
+            reviewsCount.text = itemView.resources.getQuantityString(R.plurals.reviews_count, movie.reviewsCount, movie.reviewsCount)
             genres.text = movie.genres
-            runningTime.text = "${movie.runningTimeInMin} MIN"
+            runningTime.text = itemView.resources.getString(R.string.movie_duration, movie.runningTimeInMin)
         }
+    }
+
+    interface OnRecyclerMovieItemClicked {
+        fun onBannerClick(movie: Movie)
+        fun onLikeClick(movie: Movie)
     }
 }

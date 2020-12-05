@@ -6,7 +6,7 @@ data class Movie(
     val genres: String,
     val runningTimeInMin: Int,
     val ageRating: Int = 13,
-    val isLike: Boolean = false,
+    var isLike: Boolean = false,
     val rating: Float,
     val reviewsCount: Int = 0,
     val banner: Int
