@@ -28,19 +28,18 @@ class MovieAdapter(
             clickListener.onBannerClick(position)
         }
 
-        holder.itemView.findViewById<ImageView>(R.id.vhm_iv_like).setOnClickListener {
+        holder.like.setOnClickListener {
             clickListener.onLikeClick(movies[position], position)
         }
     }
 
     override fun getItemCount(): Int = movies.size
 
-
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val banner: ImageView = itemView.findViewById(R.id.vhm_iv_movie_banner)
         private val title: TextView = itemView.findViewById(R.id.vhm_tv_movie_title)
         private val ageRating: TextView = itemView.findViewById(R.id.vhm_tv_age_rating)
-        private val like: ImageView = itemView.findViewById(R.id.vhm_iv_like)
+        val like: ImageView = itemView.findViewById(R.id.vhm_iv_like)
         private val ratingBar: RatingBar = itemView.findViewById(R.id.vhm_rating_bar)
         private val reviewsCount: TextView = itemView.findViewById(R.id.vhm_tv_reviews_count)
         private val genres: TextView = itemView.findViewById(R.id.vhm_tv_movie_genres)
@@ -50,14 +49,7 @@ class MovieAdapter(
             banner.setImageResource(movie.banner)
             title.text = movie.title
             ageRating.text = itemView.resources.getString(R.string.movie_age_rating, movie.ageRating)
-
-            like.setImageResource(
-                if (movie.isLike)
-                    R.drawable.ic_like_fill
-                else
-                    R.drawable.ic_like_empty
-            )
-
+            like.setImageResource(if (movie.isLike) R.drawable.ic_like_fill else R.drawable.ic_like_empty)
             ratingBar.rating = movie.rating
             reviewsCount.text = itemView.resources.getQuantityString(R.plurals.reviews_count, movie.reviewsCount, movie.reviewsCount)
             genres.text = movie.genres

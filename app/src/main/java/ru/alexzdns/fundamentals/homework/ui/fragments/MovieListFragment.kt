@@ -30,7 +30,7 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recycler = view.findViewById<RecyclerView>(R.id.mlf_movie_list)
-        val movies = MovieDataSource.getMovie()
+        val movies = MovieDataSource.getMovies()
         val adapter = MovieAdapter(movies, clickListener)
         recycler?.adapter = adapter
     }
@@ -38,7 +38,6 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
     override fun onDetach() {
         super.onDetach()
         listenerMovieList = null
-        recycler = null
     }
 
     private val clickListener = object : MovieAdapter.OnRecyclerMovieItemClicked {

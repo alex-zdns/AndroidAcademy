@@ -1,6 +1,5 @@
 package ru.alexzdns.fundamentals.homework.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +11,8 @@ import ru.alexzdns.fundamentals.homework.data.models.Actor
 
 
 class ActorsAdapter(
-    val context: Context,
     var actors: List<Actor>
 ) : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
-
-    private fun getItem(position: Int): Actor = actors[position]
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder =
         ActorsViewHolder(
@@ -28,7 +24,7 @@ class ActorsAdapter(
         )
 
     override fun onBindViewHolder(holder: ActorsViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(actors[position])
     }
 
     override fun getItemCount(): Int = actors.size
