@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vhm_movie_card"
+    android:layout_width="170dp"
+    android:layout_height="296dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp"
+    android:padding="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardPreventCornerOverlap="true"
+    app:rippleColor="@android:color/transparent"
+    app:strokeColor="#3B3B4D7F"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vhm_cl_film_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/movie_card_background"
+        android:padding="1dp">
+
+        <ImageView
+            android:id="@+id/vhm_iv_movie_banner"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:contentDescription="@string/movie_banner"
+            app:layout_constraintDimensionRatio="2:3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/img_black_widow_movie" />
+
+        <View
+            android:id="@+id/vhm_gradient_mask"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/vhm_gradient_mask"
+
+            app:layout_constraintBottom_toBottomOf="@id/vhm_iv_movie_banner"
+            app:layout_constraintEnd_toEndOf="@id/vhm_iv_movie_banner"
+            app:layout_constraintStart_toStartOf="@id/vhm_iv_movie_banner"
+            app:layout_constraintTop_toTopOf="@id/vhm_iv_movie_banner" />
+
+        <TextView
+            android:id="@+id/vhm_tv_age_rating"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ic_age_rating_background"
+
+            android:gravity="center"
+            android:textColor="@color/white"
+
+            android:textSize="12sp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            tools:text="13+" />
+
+        <ImageView
+            android:id="@+id/vhm_iv_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.75"
+            android:clickable="true"
+            android:contentDescription="@string/like_icon"
+            android:paddingStart="16dp"
+
+            android:paddingTop="8dp"
+
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+
+            android:src="@drawable/ic_like_empty"
+            app:layout_constraintEnd_toEndOf="@id/vhm_iv_movie_banner"
+            app:layout_constraintTop_toTopOf="@id/vhm_iv_movie_banner" />
+
+        <RatingBar
+            android:id="@+id/vhm_rating_bar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+
+            android:theme="@style/Widget.MyApp.RatingBar.Small"
+            app:layout_constraintBottom_toBottomOf="@+id/vhm_tv_reviews_count"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/vhm_tv_reviews_count"
+            tools:rating="4" />
+
+        <TextView
+            android:id="@+id/vhm_tv_reviews_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+
+            android:textColor="@color/reviews_count"
+            android:textSize="8sp"
+
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/vhm_iv_movie_banner"
+            app:layout_constraintStart_toEndOf="@+id/vhm_rating_bar"
+            tools:text="125 Reviews" />
+
+        <TextView
+            android:id="@+id/vhm_tv_movie_genres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+
+            android:textColor="@color/genres"
+            android:textSize="8sp"
+
+            app:layout_constraintBottom_toTopOf="@+id/vhm_tv_reviews_count"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Action, Adventure, Fantasy" />
+
+        <TextView
+            android:id="@+id/vhm_tv_movie_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+
+            android:textColor="@color/film_title"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/vhm_iv_movie_banner"
+
+
+            app:layout_constraintStart_toStartOf="@id/vhm_iv_movie_banner"
+            app:layout_constraintTop_toBottomOf="@id/vhm_iv_movie_banner"
+            tools:text="Avengers: End Game" />
+
+        <TextView
+            android:id="@+id/vhm_tv_movie_running_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/film_running_time"
+
+            android:textSize="8sp"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toStartOf="@id/vhm_iv_movie_banner"
+            app:layout_constraintTop_toBottomOf="@id/vhm_tv_movie_title"
+            tools:text="137 MIN" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

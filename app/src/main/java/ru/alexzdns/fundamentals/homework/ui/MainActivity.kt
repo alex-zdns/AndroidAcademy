@@ -1,7 +1,9 @@
-package ru.alexzdns.fundamentals.homework
+package ru.alexzdns.fundamentals.homework.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import ru.alexzdns.fundamentals.homework.ui.fragments.MovieDetailsFragment
+import ru.alexzdns.fundamentals.homework.ui.fragments.MovieListFragment
 
 class MainActivity : AppCompatActivity(),
     MovieListFragment.MovieListClickListener,
@@ -17,10 +19,10 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun openMovieDetailsFragment() {
+    override fun openMovieDetailsFragment(moviePosition: Int) {
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
-            .add(android.R.id.content, MovieDetailsFragment())
+            .add(android.R.id.content, MovieDetailsFragment.newInstance(moviePosition))
             .commit()
     }
 
