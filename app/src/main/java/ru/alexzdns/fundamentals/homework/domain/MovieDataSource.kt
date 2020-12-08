@@ -9,9 +9,7 @@ object MovieDataSource {
             Movie(
                 title = "Avengers: End Game",
                 genres = "Action, Adventure, Drama",
-                storyline = """After the devastating events of Avengers: Infinity War, the universe is in ruins.
-                    | With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos\'
-                    |  actions and restore balance to the universe.""".trimIndent(),
+                storyline = "After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos\' actions and restore balance to the universe.",
                 runningTimeInMin = 137,
                 rating = 4f,
                 reviewsCount = 125,
@@ -20,9 +18,7 @@ object MovieDataSource {
             Movie(
                 title = "Tenet",
                 genres = "Action, Sci-Fi, Thriller",
-                storyline = """Armed with only one word, Tenet, and fighting for the survival of the entire world,
-                    | a Protagonist journeys through a twilight world of international espionage on a mission
-                    |  that will unfold in something beyond real time.""".trimIndent(),
+                storyline = "Armed with only one word, Tenet, and fighting for the survival of the entire world, a Protagonist journeys through a twilight world of international espionage on a mission that will unfold in something beyond real time.",
                 runningTimeInMin = 97,
                 ageRating = 16,
                 isLike = true,
@@ -42,8 +38,7 @@ object MovieDataSource {
             Movie(
                 title = "Wonder Woman 1984",
                 genres = "Action, Adventure, Fantasy",
-                storyline = """Fast forward to the 1980s as Wonder Woman's next big screen adventure finds her facing
-                    | two all-new foes: Max Lord and The Cheetah.""".trimIndent(),
+                storyline = "Fast forward to the 1980s as Wonder Woman's next big screen adventure finds her facing two all-new foes: Max Lord and The Cheetah.",
                 runningTimeInMin = 120,
                 rating = 5f,
                 reviewsCount = 74,
