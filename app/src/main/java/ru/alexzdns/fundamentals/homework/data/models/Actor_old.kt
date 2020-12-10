@@ -1,7 +1,6 @@
 package ru.alexzdns.fundamentals.homework.data.models
 
-data class Actor(
-    val id: Int,
+data class Actor_old(
     val name: String,
-    val picture: String
+    val avatar: Int
 )

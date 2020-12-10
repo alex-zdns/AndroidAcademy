@@ -9,7 +9,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.alexzdns.fundamentals.homework.R
-import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.data.models.Movie_old
 import ru.alexzdns.fundamentals.homework.domain.ActorsDataSource
 import ru.alexzdns.fundamentals.homework.domain.MovieDataSource
 import ru.alexzdns.fundamentals.homework.ui.adapters.ActorsAdapter
@@ -44,15 +44,15 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
         }
     }
 
-    private fun setupView(movie: Movie) {
+    private fun setupView(movieOld: Movie_old) {
         view?.run {
-            findViewById<TextView>(R.id.mdf_tv_movie_title).text = movie.title
-            findViewById<TextView>(R.id.mdf_tv_movie_genres).text = movie.genres
-            findViewById<TextView>(R.id.mdf_tv_age_rating).text = resources.getString(R.string.movie_age_rating, movie.ageRating)
-            findViewById<TextView>(R.id.mdf_tv_storyline).text = movie.storyline
-            findViewById<RatingBar>(R.id.mdf_rating_bar).rating = movie.rating
+            findViewById<TextView>(R.id.mdf_tv_movie_title).text = movieOld.title
+            findViewById<TextView>(R.id.mdf_tv_movie_genres).text = movieOld.genres
+            findViewById<TextView>(R.id.mdf_tv_age_rating).text = resources.getString(R.string.movie_age_rating, movieOld.ageRating)
+            findViewById<TextView>(R.id.mdf_tv_storyline).text = movieOld.storyline
+            findViewById<RatingBar>(R.id.mdf_rating_bar).rating = movieOld.rating
             findViewById<TextView>(R.id.mdf_tv_reviews_count).text =
-                resources.getQuantityString(R.plurals.reviews_count, movie.reviewsCount, movie.reviewsCount)
+                resources.getQuantityString(R.plurals.reviews_count, movieOld.reviewsCount, movieOld.reviewsCount)
         }
     }
 

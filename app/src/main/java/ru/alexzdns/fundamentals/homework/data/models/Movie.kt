@@ -1,13 +1,15 @@
 package ru.alexzdns.fundamentals.homework.data.models
 
 data class Movie(
-    val title:String,
-    val storyline:String,
-    val genres: String,
-    val runningTimeInMin: Int,
-    val ageRating: Int = 13,
-    var isLike: Boolean = false,
-    val rating: Float,
-    val reviewsCount: Int = 0,
-    val banner: Int
+    val id: Int,
+    val title: String,
+    val overview: String,
+    val poster: String,
+    val backdrop: String,
+    val ratings: Float,
+    val numberOfRatings: Int,
+    val minimumAge: Int,
+    val runtime: Int,
+    val genres: List<Genre>,
+    val actors: List<Actor>
 )

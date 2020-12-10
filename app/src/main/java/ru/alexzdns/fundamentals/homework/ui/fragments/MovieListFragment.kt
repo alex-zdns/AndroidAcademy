@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.alexzdns.fundamentals.homework.R
-import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.data.models.Movie_old
 import ru.alexzdns.fundamentals.homework.domain.MovieDataSource
 import ru.alexzdns.fundamentals.homework.ui.adapters.MovieAdapter
 
@@ -45,8 +45,8 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
             listenerMovieList?.openMovieDetailsFragment(position)
         }
 
-        override fun onLikeClick(movie: Movie, position: Int) {
-            movie.isLike = !movie.isLike
+        override fun onLikeClick(movieOld: Movie_old, position: Int) {
+            movieOld.isLike = !movieOld.isLike
             recycler?.adapter?.notifyItemChanged(position)
         }
     }

@@ -8,14 +8,14 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.alexzdns.fundamentals.homework.R
-import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.data.models.Movie_old
 
 class MovieAdapter(
-    var movies: List<Movie>,
+    var movieOlds: List<Movie_old>,
     private val clickListener: OnRecyclerMovieItemClicked
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    private fun getItem(position: Int): Movie = movies[position]
+    private fun getItem(position: Int): Movie_old = movieOlds[position]
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
         MovieViewHolder(
@@ -29,11 +29,11 @@ class MovieAdapter(
         }
 
         holder.like.setOnClickListener {
-            clickListener.onLikeClick(movies[position], position)
+            clickListener.onLikeClick(movieOlds[position], position)
         }
     }
 
-    override fun getItemCount(): Int = movies.size
+    override fun getItemCount(): Int = movieOlds.size
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val banner: ImageView = itemView.findViewById(R.id.vhm_iv_movie_banner)
@@ -45,20 +45,20 @@ class MovieAdapter(
         private val genres: TextView = itemView.findViewById(R.id.vhm_tv_movie_genres)
         private val runningTime: TextView = itemView.findViewById(R.id.vhm_tv_movie_running_time)
 
-        fun bind(movie: Movie) {
-            banner.setImageResource(movie.banner)
-            title.text = movie.title
-            ageRating.text = itemView.resources.getString(R.string.movie_age_rating, movie.ageRating)
-            like.setImageResource(if (movie.isLike) R.drawable.ic_like_fill else R.drawable.ic_like_empty)
-            ratingBar.rating = movie.rating
-            reviewsCount.text = itemView.resources.getQuantityString(R.plurals.reviews_count, movie.reviewsCount, movie.reviewsCount)
-            genres.text = movie.genres
-            runningTime.text = itemView.resources.getString(R.string.movie_duration, movie.runningTimeInMin)
+        fun bind(movieOld: Movie_old) {
+            banner.setImageResource(movieOld.banner)
+            title.text = movieOld.title
+            ageRating.text = itemView.resources.getString(R.string.movie_age_rating, movieOld.ageRating)
+            like.setImageResource(if (movieOld.isLike) R.drawable.ic_like_fill else R.drawable.ic_like_empty)
+            ratingBar.rating = movieOld.rating
+            reviewsCount.text = itemView.resources.getQuantityString(R.plurals.reviews_count, movieOld.reviewsCount, movieOld.reviewsCount)
+            genres.text = movieOld.genres
+            runningTime.text = itemView.resources.getString(R.string.movie_duration, movieOld.runningTimeInMin)
         }
     }
 
     interface OnRecyclerMovieItemClicked {
         fun onBannerClick(position: Int)
-        fun onLikeClick(movie: Movie, position: Int)
+        fun onLikeClick(movieOld: Movie_old, position: Int)
     }
 }
