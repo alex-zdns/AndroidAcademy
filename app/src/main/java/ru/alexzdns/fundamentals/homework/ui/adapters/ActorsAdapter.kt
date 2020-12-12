@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import ru.alexzdns.fundamentals.homework.R
-import ru.alexzdns.fundamentals.homework.data.models.Actor_old
+import ru.alexzdns.fundamentals.homework.data.models.Actor
 
 
 class ActorsAdapter(
-    var actorOlds: List<Actor_old>
+    var actors: List<Actor>
 ) : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder =
@@ -24,19 +26,29 @@ class ActorsAdapter(
         )
 
     override fun onBindViewHolder(holder: ActorsViewHolder, position: Int) {
-        holder.bind(actorOlds[position])
+        holder.bind(actors[position])
     }
 
-    override fun getItemCount(): Int = actorOlds.size
+    override fun getItemCount(): Int = actors.size
 
 
     class ActorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val avatar: ImageView = itemView.findViewById(R.id.vha_avatar)
         private val name: TextView = itemView.findViewById(R.id.vha_cast_name)
 
-        fun bind(actorOld: Actor_old) {
-            avatar.setImageResource(actorOld.avatar)
-            name.text = actorOld.name
+        fun bind(actor: Actor) {
+
+            val imageOption = RequestOptions()
+                //.placeholder(R.drawable.ic_avatar_placeholder)
+                //.fallback(R.drawable.ic_avatar_placeholder)
+                .centerCrop()
+
+            Glide.with(itemView.context)
+                .load(actor.picture)
+                .apply(imageOption)
+                .into(avatar)
+
+            name.text = actor.name
         }
     }
 }

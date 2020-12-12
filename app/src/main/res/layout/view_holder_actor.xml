@@ -5,19 +5,29 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/vha_avatar"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/vha_card_view"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginStart="@dimen/md_padding_between_actor_photo"
-        android:layout_marginEnd="@dimen/md_padding_between_actor_photo"
-        android:contentDescription="@string/actor_photo"
-        app:layout_constraintDimensionRatio="1:1"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars"/>
+        app:cardCornerRadius="4dp"
 
+        android:layout_marginStart="@dimen/vha_padding_between_actor_photo"
+        android:layout_marginEnd="@dimen/vha_padding_between_actor_photo"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/vha_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:contentDescription="@string/actor_photo"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
+
+            tools:src="@tools:sample/avatars" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/vha_cast_name"
@@ -27,9 +37,9 @@
 
         android:paddingTop="8dp"
 
-        app:layout_constraintEnd_toEndOf="@id/vha_avatar"
-        app:layout_constraintStart_toStartOf="@id/vha_avatar"
-        app:layout_constraintTop_toBottomOf="@id/vha_avatar"
-        tools:text="@tools:sample/full_names"/>
+        app:layout_constraintEnd_toEndOf="@id/vha_card_view"
+        app:layout_constraintStart_toStartOf="@id/vha_card_view"
+        app:layout_constraintTop_toBottomOf="@id/vha_card_view"
+        tools:text="@tools:sample/full_names" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

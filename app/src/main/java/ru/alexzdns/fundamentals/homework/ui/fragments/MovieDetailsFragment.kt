@@ -5,13 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import ru.alexzdns.fundamentals.homework.R
-import ru.alexzdns.fundamentals.homework.data.models.Movie_old
-import ru.alexzdns.fundamentals.homework.domain.ActorsDataSource
-import ru.alexzdns.fundamentals.homework.domain.MovieDataSource
+import ru.alexzdns.fundamentals.homework.data.models.Movie
 import ru.alexzdns.fundamentals.homework.ui.adapters.ActorsAdapter
 
 class MovieDetailsFragment : androidx.fragment.app.Fragment() {
@@ -28,14 +30,11 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.getInt(MOVIE_ID)?.let { moviePosition ->
-            setupView(MovieDataSource.getMovies()[moviePosition])
+        arguments?.getParcelable<Movie>(MOVIE)?.let { movie ->
+            setupView(movie)
         }
 
-        val actorsList = view.findViewById<RecyclerView>(R.id.mdf_actors_list)
-        val actors = ActorsDataSource.getActors()
-        val adapter = ActorsAdapter(actors)
-        actorsList.adapter = adapter
+
 
 
         val backButton = view.findViewById<TextView>(R.id.mdf_tv_back_button)
@@ -44,15 +43,40 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
         }
     }
 
-    private fun setupView(movieOld: Movie_old) {
+    private fun setupView(movie: Movie) {
         view?.run {
-            findViewById<TextView>(R.id.mdf_tv_movie_title).text = movieOld.title
-            findViewById<TextView>(R.id.mdf_tv_movie_genres).text = movieOld.genres
-            findViewById<TextView>(R.id.mdf_tv_age_rating).text = resources.getString(R.string.movie_age_rating, movieOld.ageRating)
-            findViewById<TextView>(R.id.mdf_tv_storyline).text = movieOld.storyline
-            findViewById<RatingBar>(R.id.mdf_rating_bar).rating = movieOld.rating
+            val backdrop = findViewById<ImageView>(R.id.mdf_iv_movie_banner)
+
+            val imageOption = RequestOptions()
+                //.placeholder(R.drawable.ic_avatar_placeholder)
+                //.fallback(R.drawable.ic_avatar_placeholder)
+                .fitCenter()
+
+            Glide.with(context)
+                .load(movie.backdrop)
+                .apply(imageOption)
+                .into(backdrop)
+
+
+            findViewById<TextView>(R.id.mdf_tv_movie_title).text = movie.title
+            findViewById<TextView>(R.id.mdf_tv_movie_genres).text = movie.genres.joinToString(separator = ", ") { it.name }
+            findViewById<TextView>(R.id.mdf_tv_age_rating).text = resources.getString(R.string.movie_age_rating, movie.minimumAge)
+            findViewById<TextView>(R.id.mdf_tv_storyline).text = movie.overview
+            findViewById<RatingBar>(R.id.mdf_rating_bar).rating = movie.ratings
             findViewById<TextView>(R.id.mdf_tv_reviews_count).text =
-                resources.getQuantityString(R.plurals.reviews_count, movieOld.reviewsCount, movieOld.reviewsCount)
+                resources.getQuantityString(R.plurals.reviews_count, movie.numberOfRatings, movie.numberOfRatings)
+
+            val actorsList = findViewById<RecyclerView>(R.id.mdf_actors_list)
+            val actors = movie.actors
+
+            if (actors.isNotEmpty()) {
+                val adapter = ActorsAdapter(actors)
+                actorsList.adapter = adapter
+            } else {
+                actorsList.isGone = true
+                findViewById<TextView>(R.id.mdf_tv_cast_heading).isGone = true
+            }
+
         }
     }
 
@@ -63,12 +87,12 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
 
 
     companion object {
-        private const val MOVIE_ID = "movie_id"
+        private const val MOVIE = "movie"
 
-        fun newInstance(moviePosition: Int): MovieDetailsFragment =
+        fun newInstance(movie: Movie): MovieDetailsFragment =
             MovieDetailsFragment().apply {
                 val args = Bundle()
-                args.putInt(MOVIE_ID, moviePosition)
+                args.putParcelable(MOVIE, movie)
                 arguments = args
             }
     }
