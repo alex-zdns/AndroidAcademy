@@ -34,9 +34,6 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
             setupView(movie)
         }
 
-
-
-
         val backButton = view.findViewById<TextView>(R.id.mdf_tv_back_button)
         backButton.setOnClickListener {
             listenerMovieDetails?.removeMovieDetailsFragment()
@@ -46,10 +43,7 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
     private fun setupView(movie: Movie) {
         view?.run {
             val backdrop = findViewById<ImageView>(R.id.mdf_iv_movie_banner)
-
             val imageOption = RequestOptions()
-                //.placeholder(R.drawable.ic_avatar_placeholder)
-                //.fallback(R.drawable.ic_avatar_placeholder)
                 .fitCenter()
 
             Glide.with(context)
@@ -57,12 +51,11 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
                 .apply(imageOption)
                 .into(backdrop)
 
-
             findViewById<TextView>(R.id.mdf_tv_movie_title).text = movie.title
             findViewById<TextView>(R.id.mdf_tv_movie_genres).text = movie.genres.joinToString(separator = ", ") { it.name }
             findViewById<TextView>(R.id.mdf_tv_age_rating).text = resources.getString(R.string.movie_age_rating, movie.minimumAge)
             findViewById<TextView>(R.id.mdf_tv_storyline).text = movie.overview
-            findViewById<RatingBar>(R.id.mdf_rating_bar).rating = movie.ratings
+            findViewById<RatingBar>(R.id.mdf_rating_bar).rating = movie.ratings / 2.0f
             findViewById<TextView>(R.id.mdf_tv_reviews_count).text =
                 resources.getQuantityString(R.plurals.reviews_count, movie.numberOfRatings, movie.numberOfRatings)
 
@@ -102,3 +95,4 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
         fun removeMovieDetailsFragment()
     }
 }
+

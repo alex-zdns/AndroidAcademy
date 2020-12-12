@@ -1,5 +1,6 @@
 package ru.alexzdns.fundamentals.homework.ui.adapters
 
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +17,18 @@ class ActorsAdapter(
     var actors: List<Actor>
 ) : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder =
-        ActorsViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.view_holder_actor,
-                parent,
-                false
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
+        val holder = ActorsViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_actor, parent, false)
         )
+
+        val margin = parent.resources.getDimensionPixelSize(R.dimen.md_margin_side)
+        val side = (Resources.getSystem().displayMetrics.widthPixels - margin * 2) / parent.resources.getInteger(R.integer.actors_list_item_count)
+        holder.avatar.layoutParams.width = side
+        holder.avatar.layoutParams.height = side
+
+        return holder
+    }
 
     override fun onBindViewHolder(holder: ActorsViewHolder, position: Int) {
         holder.bind(actors[position])
@@ -33,14 +38,14 @@ class ActorsAdapter(
 
 
     class ActorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val avatar: ImageView = itemView.findViewById(R.id.vha_avatar)
+        val avatar: ImageView = itemView.findViewById(R.id.vha_avatar)
         private val name: TextView = itemView.findViewById(R.id.vha_cast_name)
 
         fun bind(actor: Actor) {
 
             val imageOption = RequestOptions()
-                //.placeholder(R.drawable.ic_avatar_placeholder)
-                //.fallback(R.drawable.ic_avatar_placeholder)
+                .placeholder(R.drawable.vha_avatar_placeholder)
+                .fallback(R.drawable.vha_avatar_placeholder)
                 .centerCrop()
 
             Glide.with(itemView.context)

@@ -1,4 +1,5 @@
 package ru.alexzdns.fundamentals.homework.data.models
+
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -15,4 +16,4 @@ data class Movie(
     val runtime: Int,
     val genres: List<Genre>,
     val actors: List<Actor>
-): Parcelable
+) : Parcelable

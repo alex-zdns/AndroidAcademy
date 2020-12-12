@@ -92,21 +92,21 @@ internal fun parseMovies(
     return jsonMovies.map { jsonMovie ->
         @Suppress("unused")
         (Movie(
-        id = jsonMovie.id,
-        title = jsonMovie.title,
-        overview = jsonMovie.overview,
-        poster = jsonMovie.posterPicture,
-        backdrop = jsonMovie.backdropPicture,
-        ratings = jsonMovie.ratings,
-        numberOfRatings = jsonMovie.votesCount,
-        minimumAge = if (jsonMovie.adult) 16 else 13,
-        runtime = jsonMovie.runtime,
-        genres = jsonMovie.genreIds.map {
-            genresMap[it] ?: throw IllegalArgumentException("Genre not found")
-        },
-        actors = jsonMovie.actors.map {
-            actorsMap[it] ?: throw IllegalArgumentException("Actor not found")
-        }
-    ))
+            id = jsonMovie.id,
+            title = jsonMovie.title,
+            overview = jsonMovie.overview,
+            poster = jsonMovie.posterPicture,
+            backdrop = jsonMovie.backdropPicture,
+            ratings = jsonMovie.ratings,
+            numberOfRatings = jsonMovie.votesCount,
+            minimumAge = if (jsonMovie.adult) 16 else 13,
+            runtime = jsonMovie.runtime,
+            genres = jsonMovie.genreIds.map {
+                genresMap[it] ?: throw IllegalArgumentException("Genre not found")
+            },
+            actors = jsonMovie.actors.map {
+                actorsMap[it] ?: throw IllegalArgumentException("Actor not found")
+            }
+        ))
     }
 }
