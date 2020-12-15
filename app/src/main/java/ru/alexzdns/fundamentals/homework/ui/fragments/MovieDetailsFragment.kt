@@ -51,7 +51,15 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
                 .apply(imageOption)
                 .into(backdrop)
 
-            findViewById<TextView>(R.id.mdf_tv_movie_title).text = movie.title
+            findViewById<TextView>(R.id.mdf_tv_movie_title).run {
+                var movieTitle = movie.title
+                if (movieTitle.contains(": ")) {
+                    movieTitle = movieTitle.replace(": ", ":\n")
+                }
+
+                this.text = movieTitle
+            }
+
             findViewById<TextView>(R.id.mdf_tv_movie_genres).text = movie.genres.joinToString(separator = ", ") { it.name }
             findViewById<TextView>(R.id.mdf_tv_age_rating).text = resources.getString(R.string.movie_age_rating, movie.minimumAge)
             findViewById<TextView>(R.id.mdf_tv_storyline).text = movie.overview
