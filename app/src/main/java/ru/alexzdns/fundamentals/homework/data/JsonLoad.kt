@@ -56,8 +56,9 @@ internal fun parseGenres(data: String): List<Genre> {
 }
 
 private fun readAssetFileToString(context: Context, fileName: String): String {
-    val stream = context.assets.open(fileName)
-    return stream.bufferedReader().readText()
+    return context.assets.open(fileName).use { stream ->
+        stream.bufferedReader().readText()
+    }
 }
 
 private suspend fun loadActors(context: Context): List<Actor> = withContext(Dispatchers.IO) {
