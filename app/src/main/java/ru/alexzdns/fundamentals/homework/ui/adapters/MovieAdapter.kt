@@ -1,6 +1,5 @@
 package ru.alexzdns.fundamentals.homework.ui.adapters
 
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,7 @@ class MovieAdapter(
         val margin = parent.resources.getDimensionPixelSize(R.dimen.mlf_margin_side)
         val marginBetweenCards = parent.resources.getDimensionPixelSize(R.dimen.mlf_margin_between_cards)
         val itemCount = parent.resources.getInteger(R.integer.movies_list_span_count)
-        val side = (Resources.getSystem().displayMetrics.widthPixels - margin * 2 - marginBetweenCards * (itemCount - 1)) / itemCount
+        val side = (parent.resources.displayMetrics.widthPixels - margin * 2 - marginBetweenCards * (itemCount - 1)) / itemCount
 
         holder.cardView.layoutParams.width = side
 
@@ -52,6 +51,7 @@ class MovieAdapter(
         private val banner: ImageView = itemView.findViewById(R.id.vhm_iv_movie_banner)
         private val title: TextView = itemView.findViewById(R.id.vhm_tv_movie_title)
         private val ageRating: TextView = itemView.findViewById(R.id.vhm_tv_age_rating)
+
         //val like: ImageView = itemView.findViewById(R.id.vhm_iv_like)
         private val ratingBar: RatingBar = itemView.findViewById(R.id.vhm_rating_bar)
         private val reviewsCount: TextView = itemView.findViewById(R.id.vhm_tv_reviews_count)
@@ -59,11 +59,6 @@ class MovieAdapter(
         private val runningTime: TextView = itemView.findViewById(R.id.vhm_tv_movie_running_time)
 
         fun bind(movie: Movie) {
-            val imageOption = RequestOptions()
-                .placeholder(R.drawable.mlf_poster_holder)
-                .fallback(R.drawable.mlf_poster_holder)
-                .centerCrop()
-
             Glide.with(itemView.context)
                 .load(movie.poster)
                 .apply(imageOption)
@@ -76,6 +71,13 @@ class MovieAdapter(
             reviewsCount.text = itemView.resources.getQuantityString(R.plurals.reviews_count, movie.numberOfRatings, movie.numberOfRatings)
             genres.text = movie.genres.joinToString(separator = ", ") { it.name }
             runningTime.text = itemView.resources.getString(R.string.movie_duration, movie.runtime)
+        }
+
+        companion object {
+            private val imageOption = RequestOptions()
+                .placeholder(R.drawable.mlf_poster_holder)
+                .fallback(R.drawable.mlf_poster_holder)
+                .centerCrop()
         }
     }
 

@@ -1,6 +1,5 @@
 package ru.alexzdns.fundamentals.homework.ui.adapters
 
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,7 @@ import ru.alexzdns.fundamentals.homework.data.models.Actor
 
 
 class ActorsAdapter(
-    var actors: List<Actor>,
+    private val actors: List<Actor>,
 ) : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
@@ -25,7 +24,7 @@ class ActorsAdapter(
         )
 
         val margin = parent.resources.getDimensionPixelSize(R.dimen.md_margin_side)
-        val side = (Resources.getSystem().displayMetrics.widthPixels - margin * 2) / parent.resources.getInteger(R.integer.actors_list_item_count)
+        val side = (parent.resources.displayMetrics.widthPixels - margin * 2) / parent.resources.getInteger(R.integer.actors_list_item_count)
         holder.avatar.layoutParams.width = side
         holder.avatar.layoutParams.height = side
 

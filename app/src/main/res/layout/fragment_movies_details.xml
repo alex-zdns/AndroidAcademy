@@ -81,10 +81,10 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/md_margin_side"
             android:layout_marginEnd="@dimen/md_margin_side"
+            android:ellipsize="marquee"
             android:gravity="center_vertical"
             android:maxLines="2"
             android:scrollHorizontally="true"
-            android:ellipsize="marquee"
             android:textColor="@color/film_title"
             android:textSize="@dimen/film_title_text_size"
             android:textStyle="bold"
@@ -166,7 +166,6 @@
 
             android:layout_marginStart="@dimen/md_margin_side"
             android:layout_marginTop="4dp"
-
             android:layout_marginEnd="@dimen/md_margin_side"
             android:alpha="0.75"
             android:gravity="center_vertical"
@@ -183,16 +182,14 @@
             android:id="@+id/mdf_tv_cast_heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginStart="@dimen/md_margin_side"
             android:layout_marginTop="24dp"
-
             android:layout_marginEnd="@dimen/md_margin_side"
             android:text="@string/cast_heading"
             android:textColor="@color/cast_heading"
-
             android:textSize="@dimen/cast_heading_text_size"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mdf_tv_storyline" />
 
@@ -205,11 +202,11 @@
             android:layout_marginEnd="@dimen/md_margin_side"
             android:layout_marginBottom="8dp"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mdf_tv_cast_heading"
+
             tools:listitem="@layout/view_holder_actor" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

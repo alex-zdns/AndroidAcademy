@@ -2,6 +2,7 @@ package ru.alexzdns.fundamentals.homework.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,12 @@ import ru.alexzdns.fundamentals.homework.ui.adapters.MovieAdapter
 class MovieListFragment : androidx.fragment.app.Fragment() {
     private var listenerMovieList: MovieListClickListener? = null
     private var recycler: RecyclerView? = null
-    private val scope = CoroutineScope(Dispatchers.IO)
+
+    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
+        Log.e("MovieListFragment", "CoroutineExceptionHandler got $exception in $coroutineContext")
+    }
+
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO + exceptionHandler)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -32,6 +38,7 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recycler = view.findViewById<RecyclerView>(R.id.mlf_movie_list)
+
         scope.launch {
             val movies = loadMovies(view.context)
             setupRecycler(movies)

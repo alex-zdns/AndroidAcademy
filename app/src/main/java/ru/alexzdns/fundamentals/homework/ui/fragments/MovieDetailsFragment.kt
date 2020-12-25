@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -43,23 +43,12 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
     private fun setupView(movie: Movie) {
         view?.run {
             val backdrop = findViewById<ImageView>(R.id.mdf_iv_movie_banner)
-            val imageOption = RequestOptions()
-                .fitCenter()
-
             Glide.with(context)
                 .load(movie.backdrop)
-                .apply(imageOption)
+                .apply(RequestOptions().fitCenter())
                 .into(backdrop)
 
-            findViewById<TextView>(R.id.mdf_tv_movie_title).run {
-                var movieTitle = movie.title
-                if (movieTitle.contains(": ")) {
-                    movieTitle = movieTitle.replace(": ", ":\n")
-                }
-
-                this.text = movieTitle
-            }
-
+            findViewById<TextView>(R.id.mdf_tv_movie_title).text = movie.title
             findViewById<TextView>(R.id.mdf_tv_movie_genres).text = movie.genres.joinToString(separator = ", ") { it.name }
             findViewById<TextView>(R.id.mdf_tv_age_rating).text = resources.getString(R.string.movie_age_rating, movie.minimumAge)
             findViewById<TextView>(R.id.mdf_tv_storyline).text = movie.overview
@@ -67,17 +56,15 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
             findViewById<TextView>(R.id.mdf_tv_reviews_count).text =
                 resources.getQuantityString(R.plurals.reviews_count, movie.numberOfRatings, movie.numberOfRatings)
 
-            val actorsList = findViewById<RecyclerView>(R.id.mdf_actors_list)
             val actors = movie.actors
 
             if (actors.isNotEmpty()) {
-                val adapter = ActorsAdapter(actors)
-                actorsList.adapter = adapter
-            } else {
-                actorsList.isGone = true
-                findViewById<TextView>(R.id.mdf_tv_cast_heading).isGone = true
+                findViewById<TextView>(R.id.mdf_tv_cast_heading).isVisible = true
+                findViewById<RecyclerView>(R.id.mdf_actors_list).run {
+                    isVisible = true
+                    adapter = ActorsAdapter(actors)
+                }
             }
-
         }
     }
 
