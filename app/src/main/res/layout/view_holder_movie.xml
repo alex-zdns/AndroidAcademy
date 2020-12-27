@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/vhm_movie_card"
-    android:layout_width="170dp"
-    android:layout_height="296dp"
-    android:layout_marginEnd="16dp"
+    android:layout_width="@dimen/movie_card_width"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
     android:padding="8dp"
     app:cardCornerRadius="8dp"
     app:cardPreventCornerOverlap="true"
     app:rippleColor="@android:color/transparent"
-    app:strokeColor="#3B3B4D7F"
+    app:strokeColor="@color/vhm_strokeColor"
     app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,8 +27,7 @@
             android:contentDescription="@string/movie_banner"
             app:layout_constraintDimensionRatio="2:3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/img_black_widow_movie" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/vhm_gradient_mask"
@@ -132,14 +130,17 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
 
+            android:ellipsize="marquee"
+            android:maxLines="2"
+            android:scrollHorizontally="true"
             android:textColor="@color/film_title"
             android:textSize="14sp"
             android:textStyle="bold"
+
             app:layout_constraintEnd_toEndOf="@id/vhm_iv_movie_banner"
-
-
             app:layout_constraintStart_toStartOf="@id/vhm_iv_movie_banner"
             app:layout_constraintTop_toBottomOf="@id/vhm_iv_movie_banner"
+
             tools:text="Avengers: End Game" />
 
         <TextView
@@ -149,13 +150,16 @@
 
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:textColor="@color/film_running_time"
 
             android:textSize="8sp"
             android:textStyle="bold"
 
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/vhm_iv_movie_banner"
             app:layout_constraintTop_toBottomOf="@id/vhm_tv_movie_title"
+
             tools:text="137 MIN" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,5 +10,10 @@
     <dimen name="storyline_heading_text_size">16sp</dimen>
     <dimen name="storyline_text_size">16sp</dimen>
     <dimen name="cast_heading_text_size">16sp</dimen>
-    <dimen name="md_padding_between_actor_photo">4dp</dimen>
+    <dimen name="vha_padding_between_actor_photo">4dp</dimen>
+    <dimen name="mlf_margin_side">16dp</dimen>
+    <dimen name="mlf_margin_between_cards">16dp</dimen>
+    <dimen name="vha_corner_radius">4dp</dimen>
+    <dimen name="movie_card_width">140dp</dimen>
+    <dimen name="actor_avatar_side">80dp</dimen>
 </resources>

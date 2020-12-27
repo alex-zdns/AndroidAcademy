@@ -2,18 +2,26 @@ package ru.alexzdns.fundamentals.homework.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.*
 import ru.alexzdns.fundamentals.homework.R
+import ru.alexzdns.fundamentals.homework.data.loadMovies
 import ru.alexzdns.fundamentals.homework.data.models.Movie
-import ru.alexzdns.fundamentals.homework.domain.MovieDataSource
 import ru.alexzdns.fundamentals.homework.ui.adapters.MovieAdapter
 
 class MovieListFragment : androidx.fragment.app.Fragment() {
     private var listenerMovieList: MovieListClickListener? = null
     private var recycler: RecyclerView? = null
+
+    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
+        Log.e("MovieListFragment", "CoroutineExceptionHandler got $exception in $coroutineContext")
+    }
+
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO + exceptionHandler)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -30,7 +38,14 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recycler = view.findViewById<RecyclerView>(R.id.mlf_movie_list)
-        val movies = MovieDataSource.getMovies()
+
+        scope.launch {
+            val movies = loadMovies(view.context)
+            setupRecycler(movies)
+        }
+    }
+
+    private suspend fun setupRecycler(movies: List<Movie>) = withContext(Dispatchers.Main) {
         val adapter = MovieAdapter(movies, clickListener)
         recycler?.adapter = adapter
     }
@@ -38,20 +53,16 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
     override fun onDetach() {
         super.onDetach()
         listenerMovieList = null
+        scope.cancel()
     }
 
     private val clickListener = object : MovieAdapter.OnRecyclerMovieItemClicked {
-        override fun onBannerClick(position: Int) {
-            listenerMovieList?.openMovieDetailsFragment(position)
-        }
-
-        override fun onLikeClick(movie: Movie, position: Int) {
-            movie.isLike = !movie.isLike
-            recycler?.adapter?.notifyItemChanged(position)
+        override fun onBannerClick(movie: Movie) {
+            listenerMovieList?.openMovieDetailsFragment(movie)
         }
     }
 
     interface MovieListClickListener {
-        fun openMovieDetailsFragment(moviePosition: Int)
+        fun openMovieDetailsFragment(movie: Movie)
     }
 }

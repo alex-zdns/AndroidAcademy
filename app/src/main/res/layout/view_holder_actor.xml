@@ -7,17 +7,17 @@
 
     <ImageView
         android:id="@+id/vha_avatar"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="@dimen/md_padding_between_actor_photo"
-        android:layout_marginEnd="@dimen/md_padding_between_actor_photo"
+        android:layout_width="@dimen/actor_avatar_side"
+        android:layout_height="@dimen/actor_avatar_side"
+
+        android:layout_marginStart="@dimen/vha_padding_between_actor_photo"
+        android:layout_marginEnd="@dimen/vha_padding_between_actor_photo"
         android:contentDescription="@string/actor_photo"
-        app:layout_constraintDimensionRatio="1:1"
         android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars"/>
-
+        tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/vha_cast_name"
@@ -30,6 +30,6 @@
         app:layout_constraintEnd_toEndOf="@id/vha_avatar"
         app:layout_constraintStart_toStartOf="@id/vha_avatar"
         app:layout_constraintTop_toBottomOf="@id/vha_avatar"
-        tools:text="@tools:sample/full_names"/>
+        tools:text="@tools:sample/full_names" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
