@@ -18,18 +18,8 @@ class MovieAdapter(
     private val clickListener: OnRecyclerMovieItemClicked
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val holder = MovieViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_holder_movie, parent, false))
-
-        val margin = parent.resources.getDimensionPixelSize(R.dimen.mlf_margin_side)
-        val marginBetweenCards = parent.resources.getDimensionPixelSize(R.dimen.mlf_margin_between_cards)
-        val itemCount = parent.resources.getInteger(R.integer.movies_list_span_count)
-        val side = (parent.resources.displayMetrics.widthPixels - margin * 2 - marginBetweenCards * (itemCount - 1)) / itemCount
-
-        holder.cardView.layoutParams.width = side
-
-        return holder
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
+        MovieViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_holder_movie, parent, false))
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(movies[position])

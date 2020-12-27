@@ -18,18 +18,9 @@ class ActorsAdapter(
     private val actors: List<Actor>,
 ) : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
-        val holder = ActorsViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_actor, parent, false)
-        )
-
-        val margin = parent.resources.getDimensionPixelSize(R.dimen.md_margin_side)
-        val side = (parent.resources.displayMetrics.widthPixels - margin * 2) / parent.resources.getInteger(R.integer.actors_list_item_count)
-        holder.avatar.layoutParams.width = side
-        holder.avatar.layoutParams.height = side
-
-        return holder
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder = ActorsViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.view_holder_actor, parent, false)
+    )
 
     override fun onBindViewHolder(holder: ActorsViewHolder, position: Int) {
         holder.bind(actors[position])
@@ -39,7 +30,7 @@ class ActorsAdapter(
 
 
     class ActorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val avatar: ImageView = itemView.findViewById(R.id.vha_avatar)
+        private val avatar: ImageView = itemView.findViewById(R.id.vha_avatar)
         private val name: TextView = itemView.findViewById(R.id.vha_cast_name)
         private val imageOption: RequestOptions = RequestOptions()
             .placeholder(R.drawable.vha_avatar_placeholder)

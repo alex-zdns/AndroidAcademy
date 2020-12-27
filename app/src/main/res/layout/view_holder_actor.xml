@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/vha_avatar"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/actor_avatar_side"
+        android:layout_height="@dimen/actor_avatar_side"
 
         android:layout_marginStart="@dimen/vha_padding_between_actor_photo"
         android:layout_marginEnd="@dimen/vha_padding_between_actor_photo"
