@@ -3,11 +3,11 @@ package ru.alexzdns.fundamentals.homework.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ru.alexzdns.fundamentals.homework.data.models.Movie
-import ru.alexzdns.fundamentals.homework.ui.fragments.MovieDetailsFragment
-import ru.alexzdns.fundamentals.homework.ui.fragments.MovieListFragment
+import ru.alexzdns.fundamentals.homework.ui.movieDetails.MovieDetailsFragment
+import ru.alexzdns.fundamentals.homework.ui.moviesList.MoviesListFragment
 
 class MainActivity : AppCompatActivity(),
-    MovieListFragment.MovieListClickListener,
+    MoviesListFragment.MovieListClickListener,
     MovieDetailsFragment.MovieDetailsClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity(),
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(android.R.id.content, MovieListFragment())
+                .add(android.R.id.content, MoviesListFragment())
                 .commit()
         }
     }

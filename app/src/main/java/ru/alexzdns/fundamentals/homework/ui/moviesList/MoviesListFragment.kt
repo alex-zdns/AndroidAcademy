@@ -1,4 +1,4 @@
-package ru.alexzdns.fundamentals.homework.ui.fragments
+package ru.alexzdns.fundamentals.homework.ui.moviesList
 
 import android.content.Context
 import android.os.Bundle
@@ -11,9 +11,8 @@ import kotlinx.coroutines.*
 import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.loadMovies
 import ru.alexzdns.fundamentals.homework.data.models.Movie
-import ru.alexzdns.fundamentals.homework.ui.adapters.MovieAdapter
 
-class MovieListFragment : androidx.fragment.app.Fragment() {
+class MoviesListFragment : androidx.fragment.app.Fragment() {
     private var listenerMovieList: MovieListClickListener? = null
     private var recycler: RecyclerView? = null
 
@@ -46,7 +45,7 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
     }
 
     private suspend fun setupRecycler(movies: List<Movie>) = withContext(Dispatchers.Main) {
-        val adapter = MovieAdapter(movies, clickListener)
+        val adapter = MoviesAdapter(movies, clickListener)
         recycler?.adapter = adapter
     }
 
@@ -56,7 +55,7 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
         scope.cancel()
     }
 
-    private val clickListener = object : MovieAdapter.OnRecyclerMovieItemClicked {
+    private val clickListener = object : MoviesAdapter.OnRecyclerMovieItemClicked {
         override fun onBannerClick(movie: Movie) {
             listenerMovieList?.openMovieDetailsFragment(movie)
         }

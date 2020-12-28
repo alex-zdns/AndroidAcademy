@@ -1,4 +1,4 @@
-package ru.alexzdns.fundamentals.homework.ui.adapters
+package ru.alexzdns.fundamentals.homework.ui.moviesList
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +13,10 @@ import com.bumptech.glide.request.RequestOptions
 import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.models.Movie
 
-class MovieAdapter(
+class MoviesAdapter(
     var movies: List<Movie>,
     private val clickListener: OnRecyclerMovieItemClicked
-) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
         MovieViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_holder_movie, parent, false))

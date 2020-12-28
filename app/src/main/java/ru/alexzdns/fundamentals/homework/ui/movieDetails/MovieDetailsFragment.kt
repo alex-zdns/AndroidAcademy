@@ -1,4 +1,4 @@
-package ru.alexzdns.fundamentals.homework.ui.fragments
+package ru.alexzdns.fundamentals.homework.ui.movieDetails
 
 import android.content.Context
 import android.os.Bundle
@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.models.Movie
-import ru.alexzdns.fundamentals.homework.ui.adapters.ActorsAdapter
 
 class MovieDetailsFragment : androidx.fragment.app.Fragment() {
     private var listenerMovieDetails: MovieDetailsClickListener? = null
