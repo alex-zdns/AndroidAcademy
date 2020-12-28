@@ -2,25 +2,22 @@ package ru.alexzdns.fundamentals.homework.ui.moviesList
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.*
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.alexzdns.fundamentals.homework.R
-import ru.alexzdns.fundamentals.homework.data.loadMovies
 import ru.alexzdns.fundamentals.homework.data.models.Movie
 
-class MoviesListFragment : androidx.fragment.app.Fragment() {
+class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.OnRefreshListener {
+    private val viewModel: MoviesListViewModel by viewModels { MoviesListViewModelFactory() }
+
     private var listenerMovieList: MovieListClickListener? = null
     private var recycler: RecyclerView? = null
-
-    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
-        Log.e("MovieListFragment", "CoroutineExceptionHandler got $exception in $coroutineContext")
-    }
-
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO + exceptionHandler)
+    private var loader: SwipeRefreshLayout? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -28,23 +25,44 @@ class MoviesListFragment : androidx.fragment.app.Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_movies_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recycler = view.findViewById<RecyclerView>(R.id.mlf_movie_list)
+        recycler = view.findViewById(R.id.mlf_movie_list)
+        loader = view.findViewById(R.id.fml_swipe_container)
+        loader?.setOnRefreshListener(this)
 
-        scope.launch {
-            val movies = loadMovies(view.context)
-            setupRecycler(movies)
-        }
+        viewModel.loadingState.observe(this.viewLifecycleOwner, this::setState)
+        viewModel.moviesList.observe(this.viewLifecycleOwner, this::setupRecycler)
+
+        if (savedInstanceState == null) viewModel.getMovies()
     }
 
-    private suspend fun setupRecycler(movies: List<Movie>) = withContext(Dispatchers.Main) {
+    private fun setState(state: MoviesListViewModel.State) =
+        when (state) {
+            is MoviesListViewModel.State.Default -> {
+                setLoading(false)
+            }
+            is MoviesListViewModel.State.Loading -> {
+                setLoading(true)
+            }
+            is MoviesListViewModel.State.Error -> {
+                setLoading(false)
+                Toast.makeText(context, getString(R.string.loading_movies_error_message), Toast.LENGTH_LONG).show()
+            }
+            is MoviesListViewModel.State.Success -> {
+                setLoading(false)
+            }
+        }
+
+    private fun setLoading(loading: Boolean) {
+        loader?.isRefreshing = loading
+    }
+
+    private fun setupRecycler(movies: List<Movie>) {
         val adapter = MoviesAdapter(movies, clickListener)
         recycler?.adapter = adapter
     }
@@ -52,7 +70,14 @@ class MoviesListFragment : androidx.fragment.app.Fragment() {
     override fun onDetach() {
         super.onDetach()
         listenerMovieList = null
-        scope.cancel()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        recycler?.adapter = null
+        recycler = null
+        loader?.setOnRefreshListener(null)
+        loader = null
     }
 
     private val clickListener = object : MoviesAdapter.OnRecyclerMovieItemClicked {
@@ -63,5 +88,9 @@ class MoviesListFragment : androidx.fragment.app.Fragment() {
 
     interface MovieListClickListener {
         fun openMovieDetailsFragment(movie: Movie)
+    }
+
+    override fun onRefresh() {
+        viewModel.getMovies()
     }
 }

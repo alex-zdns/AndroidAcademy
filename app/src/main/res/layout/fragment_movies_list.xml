@@ -1,66 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fml_swipe_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     tools:context=".ui.moviesList.MoviesListFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/mlf_tv_movies_list"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent">
 
-            android:layout_marginTop="40dp"
-            android:gravity="center_vertical"
-            android:paddingStart="40dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="40dp"
-            android:paddingBottom="8dp"
+            <TextView
+                android:id="@+id/mlf_tv_movies_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-            android:text="@string/movies_list"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="40dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="40dp"
+                android:paddingBottom="8dp"
 
-        <ImageView
-            android:id="@+id/mlf_iv_target"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+                android:text="@string/movies_list"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            android:layout_marginStart="16dp"
-            android:contentDescription="@string/target_icon"
+            <ImageView
+                android:id="@+id/mlf_iv_target"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-            android:src="@drawable/ic_target"
-            app:layout_constraintBottom_toBottomOf="@id/mlf_tv_movies_list"
-            app:layout_constraintStart_toStartOf="@id/mlf_tv_movies_list"
-            app:layout_constraintTop_toTopOf="@id/mlf_tv_movies_list" />
+                android:layout_marginStart="16dp"
+                android:contentDescription="@string/target_icon"
+
+                android:src="@drawable/ic_target"
+                app:layout_constraintBottom_toBottomOf="@id/mlf_tv_movies_list"
+                app:layout_constraintStart_toStartOf="@id/mlf_tv_movies_list"
+                app:layout_constraintTop_toTopOf="@id/mlf_tv_movies_list" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mlf_movie_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mlf_movie_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
-            android:layout_marginStart="@dimen/mlf_margin_side"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="@dimen/mlf_margin_side"
+                android:layout_marginStart="@dimen/mlf_margin_side"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="@dimen/mlf_margin_side"
 
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
 
-            app:layout_constraintTop_toBottomOf="@+id/mlf_tv_movies_list"
-            app:spanCount="@integer/movies_list_span_count"
+                app:layout_constraintTop_toBottomOf="@+id/mlf_tv_movies_list"
+                app:spanCount="@integer/movies_list_span_count"
 
-            tools:itemCount="4"
-            tools:listitem="@layout/view_holder_movie" />
+                tools:itemCount="4"
+                tools:listitem="@layout/view_holder_movie" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -74,7 +74,7 @@ internal fun parseActors(data: String): List<Actor> {
 
 @Suppress("unused")
 internal suspend fun loadMovies(context: Context): List<Movie> = withContext(Dispatchers.IO) {
-    delay(3000) // imitation network working
+    delay(2000) // imitation network working
     val genresMap = loadGenres(context)
     val actorsMap = loadActors(context)
 
