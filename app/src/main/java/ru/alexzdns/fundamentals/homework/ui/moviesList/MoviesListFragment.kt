@@ -36,7 +36,6 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         loader?.setOnRefreshListener(this)
 
         viewModel.loadingState.observe(this.viewLifecycleOwner, this::setState)
-        viewModel.moviesList.observe(this.viewLifecycleOwner, this::setupRecycler)
 
         if (savedInstanceState == null) viewModel.getMovies()
     }
@@ -54,6 +53,7 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
                 Toast.makeText(context, getString(R.string.loading_movies_error_message), Toast.LENGTH_LONG).show()
             }
             is MoviesListViewModel.State.Success -> {
+                setupRecycler(state.movies)
                 setLoading(false)
             }
         }
