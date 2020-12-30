@@ -35,9 +35,9 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         loader = view.findViewById(R.id.fml_swipe_container)
         loader?.setOnRefreshListener(this)
 
-        viewModel.loadingState.observe(this.viewLifecycleOwner, this::setState)
+        viewModel.state.observe(this.viewLifecycleOwner, this::setState)
 
-        if (savedInstanceState == null) viewModel.getMovies()
+        if (viewModel.state.value is MoviesListViewModel.State.Default) viewModel.getMovies()
     }
 
     private fun setState(state: MoviesListViewModel.State) =
@@ -85,12 +85,14 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
             listenerMovieList?.openMovieDetailsFragment(movie)
         }
     }
+    
+    override fun onRefresh() {
+        viewModel.getMovies()
+    }
+
 
     interface MovieListClickListener {
         fun openMovieDetailsFragment(movie: Movie)
     }
-
-    override fun onRefresh() {
-        viewModel.getMovies()
-    }
 }
+

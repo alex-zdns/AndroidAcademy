@@ -10,17 +10,17 @@ import ru.alexzdns.fundamentals.homework.data.loadMovies
 import ru.alexzdns.fundamentals.homework.data.models.Movie
 
 class MoviesListViewModel : ViewModel() {
-    private val _mutableLoadingState = MutableLiveData<State>(State.Default())
-    val loadingState: LiveData<State> get() = _mutableLoadingState
+    private val _mutableState = MutableLiveData<State>(State.Default())
+    val state: LiveData<State> get() = _mutableState
 
     fun getMovies() {
         viewModelScope.launch {
-            _mutableLoadingState.value = State.Loading()
+            _mutableState.value = State.Loading()
             try {
                 val movies = loadMovies(App.context())
-                _mutableLoadingState.value = State.Success(movies)
+                _mutableState.value = State.Success(movies)
             } catch (e: Exception) {
-                _mutableLoadingState.value = State.Error()
+                _mutableState.value = State.Error()
             }
         }
     }
