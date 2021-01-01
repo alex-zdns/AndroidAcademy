@@ -29,7 +29,7 @@ object NetworkModule {
 
     private val httpClient = OkHttpClient.Builder()
         .addInterceptor(APIKeyInterceptor())
-        .addInterceptor(LanguagesInterceptor("ru"))
+        .addInterceptor(LanguagesInterceptor("en"))
         .connectTimeout(10, TimeUnit.SECONDS)
         .writeTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
@@ -49,7 +49,7 @@ object NetworkModule {
             theMovieDBApiService.getGenres().genres.map { Genre(id = it.id, name = it.name) }
                 .associateBy { it.id }
 
-        return@withContext theMovieDBApiService.getPopularMovie().movies.map { movieDTO ->
+        return@withContext theMovieDBApiService.getTopRatedMovie().movies.map { movieDTO ->
             Movie(
                 id = movieDTO.id,
                 title = movieDTO.title,
