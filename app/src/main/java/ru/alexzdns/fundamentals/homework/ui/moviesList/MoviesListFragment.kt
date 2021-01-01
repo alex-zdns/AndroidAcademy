@@ -85,7 +85,7 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
             listenerMovieList?.openMovieDetailsFragment(movie)
         }
     }
-    
+
     override fun onRefresh() {
         viewModel.getMovies()
     }
