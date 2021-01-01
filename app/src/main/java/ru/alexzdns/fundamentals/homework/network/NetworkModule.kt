@@ -8,6 +8,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.create
+import ru.alexzdns.fundamentals.homework.BuildConfig
 import ru.alexzdns.fundamentals.homework.data.models.Actor
 import ru.alexzdns.fundamentals.homework.data.models.Genre
 import ru.alexzdns.fundamentals.homework.data.models.Movie
@@ -17,9 +18,6 @@ import java.util.concurrent.TimeUnit
 
 
 object NetworkModule {
-
-    private const val baseUrl = "https://api.themoviedb.org/3/"
-
     private val json = Json {
         prettyPrint = true
         ignoreUnknownKeys = true
@@ -37,7 +35,7 @@ object NetworkModule {
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     private val retrofit = Retrofit.Builder()
-        .baseUrl(baseUrl)
+        .baseUrl(BuildConfig.BASE_URL)
         .client(httpClient)
         .addConverterFactory(json.asConverterFactory(contentType))
         .build()
