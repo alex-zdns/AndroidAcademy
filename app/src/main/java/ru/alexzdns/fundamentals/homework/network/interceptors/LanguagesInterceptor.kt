@@ -3,7 +3,7 @@ package ru.alexzdns.fundamentals.homework.network.interceptors
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class LanguagesInterceptor(val languageCode: String) : Interceptor {
+class LanguagesInterceptor(private val languageCode: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
         val originalHttpUrl = original.url

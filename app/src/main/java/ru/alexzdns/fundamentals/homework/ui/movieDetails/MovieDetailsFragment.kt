@@ -12,11 +12,19 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.alexzdns.fundamentals.homework.R
+import ru.alexzdns.fundamentals.homework.data.models.Actor
 import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.network.NetworkModule
 
 class MovieDetailsFragment : androidx.fragment.app.Fragment() {
     private var listenerMovieDetails: MovieDetailsClickListener? = null
+
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,10 +62,17 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
             findViewById<RatingBar>(R.id.mdf_rating_bar).rating = movie.ratings / 2.0f
             findViewById<TextView>(R.id.mdf_tv_reviews_count).text =
                 resources.getQuantityString(R.plurals.reviews_count, movie.numberOfRatings, movie.numberOfRatings)
+        }
 
-            val actors = movie.actors
+        scope.launch {
+            val actors = NetworkModule.loadActors(movie.id)
+            setupAdapter(actors)
+        }
+    }
 
-            if (actors.isNotEmpty()) {
+    private suspend fun setupAdapter(actors: List<Actor>) = withContext(Dispatchers.Main) {
+        if (actors.isNotEmpty()) {
+            view?.run {
                 findViewById<TextView>(R.id.mdf_tv_cast_heading).isVisible = true
                 findViewById<RecyclerView>(R.id.mdf_actors_list).run {
                     isVisible = true

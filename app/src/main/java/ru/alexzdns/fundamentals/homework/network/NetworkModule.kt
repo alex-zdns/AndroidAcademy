@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 
 object NetworkModule {
 
-    private val baseUrl = "https://api.themoviedb.org/3/"
+    private const val baseUrl = "https://api.themoviedb.org/3/"
 
     private val json = Json {
         prettyPrint = true
@@ -44,8 +44,10 @@ object NetworkModule {
 
     private val theMovieDBApiService: MovieService = retrofit.create()
 
-    suspend fun loadMovies(): List<Movie> = withContext(Dispatchers.IO)  {
-        val genres: Map<Int, Genre> = theMovieDBApiService.getGenres().genres.map { Genre(id = it.id, name = it.name) }.associateBy { it.id }
+    suspend fun loadMovies(): List<Movie> = withContext(Dispatchers.IO) {
+        val genres: Map<Int, Genre> =
+            theMovieDBApiService.getGenres().genres.map { Genre(id = it.id, name = it.name) }
+                .associateBy { it.id }
 
         return@withContext theMovieDBApiService.getPopularMovie().movies.map { movieDTO ->
             Movie(
@@ -57,12 +59,23 @@ object NetworkModule {
                 ratings = movieDTO.voteAverage,
                 numberOfRatings = movieDTO.voteCount,
                 minimumAge = if (movieDTO.adult) 16 else 13,
-                runtime =  0,
+                runtime = 0,
                 genres = movieDTO.genres.map {
                     genres[it] ?: throw IllegalArgumentException("Genre not found")
                 },
                 actors = emptyList<Actor>()
             )
         }
+    }
+
+    suspend fun loadActors(movieId: Long): List<Actor> = withContext(Dispatchers.IO) {
+        return@withContext theMovieDBApiService.getCasts(movieId).cast.filter { it.profilePath != null }
+            .map { castDTO ->
+                Actor(
+                    id = castDTO.id,
+                    name = castDTO.name,
+                    picture = "https://image.tmdb.org/t/p/original" + castDTO.profilePath
+                )
+            }
     }
 }
