@@ -8,23 +8,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.models.Actor
 import ru.alexzdns.fundamentals.homework.data.models.Movie
-import ru.alexzdns.fundamentals.homework.network.NetworkModule
 
 class MovieDetailsFragment : androidx.fragment.app.Fragment() {
+    private lateinit var viewModel: MovieDetailsViewModel
     private var listenerMovieDetails: MovieDetailsClickListener? = null
-
-    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -38,6 +34,11 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.getParcelable<Movie>(MOVIE)?.let { movie ->
+            viewModel = ViewModelProvider(this, MovieDetailsViewModelFactory(movie.id)).get(MovieDetailsViewModel::class.java)
+            viewModel.state.observe(this.viewLifecycleOwner, this::setState)
+
+            if (viewModel.state.value is MovieDetailsViewModel.State.Default) viewModel.getActors()
+
             setupView(movie)
         }
 
@@ -63,14 +64,23 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
             findViewById<TextView>(R.id.mdf_tv_reviews_count).text =
                 resources.getQuantityString(R.plurals.reviews_count, movie.numberOfRatings, movie.numberOfRatings)
         }
-
-        scope.launch {
-            val actors = NetworkModule.loadActors(movie.id)
-            setupAdapter(actors)
-        }
     }
 
-    private suspend fun setupAdapter(actors: List<Actor>) = withContext(Dispatchers.Main) {
+    private fun setState(state: MovieDetailsViewModel.State) =
+        when (state) {
+            is MovieDetailsViewModel.State.Default -> {
+            }
+            is MovieDetailsViewModel.State.Loading -> {
+            }
+            is MovieDetailsViewModel.State.Error -> {
+                Toast.makeText(context, getString(R.string.loading_actors_error_message), Toast.LENGTH_LONG).show()
+            }
+            is MovieDetailsViewModel.State.Success -> {
+                setupAdapter(state.actors)
+            }
+        }
+
+    private fun setupAdapter(actors: List<Actor>) {
         if (actors.isNotEmpty()) {
             view?.run {
                 findViewById<TextView>(R.id.mdf_tv_cast_heading).isVisible = true
@@ -86,7 +96,6 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
         super.onDetach()
         listenerMovieDetails = null
     }
-
 
     companion object {
         private const val MOVIE = "movie"
