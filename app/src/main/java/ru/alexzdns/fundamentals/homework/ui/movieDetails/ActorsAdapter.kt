@@ -1,4 +1,4 @@
-package ru.alexzdns.fundamentals.homework.ui.adapters
+package ru.alexzdns.fundamentals.homework.ui.movieDetails
 
 import android.view.LayoutInflater
 import android.view.View

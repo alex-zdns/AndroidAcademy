@@ -11,6 +11,7 @@
 
     <string name="movie_age_rating">%d+</string>
     <string name="movie_duration">%d min</string>
+    <string name="loading_movies_error_message">Error loading movie lists</string>
 
     <plurals name="reviews_count">
         <item quantity="one">%d review</item>
