@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.ui.moviesList.MoviesListViewModel.State
 
 class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private val viewModel: MoviesListViewModel by viewModels { MoviesListViewModelFactory() }
@@ -37,22 +38,22 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
 
         viewModel.state.observe(this.viewLifecycleOwner, this::setState)
 
-        if (viewModel.state.value is MoviesListViewModel.State.Default) viewModel.getMovies()
+        if (viewModel.state.value is State.Default) viewModel.getMovies()
     }
 
-    private fun setState(state: MoviesListViewModel.State) =
+    private fun setState(state: State) =
         when (state) {
-            is MoviesListViewModel.State.Default -> {
+            is State.Default -> {
                 setLoading(false)
             }
-            is MoviesListViewModel.State.Loading -> {
+            is State.Loading -> {
                 setLoading(true)
             }
-            is MoviesListViewModel.State.Error -> {
+            is State.Error -> {
                 setLoading(false)
                 Toast.makeText(context, getString(R.string.loading_movies_error_message), Toast.LENGTH_LONG).show()
             }
-            is MoviesListViewModel.State.Success -> {
+            is State.Success -> {
                 setupRecycler(state.movies)
                 setLoading(false)
             }
