@@ -12,6 +12,7 @@ import ru.alexzdns.fundamentals.homework.BuildConfig
 import ru.alexzdns.fundamentals.homework.data.models.Actor
 import ru.alexzdns.fundamentals.homework.data.models.Genre
 import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.network.dto.MovieDTO
 import ru.alexzdns.fundamentals.homework.network.interceptors.APIKeyInterceptor
 import ru.alexzdns.fundamentals.homework.network.interceptors.LanguagesInterceptor
 import java.util.concurrent.TimeUnit
@@ -22,6 +23,8 @@ object NetworkModule {
         prettyPrint = true
         ignoreUnknownKeys = true
     }
+
+    private var page = 1;
 
     private val contentType = "application/json".toMediaType()
 
@@ -47,7 +50,13 @@ object NetworkModule {
             theMovieDBApiService.getGenres().genres.map { Genre(id = it.id, name = it.name) }
                 .associateBy { it.id }
 
-        return@withContext theMovieDBApiService.getTopRatedMovie().movies.map { movieDTO ->
+        val movieResponse = theMovieDBApiService.getPopularMovie(page)
+        page++
+        parseMovie(movieResponse.movies, genres)
+    }
+
+    private suspend fun parseMovie(moviesDTO: List<MovieDTO>, genres: Map<Int, Genre>):List<Movie> = withContext(Dispatchers.Default) {
+        moviesDTO.map { movieDTO ->
             Movie(
                 id = movieDTO.id,
                 title = movieDTO.title,
@@ -60,8 +69,7 @@ object NetworkModule {
                 runtime = 0,
                 genres = movieDTO.genres.map {
                     genres[it] ?: throw IllegalArgumentException("Genre not found")
-                },
-                actors = emptyList<Actor>()
+                }
             )
         }
     }
