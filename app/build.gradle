@@ -18,6 +18,14 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "API_KEY", "\"79827c34a6d2d04b58c4b364e37255a9\""
+        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/\""
+        buildConfigField "String", "BACKDROP_SIZES_PATCH", "\"w780/\""
+        buildConfigField "String", "POSTER_SIZES_PATCH", "\"w185/\""
+        buildConfigField "String", "PROFILE_SIZES_PATCH", "\"w185/\""
+
     }
 
     buildTypes {
@@ -29,16 +37,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    flavorDimensions "serverType"
-    productFlavors {
-        prod {
-            dimension "serverType"
-            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
-            buildConfigField "String", "API_KEY", "\"79827c34a6d2d04b58c4b364e37255a9\""
-        }
-    }
-
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

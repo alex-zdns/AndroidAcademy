@@ -15,7 +15,7 @@ class MoviesListViewModel : ViewModel() {
     private val _mutableState = MutableLiveData<State>(State.Default())
     val state: LiveData<State> get() = _mutableState
 
-    val moviesPagingFlow = Pager(PagingConfig(pageSize = 20)) {
+    val moviesPagingFlow = Pager(PagingConfig(pageSize = 10)) {
         MoviesPagingSource()
     }.flow.cachedIn(viewModelScope)
 

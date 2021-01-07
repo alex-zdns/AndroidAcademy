@@ -9,7 +9,7 @@ data class MovieDTO (
     val adult: Boolean,
 
     @SerialName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
 
     @SerialName("genres")
     val genres: List<GenreDTO>,
@@ -18,10 +18,10 @@ data class MovieDTO (
     val id: Long,
 
     @SerialName("overview")
-    val overview: String,
+    val overview: String?,
 
     @SerialName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
 
     @SerialName("title")
     val title: String,
@@ -33,5 +33,5 @@ data class MovieDTO (
     val voteCount: Int,
 
     @SerialName("runtime")
-    val runtime: Int
+    val runtime: Int?
 )

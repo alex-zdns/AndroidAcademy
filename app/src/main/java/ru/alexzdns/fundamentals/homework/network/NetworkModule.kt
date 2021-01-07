@@ -48,7 +48,7 @@ object NetworkModule {
                 Actor(
                     id = castDTO.id,
                     name = castDTO.name,
-                    picture = "https://image.tmdb.org/t/p/original" + castDTO.profilePath
+                    picture = BuildConfig.IMAGE_BASE_URL + BuildConfig.PROFILE_SIZES_PATCH + castDTO.profilePath
                 )
             }
     }
