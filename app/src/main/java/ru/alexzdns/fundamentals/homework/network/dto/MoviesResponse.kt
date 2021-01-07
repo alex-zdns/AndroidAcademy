@@ -9,7 +9,7 @@ data class MoviesResponse(
     val page: Int,
 
     @SerialName("results")
-    val movies: List<MovieDTO>,
+    val movies: List<MovieShortDTO>,
 
     @SerialName("total_pages")
     val totalPages: Int

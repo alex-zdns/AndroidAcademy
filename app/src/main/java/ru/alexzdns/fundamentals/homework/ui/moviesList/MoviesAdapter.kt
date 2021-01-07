@@ -6,16 +6,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.models.Movie
 
-class MoviesAdapter(
-    var movies: List<Movie>,
+class MoviesAdapter(diffCallback: DiffUtil.ItemCallback<Movie>,
     private val clickListener: OnRecyclerMovieItemClicked
-) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+) : PagingDataAdapter<Movie, MoviesAdapter.MovieViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
         MovieViewHolder(
@@ -23,19 +24,21 @@ class MoviesAdapter(
         )
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(movies[position])
-        holder.itemView.setOnClickListener {
-            clickListener.onBannerClick(movies[position])
+
+        val item = getItem(position)
+        if(item == null) {
+            //holder.bindPlaceholder()
+        } else {
+            getItem(position)?.let {movie ->
+                holder.bind(movie)
+                holder.itemView.setOnClickListener {
+                    clickListener.onBannerClick(movie)
+                }
+            }
         }
 
-        /*
-        holder.like.setOnClickListener {
-            clickListener.onLikeClick(movies[position], position)
-        }
-         */
+
     }
-
-    override fun getItemCount(): Int = movies.size
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val banner: ImageView = itemView.findViewById(R.id.vhm_iv_movie_banner)
@@ -58,7 +61,7 @@ class MoviesAdapter(
             ageRating.text =
                 itemView.resources.getString(R.string.movie_age_rating, movie.minimumAge)
             //like.setImageResource(if (movie.isLike) R.drawable.ic_like_fill else R.drawable.ic_like_empty)
-            ratingBar.rating = movie.ratings / 2.0f
+            ratingBar.rating = movie.ratings
             reviewsCount.text = itemView.resources.getQuantityString(
                 R.plurals.reviews_count,
                 movie.numberOfRatings,

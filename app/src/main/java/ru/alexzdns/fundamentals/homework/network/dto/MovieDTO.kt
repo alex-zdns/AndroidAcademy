@@ -11,8 +11,8 @@ data class MovieDTO (
     @SerialName("backdrop_path")
     val backdropPath: String,
 
-    @SerialName("genre_ids")
-    val genres: List<Int>,
+    @SerialName("genres")
+    val genres: List<GenreDTO>,
 
     @SerialName("id")
     val id: Long,
@@ -30,5 +30,8 @@ data class MovieDTO (
     val voteAverage: Float,
 
     @SerialName("vote_count")
-    val voteCount: Int
+    val voteCount: Int,
+
+    @SerialName("runtime")
+    val runtime: Int
 )

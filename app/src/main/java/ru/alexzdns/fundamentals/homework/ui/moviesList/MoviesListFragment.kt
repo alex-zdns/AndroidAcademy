@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.models.Movie
 
@@ -17,6 +20,14 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
 
     private var listenerMovieList: MovieListClickListener? = null
     private var recycler: RecyclerView? = null
+
+    private val clickListener = object : MoviesAdapter.OnRecyclerMovieItemClicked {
+        override fun onBannerClick(movie: Movie) {
+            listenerMovieList?.openMovieDetailsFragment(movie)
+        }
+    }
+
+    private val pagingAdapter = MoviesAdapter(MoviesDiffCallback(), clickListener)
     private var loader: SwipeRefreshLayout? = null
 
     override fun onAttach(context: Context) {
@@ -32,6 +43,15 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         super.onViewCreated(view, savedInstanceState)
 
         recycler = view.findViewById(R.id.mlf_movie_list)
+        recycler?.adapter = pagingAdapter
+
+
+        lifecycleScope.launch {
+            viewModel.moviesPagingFlow.collectLatest { pagingData ->
+                pagingAdapter.submitData(pagingData)
+            }
+        }
+
         loader = view.findViewById(R.id.fml_swipe_container)
         loader?.setOnRefreshListener(this)
 
@@ -53,18 +73,12 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
                 Toast.makeText(context, getString(R.string.loading_movies_error_message), Toast.LENGTH_LONG).show()
             }
             is MoviesListViewModel.State.Success -> {
-                setupRecycler(state.movies)
                 setLoading(false)
             }
         }
 
     private fun setLoading(loading: Boolean) {
         loader?.isRefreshing = loading
-    }
-
-    private fun setupRecycler(movies: List<Movie>) {
-        val adapter = MoviesAdapter(movies, clickListener)
-        recycler?.adapter = adapter
     }
 
     override fun onDetach() {
@@ -80,11 +94,7 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         loader = null
     }
 
-    private val clickListener = object : MoviesAdapter.OnRecyclerMovieItemClicked {
-        override fun onBannerClick(movie: Movie) {
-            listenerMovieList?.openMovieDetailsFragment(movie)
-        }
-    }
+
 
     override fun onRefresh() {
         viewModel.getMovies()
