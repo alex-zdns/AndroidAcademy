@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +27,7 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
     }
 
     private val pagingAdapter = MoviesAdapter(MoviesDiffCallback(), clickListener)
+
     private var loader: SwipeRefreshLayout? = null
 
     override fun onAttach(context: Context) {
@@ -54,31 +54,6 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
 
         loader = view.findViewById(R.id.fml_swipe_container)
         loader?.setOnRefreshListener(this)
-
-        viewModel.state.observe(this.viewLifecycleOwner, this::setState)
-
-        if (viewModel.state.value is MoviesListViewModel.State.Default) viewModel.getMovies()
-    }
-
-    private fun setState(state: MoviesListViewModel.State) =
-        when (state) {
-            is MoviesListViewModel.State.Default -> {
-                setLoading(false)
-            }
-            is MoviesListViewModel.State.Loading -> {
-                setLoading(true)
-            }
-            is MoviesListViewModel.State.Error -> {
-                setLoading(false)
-                Toast.makeText(context, getString(R.string.loading_movies_error_message), Toast.LENGTH_LONG).show()
-            }
-            is MoviesListViewModel.State.Success -> {
-                setLoading(false)
-            }
-        }
-
-    private fun setLoading(loading: Boolean) {
-        loader?.isRefreshing = loading
     }
 
     override fun onDetach() {
@@ -97,7 +72,6 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
 
 
     override fun onRefresh() {
-        viewModel.getMovies()
     }
 
 
