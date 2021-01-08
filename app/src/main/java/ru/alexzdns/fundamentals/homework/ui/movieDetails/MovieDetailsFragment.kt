@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.models.Actor
 import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.ui.movieDetails.MovieDetailsViewModel.State
 
 class MovieDetailsFragment : androidx.fragment.app.Fragment() {
     private lateinit var viewModel: MovieDetailsViewModel
@@ -37,7 +38,7 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
             viewModel = ViewModelProvider(this, MovieDetailsViewModelFactory(movie.id)).get(MovieDetailsViewModel::class.java)
             viewModel.state.observe(this.viewLifecycleOwner, this::setState)
 
-            if (viewModel.state.value is MovieDetailsViewModel.State.Default) viewModel.getActors()
+            if (viewModel.state.value is State.Default) viewModel.getActors()
 
             setupView(movie)
         }
@@ -60,22 +61,20 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
             findViewById<TextView>(R.id.mdf_tv_movie_genres).text = movie.genres.joinToString(separator = ", ") { it.name }
             findViewById<TextView>(R.id.mdf_tv_age_rating).text = resources.getString(R.string.movie_age_rating, movie.minimumAge)
             findViewById<TextView>(R.id.mdf_tv_storyline).text = movie.overview
-            findViewById<RatingBar>(R.id.mdf_rating_bar).rating = movie.ratings / 2.0f
+            findViewById<RatingBar>(R.id.mdf_rating_bar).rating = movie.ratings
             findViewById<TextView>(R.id.mdf_tv_reviews_count).text =
                 resources.getQuantityString(R.plurals.reviews_count, movie.numberOfRatings, movie.numberOfRatings)
         }
     }
 
-    private fun setState(state: MovieDetailsViewModel.State) =
+    private fun setState(state: State) =
         when (state) {
-            is MovieDetailsViewModel.State.Default -> {
-            }
-            is MovieDetailsViewModel.State.Loading -> {
-            }
-            is MovieDetailsViewModel.State.Error -> {
+            is State.Default,
+            is State.Loading -> {}
+            is State.Error -> {
                 Toast.makeText(context, getString(R.string.loading_actors_error_message), Toast.LENGTH_LONG).show()
             }
-            is MovieDetailsViewModel.State.Success -> {
+            is State.Success -> {
                 setupAdapter(state.actors)
             }
         }
@@ -96,6 +95,7 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
         super.onDetach()
         listenerMovieDetails = null
     }
+
 
     companion object {
         private const val MOVIE = "movie"

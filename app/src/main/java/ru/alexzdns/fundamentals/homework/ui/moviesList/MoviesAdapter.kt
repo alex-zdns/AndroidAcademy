@@ -58,7 +58,7 @@ class MoviesAdapter(
             ageRating.text =
                 itemView.resources.getString(R.string.movie_age_rating, movie.minimumAge)
             //like.setImageResource(if (movie.isLike) R.drawable.ic_like_fill else R.drawable.ic_like_empty)
-            ratingBar.rating = movie.ratings / 2.0f
+            ratingBar.rating = movie.ratings
             reviewsCount.text = itemView.resources.getQuantityString(
                 R.plurals.reviews_count,
                 movie.numberOfRatings,
