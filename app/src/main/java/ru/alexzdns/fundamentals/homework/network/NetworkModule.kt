@@ -3,6 +3,7 @@ package ru.alexzdns.fundamentals.homework.network
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -11,8 +12,10 @@ import retrofit2.Retrofit
 import retrofit2.create
 import ru.alexzdns.fundamentals.homework.BuildConfig
 import ru.alexzdns.fundamentals.homework.data.models.Actor
+import ru.alexzdns.fundamentals.homework.data.models.Genre
+import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.network.dto.MovieDTO
 import ru.alexzdns.fundamentals.homework.network.interceptors.APIKeyInterceptor
-import ru.alexzdns.fundamentals.homework.network.interceptors.LanguagesInterceptor
 import java.util.concurrent.TimeUnit
 
 
@@ -26,7 +29,6 @@ object NetworkModule {
 
     private val httpClient = OkHttpClient.Builder()
         .addInterceptor(APIKeyInterceptor())
-        .addInterceptor(LanguagesInterceptor("en"))
         .connectTimeout(10, TimeUnit.SECONDS)
         .writeTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
@@ -41,6 +43,35 @@ object NetworkModule {
         .build()
 
     val theMovieDBApiService: MovieService = retrofit.create()
+
+
+    suspend fun loadMovies(): List<Movie> {
+        val response = theMovieDBApiService.getPopularMovie()
+
+        val moviesDTO = response.movies
+            .map { movieDTO -> movieDTO.id }
+            .map { theMovieDBApiService.getMovieDetailsAsync(movieId = it) }
+            .awaitAll()
+            .filter { it.backdropPath != null && it.posterPath != null }
+
+        return parseMovie(moviesDTO)
+    }
+
+    private fun parseMovie(moviesDTO: List<MovieDTO>): List<Movie> =
+        moviesDTO.map { movieDTO ->
+            Movie(
+                id = movieDTO.id,
+                title = movieDTO.title,
+                overview = movieDTO.overview ?: "",
+                poster = BuildConfig.IMAGE_BASE_URL + BuildConfig.POSTER_SIZES_PATCH + movieDTO.posterPath,
+                backdrop = BuildConfig.IMAGE_BASE_URL + BuildConfig.BACKDROP_SIZES_PATCH + movieDTO.backdropPath,
+                ratings = movieDTO.voteAverage / 2.0f,
+                numberOfRatings = movieDTO.voteCount,
+                minimumAge = if (movieDTO.adult) 16 else 13,
+                runtime = movieDTO.runtime ?: 0,
+                genres = movieDTO.genres.map { genreDTO -> Genre(genreDTO.id, genreDTO.name) }
+            )
+        }
 
     suspend fun loadActors(movieId: Long): List<Actor> = withContext(Dispatchers.IO) {
         return@withContext theMovieDBApiService.getCasts(movieId).cast.filter { it.profilePath != null }
