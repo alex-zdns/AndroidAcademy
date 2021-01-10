@@ -20,20 +20,24 @@ object NetworkModule {
 
     private val contentType = "application/json".toMediaType()
 
-    private val httpClient = OkHttpClient.Builder()
-        .addInterceptor(APIKeyInterceptor())
-        .connectTimeout(10, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .build()
+    private val httpClient by lazy {
+        OkHttpClient.Builder()
+            .addInterceptor(APIKeyInterceptor())
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL)
-        .client(httpClient)
-        .addConverterFactory(json.asConverterFactory(contentType))
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .build()
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .client(httpClient)
+            .addConverterFactory(json.asConverterFactory(contentType))
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .build()
+    }
 
     val theMovieDBApiService: MovieService = retrofit.create()
 }
