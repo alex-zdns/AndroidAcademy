@@ -5,15 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import ru.alexzdns.fundamentals.homework.BuildConfig
-import ru.alexzdns.fundamentals.homework.data.models.Genre
 import ru.alexzdns.fundamentals.homework.data.models.Movie
-import ru.alexzdns.fundamentals.homework.network.NetworkModule
-import ru.alexzdns.fundamentals.homework.network.dto.MovieDTO
+import ru.alexzdns.fundamentals.homework.network.MovieApi
+import ru.alexzdns.fundamentals.homework.network.dto.GenreDto
+import ru.alexzdns.fundamentals.homework.network.dto.MovieDto
 
-class MoviesListViewModel : ViewModel() {
+class MoviesListViewModel(
+    private val movieApi: MovieApi
+) : ViewModel() {
     private val _mutableState = MutableLiveData<State>(State.Default())
     val state: LiveData<State> get() = _mutableState
 
@@ -32,30 +33,29 @@ class MoviesListViewModel : ViewModel() {
     }
 
     private suspend fun loadMovies(): List<Movie> {
-        val response = NetworkModule.theMovieDBApiService.getPopularMovie()
+        val genresMap = movieApi.getGenres().genres
+            .associateBy { it.id }
 
-        val moviesDTO = response.movies
-            .map { movieDTO -> movieDTO.id }
-            .map { NetworkModule.theMovieDBApiService.getMovieDetailsAsync(movieId = it) }
-            .awaitAll()
-            .filter { it.backdropPath != null && it.posterPath != null }
+        val moviesDto = movieApi.getPopularMovie().movies
+            .filter {it.backdropPath != null && it.posterPath != null }
 
-        return parseMovie(moviesDTO)
+        return mapMovie(moviesDto, genresMap)
     }
 
-    private fun parseMovie(moviesDTO: List<MovieDTO>): List<Movie> =
-        moviesDTO.map { movieDTO ->
+    private fun mapMovie(moviesDto: List<MovieDto>, genres: Map<Int, GenreDto>): List<Movie> =
+        moviesDto.map { dto ->
             Movie(
-                id = movieDTO.id,
-                title = movieDTO.title,
-                overview = movieDTO.overview ?: "",
-                poster = BuildConfig.IMAGE_BASE_URL + BuildConfig.POSTER_SIZES_PATCH + movieDTO.posterPath,
-                backdrop = BuildConfig.IMAGE_BASE_URL + BuildConfig.BACKDROP_SIZES_PATCH + movieDTO.backdropPath,
-                ratings = movieDTO.voteAverage / 2.0f,
-                numberOfRatings = movieDTO.voteCount,
-                minimumAge = if (movieDTO.adult) 16 else 13,
-                runtime = movieDTO.runtime ?: 0,
-                genres = movieDTO.genres.map { genreDTO -> Genre(genreDTO.id, genreDTO.name) }
+                id = dto.id,
+                title = dto.title,
+                overview = dto.overview,
+                poster = BuildConfig.IMAGE_BASE_URL + BuildConfig.POSTER_SIZES_PATCH + dto.posterPath,
+                backdrop = BuildConfig.IMAGE_BASE_URL + BuildConfig.BACKDROP_SIZES_PATCH + dto.backdropPath,
+                ratings = dto.voteAverage / 2.0f,
+                numberOfRatings = dto.voteCount,
+                minimumAge = if (dto.adult) 16 else 13,
+                genres = dto.genresIds
+                    .map { genres[it] ?: throw IllegalArgumentException("Genre not found") }
+                    .joinToString(separator = ", ") { it.name }
             )
         }
 

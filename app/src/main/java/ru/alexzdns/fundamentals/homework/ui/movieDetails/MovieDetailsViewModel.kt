@@ -10,13 +10,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.alexzdns.fundamentals.homework.BuildConfig
 import ru.alexzdns.fundamentals.homework.data.models.Actor
-import ru.alexzdns.fundamentals.homework.network.NetworkModule
+import ru.alexzdns.fundamentals.homework.network.MovieApi
 
-class MovieDetailsViewModel(private val movieId: Long) : ViewModel() {
+class MovieDetailsViewModel(private val movieApi: MovieApi) : ViewModel() {
     private val _mutableState = MutableLiveData<State>(State.Default())
     val state: LiveData<State> get() = _mutableState
 
-    fun getActors() {
+    fun getActors(movieId: Long) {
         viewModelScope.launch {
             _mutableState.value = State.Loading()
             try {
@@ -31,7 +31,7 @@ class MovieDetailsViewModel(private val movieId: Long) : ViewModel() {
     }
 
     private suspend fun loadActors(movieId: Long): List<Actor> = withContext(Dispatchers.IO) {
-        NetworkModule.theMovieDBApiService.getCasts(movieId).cast
+        movieApi.getCasts(movieId).cast
             .filter { it.profilePath != null }
             .map { castDTO ->
                 Actor(

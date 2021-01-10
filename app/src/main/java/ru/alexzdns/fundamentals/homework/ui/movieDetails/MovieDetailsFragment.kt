@@ -10,7 +10,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -20,7 +20,7 @@ import ru.alexzdns.fundamentals.homework.data.models.Movie
 import ru.alexzdns.fundamentals.homework.ui.movieDetails.MovieDetailsViewModel.State
 
 class MovieDetailsFragment : androidx.fragment.app.Fragment() {
-    private lateinit var viewModel: MovieDetailsViewModel
+    private val viewModel: MovieDetailsViewModel by viewModels { MovieDetailsViewModelFactory() }
     private var listenerMovieDetails: MovieDetailsClickListener? = null
 
     override fun onAttach(context: Context) {
@@ -33,14 +33,11 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.state.observe(this.viewLifecycleOwner, this::setState)
 
         arguments?.getParcelable<Movie>(MOVIE)?.let { movie ->
-            viewModel = ViewModelProvider(this, MovieDetailsViewModelFactory(movie.id)).get(MovieDetailsViewModel::class.java)
-            viewModel.state.observe(this.viewLifecycleOwner, this::setState)
-
-            if (viewModel.state.value is State.Default) viewModel.getActors()
-
             setupView(movie)
+            if (viewModel.state.value is State.Default) viewModel.getActors(movie.id)
         }
 
         val backButton = view.findViewById<TextView>(R.id.mdf_tv_back_button)
@@ -50,19 +47,19 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun setupView(movie: Movie) {
-        view?.run {
-            val backdrop = findViewById<ImageView>(R.id.mdf_iv_movie_banner)
-            Glide.with(context)
+        view?.let {
+            val backdrop = it.findViewById<ImageView>(R.id.mdf_iv_movie_banner)
+            Glide.with(it.context)
                 .load(movie.backdrop)
                 .apply(RequestOptions().fitCenter())
                 .into(backdrop)
 
-            findViewById<TextView>(R.id.mdf_tv_movie_title).text = movie.title
-            findViewById<TextView>(R.id.mdf_tv_movie_genres).text = movie.genres.joinToString(separator = ", ") { it.name }
-            findViewById<TextView>(R.id.mdf_tv_age_rating).text = resources.getString(R.string.movie_age_rating, movie.minimumAge)
-            findViewById<TextView>(R.id.mdf_tv_storyline).text = movie.overview
-            findViewById<RatingBar>(R.id.mdf_rating_bar).rating = movie.ratings
-            findViewById<TextView>(R.id.mdf_tv_reviews_count).text =
+            it.findViewById<TextView>(R.id.mdf_tv_movie_title).text = movie.title
+            it.findViewById<TextView>(R.id.mdf_tv_movie_genres).text = movie.genres
+            it.findViewById<TextView>(R.id.mdf_tv_age_rating).text = resources.getString(R.string.movie_age_rating, movie.minimumAge)
+            it.findViewById<TextView>(R.id.mdf_tv_storyline).text = movie.overview
+            it.findViewById<RatingBar>(R.id.mdf_rating_bar).rating = movie.ratings
+            it.findViewById<TextView>(R.id.mdf_tv_reviews_count).text =
                 resources.getQuantityString(R.plurals.reviews_count, movie.numberOfRatings, movie.numberOfRatings)
         }
     }
@@ -81,9 +78,9 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
 
     private fun setupAdapter(actors: List<Actor>) {
         if (actors.isNotEmpty()) {
-            view?.run {
-                findViewById<TextView>(R.id.mdf_tv_cast_heading).isVisible = true
-                findViewById<RecyclerView>(R.id.mdf_actors_list).run {
+            view?.let {
+                it.findViewById<TextView>(R.id.mdf_tv_cast_heading).isVisible = true
+                it.findViewById<RecyclerView>(R.id.mdf_actors_list).run {
                     isVisible = true
                     adapter = ActorsAdapter(actors)
                 }

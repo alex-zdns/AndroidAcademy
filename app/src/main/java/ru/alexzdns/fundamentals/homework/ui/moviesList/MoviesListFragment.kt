@@ -72,14 +72,6 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         listenerMovieList = null
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        recycler?.adapter = null
-        recycler = null
-        loader?.setOnRefreshListener(null)
-        loader = null
-    }
-
     private val clickListener = object : MoviesAdapter.OnRecyclerMovieItemClicked {
         override fun onBannerClick(movie: Movie) {
             listenerMovieList?.openMovieDetailsFragment(movie)

@@ -4,21 +4,21 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MovieDTO (
+data class MovieDto (
     @SerialName("adult")
     val adult: Boolean,
 
     @SerialName("backdrop_path")
     val backdropPath: String?,
 
-    @SerialName("genres")
-    val genres: List<GenreDTO>,
+    @SerialName("genre_ids")
+    val genresIds: List<Int>,
 
     @SerialName("id")
     val id: Long,
 
     @SerialName("overview")
-    val overview: String?,
+    val overview: String,
 
     @SerialName("poster_path")
     val posterPath: String?,
@@ -31,7 +31,4 @@ data class MovieDTO (
 
     @SerialName("vote_count")
     val voteCount: Int,
-
-    @SerialName("runtime")
-    val runtime: Int?
 )

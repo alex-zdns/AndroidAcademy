@@ -46,7 +46,6 @@ class MoviesAdapter(
         private val ratingBar: RatingBar = itemView.findViewById(R.id.vhm_rating_bar)
         private val reviewsCount: TextView = itemView.findViewById(R.id.vhm_tv_reviews_count)
         private val genres: TextView = itemView.findViewById(R.id.vhm_tv_movie_genres)
-        private val runningTime: TextView = itemView.findViewById(R.id.vhm_tv_movie_running_time)
 
         fun bind(movie: Movie) {
             Glide.with(itemView.context)
@@ -64,8 +63,7 @@ class MoviesAdapter(
                 movie.numberOfRatings,
                 movie.numberOfRatings
             )
-            genres.text = movie.genres.joinToString(separator = ", ") { it.name }
-            runningTime.text = itemView.resources.getString(R.string.movie_duration, movie.runtime)
+            genres.text = movie.genres
         }
 
         companion object {
