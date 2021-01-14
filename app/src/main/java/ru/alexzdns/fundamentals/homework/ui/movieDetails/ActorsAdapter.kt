@@ -35,7 +35,7 @@ class ActorsAdapter(
         private val imageOption: RequestOptions = RequestOptions()
             .placeholder(R.drawable.vha_avatar_placeholder)
             .fallback(R.drawable.vha_avatar_placeholder)
-            .transforms(CenterCrop(), RoundedCorners(itemView.resources.getDimensionPixelSize(R.dimen.vha_corner_radius)))
+            .transform(CenterCrop(), RoundedCorners(itemView.resources.getDimensionPixelSize(R.dimen.vha_corner_radius)))
 
         fun bind(actor: Actor) {
             Glide.with(itemView.context)

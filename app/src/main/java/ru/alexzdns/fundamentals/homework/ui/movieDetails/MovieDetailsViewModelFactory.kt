@@ -1,15 +1,14 @@
-package ru.alexzdns.fundamentals.homework.ui.moviesList
+package ru.alexzdns.fundamentals.homework.ui.movieDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import retrofit2.create
 import ru.alexzdns.fundamentals.homework.network.NetworkModule
 
-class MoviesListViewModelFactory : ViewModelProvider.Factory {
-
+class MovieDetailsViewModelFactory(): ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = when (modelClass) {
-        MoviesListViewModel::class.java -> MoviesListViewModel(NetworkModule.retrofit.create())
+        MovieDetailsViewModel::class.java -> MovieDetailsViewModel(NetworkModule.retrofit.create())
         else -> throw IllegalArgumentException("$modelClass is not registered ViewModel")
     } as T
 }
