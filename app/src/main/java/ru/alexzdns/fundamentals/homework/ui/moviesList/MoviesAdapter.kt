@@ -8,6 +8,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.data.models.Movie
@@ -50,6 +51,7 @@ class MoviesAdapter(
         fun bind(movie: Movie) {
             Glide.with(itemView.context)
                 .load(movie.poster)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .apply(imageOption)
                 .into(banner)
 
