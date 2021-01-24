@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.alexzdns.fundamentals.homework.R
-import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.domain.models.Movie
 
 class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private val viewModel: MoviesListViewModel by viewModels { MoviesListViewModelFactory() }

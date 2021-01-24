@@ -1,4 +1,4 @@
-package ru.alexzdns.fundamentals.homework.data.models
+package ru.alexzdns.fundamentals.homework.domain.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

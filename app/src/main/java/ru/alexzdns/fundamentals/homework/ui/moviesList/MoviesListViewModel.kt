@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.alexzdns.fundamentals.homework.BuildConfig
-import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.data.MoviesRepository
+import ru.alexzdns.fundamentals.homework.domain.models.Movie
 import ru.alexzdns.fundamentals.homework.network.MovieApi
 import ru.alexzdns.fundamentals.homework.network.dto.GenreDto
 import ru.alexzdns.fundamentals.homework.network.dto.MovieDto
 
 class MoviesListViewModel(
+    private val repository: MoviesRepository,
     private val movieApi: MovieApi
 ) : ViewModel() {
     private val _mutableState = MutableLiveData<State>(State.Default())
@@ -22,10 +24,13 @@ class MoviesListViewModel(
         viewModelScope.launch {
             _mutableState.value = State.Loading()
             try {
+                val moviesFromDb = repository.getAllMovie()
+                _mutableState.value = State.Success(moviesFromDb)
                 val movies = loadMovies()
+                repository.saveAllMovie(movies)
                 _mutableState.value = State.Success(movies)
             } catch (e: Exception) {
-                Log.e("loadMovies", e.message?: "")
+                Log.e("loadMovies", e.message ?: "")
                 e.printStackTrace()
                 _mutableState.value = State.Error()
             }
@@ -37,7 +42,7 @@ class MoviesListViewModel(
             .associateBy { it.id }
 
         val moviesDto = movieApi.getPopularMovie().movies
-            .filter {it.backdropPath != null && it.posterPath != null }
+            .filter { it.backdropPath != null && it.posterPath != null }
 
         return mapMovie(moviesDto, genresMap)
     }

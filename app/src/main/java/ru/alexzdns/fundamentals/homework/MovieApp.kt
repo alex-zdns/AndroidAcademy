@@ -3,7 +3,7 @@ package ru.alexzdns.fundamentals.homework
 import android.app.Application
 import android.content.Context
 
-class App : Application() {
+class MovieApp: Application() {
 
     override fun onCreate() {
         super.onCreate()

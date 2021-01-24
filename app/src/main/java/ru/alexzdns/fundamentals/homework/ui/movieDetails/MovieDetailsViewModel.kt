@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.alexzdns.fundamentals.homework.BuildConfig
-import ru.alexzdns.fundamentals.homework.data.models.Actor
+import ru.alexzdns.fundamentals.homework.domain.models.Actor
 import ru.alexzdns.fundamentals.homework.network.MovieApi
 
 class MovieDetailsViewModel(private val movieApi: MovieApi) : ViewModel() {
