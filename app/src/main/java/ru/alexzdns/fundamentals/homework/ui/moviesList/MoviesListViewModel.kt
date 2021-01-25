@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.alexzdns.fundamentals.homework.BuildConfig
-import ru.alexzdns.fundamentals.homework.data.MoviesRepository
+import ru.alexzdns.fundamentals.homework.data.repository.MoviesRepository
 import ru.alexzdns.fundamentals.homework.domain.models.Movie
 import ru.alexzdns.fundamentals.homework.network.MovieApi
 import ru.alexzdns.fundamentals.homework.network.dto.GenreDto
@@ -36,7 +36,6 @@ class MoviesListViewModel(
         }
     }
 
-
     private suspend fun getMoviesFromDb() {
             try {
                 _mutableState.value = State.Loading()
@@ -44,6 +43,7 @@ class MoviesListViewModel(
                 _mutableMoviesList.value = moviesFromDb
                 _mutableState.value = State.Success()
             } catch (e: Exception) {
+                Log.e("loadMoviesFromDB", e.message ?: "")
                 _mutableState.value = State.Error()
             }
     }
@@ -57,7 +57,7 @@ class MoviesListViewModel(
 
                 _mutableState.value = State.Success()
             } catch (e: Exception) {
-                Log.e("loadMovies", e.message ?: "")
+                Log.e("loadMoviesFromServer", e.message ?: "")
                 e.printStackTrace()
                 _mutableState.value = State.Error()
             }

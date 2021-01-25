@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import retrofit2.create
 import ru.alexzdns.fundamentals.homework.MovieApp
-import ru.alexzdns.fundamentals.homework.data.MoviesRepository
+import ru.alexzdns.fundamentals.homework.data.repository.MoviesRepository
 import ru.alexzdns.fundamentals.homework.network.NetworkModule
 
 class MoviesListViewModelFactory : ViewModelProvider.Factory {

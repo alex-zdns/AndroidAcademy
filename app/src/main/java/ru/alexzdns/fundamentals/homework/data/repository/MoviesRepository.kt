@@ -1,13 +1,27 @@
-package ru.alexzdns.fundamentals.homework.data
+package ru.alexzdns.fundamentals.homework.data.repository
 
 import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import ru.alexzdns.fundamentals.homework.data.MoviesAppDataBase
 import ru.alexzdns.fundamentals.homework.data.entity.MovieEntity
 import ru.alexzdns.fundamentals.homework.domain.models.Movie
 
 class MoviesRepository(applicationContext: Context) {
     private val db = MoviesAppDataBase.create(applicationContext)
+
+    suspend fun getAllMovie(): List<Movie> = withContext(Dispatchers.IO) {
+        db.moviesDao.getAllMovies().map { toMovie(it) }
+    }
+
+    suspend fun saveAllMovie(movies: List<Movie>) = withContext(Dispatchers.IO) {
+        val entices: List<MovieEntity> = movies.mapIndexed { index, movie -> toMovieEntity(movie, index) }
+        db.moviesDao.insertMovies(entices)
+    }
+
+    suspend fun setIsFavoriteValueById(movie: Movie) {
+        db.moviesDao.setIsFavoriteValueById(movie.id, movie.isFavorite)
+    }
 
 
     private fun toMovie(movieEntity: MovieEntity): Movie = Movie(
@@ -36,18 +50,4 @@ class MoviesRepository(applicationContext: Context) {
         position = position,
         isFavorite = movie.isFavorite
     )
-
-    suspend fun getAllMovie(): List<Movie> = withContext(Dispatchers.IO) {
-        db.moviesDao.getAllMovies().map { toMovie(it) }
-    }
-
-    suspend fun saveAllMovie(movies: List<Movie>) = withContext(Dispatchers.IO) {
-        val entices: List<MovieEntity> = movies.mapIndexed { index, movie -> toMovieEntity(movie, index) }
-        db.moviesDao.insertMovies(entices)
-    }
-
-    suspend fun setIsFavoriteValueById(movie: Movie) {
-        db.moviesDao.setIsFavoriteValueById(movie.id, movie.isFavorite)
-    }
-
 }

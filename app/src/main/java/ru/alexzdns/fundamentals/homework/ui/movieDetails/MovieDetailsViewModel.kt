@@ -9,10 +9,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.alexzdns.fundamentals.homework.BuildConfig
+import ru.alexzdns.fundamentals.homework.data.repository.ActorsRepository
 import ru.alexzdns.fundamentals.homework.domain.models.Actor
 import ru.alexzdns.fundamentals.homework.network.MovieApi
 
-class MovieDetailsViewModel(private val movieApi: MovieApi) : ViewModel() {
+class MovieDetailsViewModel(
+    private val repository: ActorsRepository,
+    private val movieApi: MovieApi
+    ) : ViewModel() {
     private val _mutableState = MutableLiveData<State>(State.Default())
     val state: LiveData<State> get() = _mutableState
 
@@ -20,8 +24,12 @@ class MovieDetailsViewModel(private val movieApi: MovieApi) : ViewModel() {
         viewModelScope.launch {
             _mutableState.value = State.Loading()
             try {
+                val actorsFromDb = repository.getActorsByMovieId(movieId)
+                _mutableState.value = State.Success(actorsFromDb)
+
                 val actors = loadActors(movieId)
                 _mutableState.value = State.Success(actors)
+                repository.saveActors(actors, movieId)
             } catch (e: Exception) {
                 Log.e("loadActors", e.message ?: "")
                 e.printStackTrace()

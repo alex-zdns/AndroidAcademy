@@ -21,7 +21,7 @@ data class MovieEntity (
     @ColumnInfo(name = DbContract.Movies.COLUMN_NAME_OVERVIEW)
     val overview: String,
 
-    @ColumnInfo(name = DbContract.Movies.COLUMN_NAME_POSTER_PATCH)
+    @ColumnInfo(name = DbContract.Movies.COLUMN_NAME_POSTER_PATH)
     val poster: String,
 
     @ColumnInfo(name = DbContract.Movies.COLUMN_NAME_BACKDROP_PATH)

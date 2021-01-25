@@ -11,7 +11,7 @@ object DbContract {
         const val COLUMN_NAME_ID = BaseColumns._ID
         const val COLUMN_NAME_TITLE = "title"
         const val COLUMN_NAME_OVERVIEW = "overview"
-        const val COLUMN_NAME_POSTER_PATCH = "poster"
+        const val COLUMN_NAME_POSTER_PATH = "poster"
         const val COLUMN_NAME_BACKDROP_PATH = "backdrop"
         const val COLUMN_NAME_RATINGS = "ratings"
         const val COLUMN_NAME_RATING_COUNT = "numberOfRatings"
@@ -19,5 +19,14 @@ object DbContract {
         const val COLUMN_NAME_GENRES = "genres"
         const val COLUMN_NAME_POSITION = "position"
         const val COLUMN_NAME_IS_FAVORITE = "is_favorite"
+    }
+
+    object Actors {
+        const val TABLE_NAME = "actors"
+
+        const val COLUMN_NAME_ID = BaseColumns._ID
+        const val COLUMN_NAME_NAME = "name"
+        const val COLUMN_NAME_PICTURE_PATCH = "picture_path"
+        const val COLUMN_NAME_MOVIE_ID = "movie_id"
     }
 }

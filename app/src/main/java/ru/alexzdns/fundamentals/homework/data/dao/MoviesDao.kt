@@ -1,4 +1,4 @@
-package ru.alexzdns.fundamentals.homework.data
+package ru.alexzdns.fundamentals.homework.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
