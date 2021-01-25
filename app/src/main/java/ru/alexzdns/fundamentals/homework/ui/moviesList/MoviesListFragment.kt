@@ -19,6 +19,17 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
     private var recycler: RecyclerView? = null
     private var loader: SwipeRefreshLayout? = null
 
+    private val adapter = MoviesAdapter(object : MoviesAdapter.OnRecyclerMovieItemClicked {
+        override fun onBannerClick(movie: Movie) {
+            listenerMovieList?.openMovieDetailsFragment(movie)
+        }
+
+        override fun onLikeClick(movie: Movie) {
+            viewModel.onLikeHandle(movie)
+        }
+    })
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listenerMovieList = context as? MovieListClickListener
@@ -32,6 +43,8 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         super.onViewCreated(view, savedInstanceState)
 
         recycler = view.findViewById(R.id.mlf_movie_list)
+        recycler?.adapter = adapter
+
         loader = view.findViewById(R.id.fml_swipe_container)
         loader?.setOnRefreshListener(this)
 
@@ -53,7 +66,7 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
                 Toast.makeText(context, getString(R.string.loading_movies_error_message), Toast.LENGTH_LONG).show()
             }
             is MoviesListViewModel.State.Success -> {
-                setupRecycler(state.movies)
+                updateMoviesList(state.movies)
                 setLoading(false)
             }
         }
@@ -62,9 +75,8 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         loader?.isRefreshing = loading
     }
 
-    private fun setupRecycler(movies: List<Movie>) {
-        val adapter = MoviesAdapter(movies, clickListener)
-        recycler?.adapter = adapter
+    private fun updateMoviesList(movies: List<Movie>) {
+        adapter.submitList(movies)
     }
 
     override fun onDetach() {
@@ -72,11 +84,6 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         listenerMovieList = null
     }
 
-    private val clickListener = object : MoviesAdapter.OnRecyclerMovieItemClicked {
-        override fun onBannerClick(movie: Movie) {
-            listenerMovieList?.openMovieDetailsFragment(movie)
-        }
-    }
 
     override fun onRefresh() {
         viewModel.getMovies()

@@ -19,7 +19,8 @@ class MoviesRepository(applicationContext: Context) {
         ratings = movieEntity.ratings,
         numberOfRatings = movieEntity.numberOfRatings,
         minimumAge = movieEntity.minimumAge,
-        genres = movieEntity.genres
+        genres = movieEntity.genres,
+        isFavorite = movieEntity.isFavorite
     )
 
     private fun toMovieEntity(movie: Movie, position: Int): MovieEntity = MovieEntity(
@@ -32,7 +33,8 @@ class MoviesRepository(applicationContext: Context) {
         numberOfRatings = movie.numberOfRatings,
         minimumAge = movie.minimumAge,
         genres = movie.genres,
-        position = position
+        position = position,
+        isFavorite = movie.isFavorite
     )
 
     suspend fun getAllMovie(): List<Movie> = withContext(Dispatchers.IO) {
@@ -42,6 +44,10 @@ class MoviesRepository(applicationContext: Context) {
     suspend fun saveAllMovie(movies: List<Movie>) = withContext(Dispatchers.IO) {
         val entices: List<MovieEntity> = movies.mapIndexed { index, movie -> toMovieEntity(movie, index) }
         db.moviesDao.insertMovies(entices)
+    }
+
+    suspend fun setIsFavoriteValueById(movie: Movie) {
+        db.moviesDao.setIsFavoriteValueById(movie.id, movie.isFavorite)
     }
 
 }

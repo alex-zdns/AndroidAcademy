@@ -18,5 +18,6 @@ object DbContract {
         const val COLUMN_NAME_MIN_AGE = "minimumAge"
         const val COLUMN_NAME_GENRES = "genres"
         const val COLUMN_NAME_POSITION = "position"
+        const val COLUMN_NAME_IS_FAVORITE = "is_favorite"
     }
 }

@@ -19,4 +19,7 @@ interface MoviesDao {
 
     @Query("SELECT * FROM movies WHERE _id == :id")
     suspend fun getMovieById(id: Long): MovieEntity
+
+    @Query("UPDATE movies SET is_favorite = :newValue WHERE _id == :movieId")
+    suspend fun setIsFavoriteValueById(movieId: Long, newValue: Boolean)
 }

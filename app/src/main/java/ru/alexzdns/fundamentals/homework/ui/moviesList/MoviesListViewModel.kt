@@ -26,7 +26,7 @@ class MoviesListViewModel(
             try {
                 val moviesFromDb = repository.getAllMovie()
                 _mutableState.value = State.Success(moviesFromDb)
-                val movies = loadMovies()
+                val movies = loadMovies(moviesFromDb)
                 repository.saveAllMovie(movies)
                 _mutableState.value = State.Success(movies)
             } catch (e: Exception) {
@@ -37,17 +37,17 @@ class MoviesListViewModel(
         }
     }
 
-    private suspend fun loadMovies(): List<Movie> {
+    private suspend fun loadMovies(moviesFromDb: List<Movie>): List<Movie> {
         val genresMap = movieApi.getGenres().genres
             .associateBy { it.id }
 
         val moviesDto = movieApi.getPopularMovie().movies
             .filter { it.backdropPath != null && it.posterPath != null }
 
-        return mapMovie(moviesDto, genresMap)
+        return mapMovie(moviesDto, genresMap, moviesFromDb.associateBy { it.id })
     }
 
-    private fun mapMovie(moviesDto: List<MovieDto>, genres: Map<Int, GenreDto>): List<Movie> =
+    private fun mapMovie(moviesDto: List<MovieDto>, genres: Map<Int, GenreDto>, moviesFromDb: Map<Long, Movie>): List<Movie> =
         moviesDto.map { dto ->
             Movie(
                 id = dto.id,
@@ -60,9 +60,17 @@ class MoviesListViewModel(
                 minimumAge = if (dto.adult) 16 else 13,
                 genres = dto.genresIds
                     .map { genres[it] ?: throw IllegalArgumentException("Genre not found") }
-                    .joinToString(separator = ", ") { it.name }
+                    .joinToString(separator = ", ") { it.name },
+                isFavorite = moviesFromDb[dto.id]?.isFavorite ?: false
             )
         }
+
+    fun onLikeHandle(movie: Movie) {
+        movie.isFavorite = !movie.isFavorite
+        viewModelScope.launch {
+            repository.setIsFavoriteValueById(movie)
+        }
+    }
 
     sealed class State {
         class Default : State()

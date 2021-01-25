@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -14,9 +16,8 @@ import ru.alexzdns.fundamentals.homework.R
 import ru.alexzdns.fundamentals.homework.domain.models.Movie
 
 class MoviesAdapter(
-    var movies: List<Movie>,
     private val clickListener: OnRecyclerMovieItemClicked
-) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+) : ListAdapter<Movie, MoviesAdapter.MovieViewHolder>(MovieDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
         MovieViewHolder(
@@ -24,26 +25,25 @@ class MoviesAdapter(
         )
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(movies[position])
+        holder.bind(getItem(position))
         holder.itemView.setOnClickListener {
-            clickListener.onBannerClick(movies[position])
+            clickListener.onBannerClick(getItem(position))
         }
 
-        /*
+
         holder.like.setOnClickListener {
-            clickListener.onLikeClick(movies[position], position)
+            clickListener.onLikeClick(getItem(position))
+            notifyItemChanged(position)
         }
-         */
-    }
 
-    override fun getItemCount(): Int = movies.size
+    }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val banner: ImageView = itemView.findViewById(R.id.vhm_iv_movie_banner)
         private val title: TextView = itemView.findViewById(R.id.vhm_tv_movie_title)
         private val ageRating: TextView = itemView.findViewById(R.id.vhm_tv_age_rating)
 
-        //val like: ImageView = itemView.findViewById(R.id.vhm_iv_like)
+        val like: ImageView = itemView.findViewById(R.id.vhm_iv_like)
         private val ratingBar: RatingBar = itemView.findViewById(R.id.vhm_rating_bar)
         private val reviewsCount: TextView = itemView.findViewById(R.id.vhm_tv_reviews_count)
         private val genres: TextView = itemView.findViewById(R.id.vhm_tv_movie_genres)
@@ -58,7 +58,7 @@ class MoviesAdapter(
             title.text = movie.title
             ageRating.text =
                 itemView.resources.getString(R.string.movie_age_rating, movie.minimumAge)
-            //like.setImageResource(if (movie.isLike) R.drawable.ic_like_fill else R.drawable.ic_like_empty)
+            like.setImageResource(if (movie.isFavorite) R.drawable.ic_like_fill else R.drawable.ic_like_empty)
             ratingBar.rating = movie.ratings
             reviewsCount.text = itemView.resources.getQuantityString(
                 R.plurals.reviews_count,
@@ -76,8 +76,17 @@ class MoviesAdapter(
         }
     }
 
+    private class MovieDiffCallback(): DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+            oldItem == newItem
+
+    }
+
     interface OnRecyclerMovieItemClicked {
         fun onBannerClick(movie: Movie)
-        //fun onLikeClick(movie: Movie, position: Int)
+        fun onLikeClick(movie: Movie)
     }
 }
