@@ -20,34 +20,60 @@ class MoviesListViewModel(
     private val _mutableState = MutableLiveData<State>(State.Default())
     val state: LiveData<State> get() = _mutableState
 
-    fun getMovies() {
+    private val _mutableMoviesList = MutableLiveData<List<Movie>>(emptyList())
+    val moviesList: LiveData<List<Movie>> get() = _mutableMoviesList
+
+    fun getMoviesFromDbAndServer() {
         viewModelScope.launch {
-            _mutableState.value = State.Loading()
+            getMoviesFromDb()
+            getMoviesFromServer()
+        }
+    }
+
+    fun updateMovieFromServer() {
+        viewModelScope.launch {
+            getMoviesFromServer()
+        }
+    }
+
+
+    private suspend fun getMoviesFromDb() {
             try {
+                _mutableState.value = State.Loading()
                 val moviesFromDb = repository.getAllMovie()
-                _mutableState.value = State.Success(moviesFromDb)
-                val movies = loadMovies(moviesFromDb)
+                _mutableMoviesList.value = moviesFromDb
+                _mutableState.value = State.Success()
+            } catch (e: Exception) {
+                _mutableState.value = State.Error()
+            }
+    }
+
+    private suspend fun getMoviesFromServer() {
+            try {
+                _mutableState.value = State.Loading()
+                val movies = loadMoviesFromServer()
+                _mutableMoviesList.value = movies
                 repository.saveAllMovie(movies)
-                _mutableState.value = State.Success(movies)
+
+                _mutableState.value = State.Success()
             } catch (e: Exception) {
                 Log.e("loadMovies", e.message ?: "")
                 e.printStackTrace()
                 _mutableState.value = State.Error()
             }
-        }
     }
 
-    private suspend fun loadMovies(moviesFromDb: List<Movie>): List<Movie> {
+    private suspend fun loadMoviesFromServer(): List<Movie> {
         val genresMap = movieApi.getGenres().genres
             .associateBy { it.id }
 
         val moviesDto = movieApi.getPopularMovie().movies
             .filter { it.backdropPath != null && it.posterPath != null }
 
-        return mapMovie(moviesDto, genresMap, moviesFromDb.associateBy { it.id })
+        return mapMovie(moviesDto, genresMap, moviesList.value?.associateBy { it.id }?: emptyMap())
     }
 
-    private fun mapMovie(moviesDto: List<MovieDto>, genres: Map<Int, GenreDto>, moviesFromDb: Map<Long, Movie>): List<Movie> =
+    private fun mapMovie(moviesDto: List<MovieDto>, genres: Map<Int, GenreDto>, moviesOld: Map<Long, Movie>): List<Movie> =
         moviesDto.map { dto ->
             Movie(
                 id = dto.id,
@@ -61,7 +87,7 @@ class MoviesListViewModel(
                 genres = dto.genresIds
                     .map { genres[it] ?: throw IllegalArgumentException("Genre not found") }
                     .joinToString(separator = ", ") { it.name },
-                isFavorite = moviesFromDb[dto.id]?.isFavorite ?: false
+                isFavorite = moviesOld[dto.id]?.isFavorite ?: false
             )
         }
 
@@ -76,6 +102,6 @@ class MoviesListViewModel(
         class Default : State()
         class Loading : State()
         class Error : State()
-        class Success(val movies: List<Movie>) : State()
+        class Success : State()
     }
 }
