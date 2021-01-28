@@ -38,10 +38,4 @@ data class MovieEntity (
 
     @ColumnInfo(name = DbContract.Movies.COLUMN_NAME_GENRES)
     val genres: String,
-
-    @ColumnInfo(name = DbContract.Movies.COLUMN_NAME_POSITION)
-    val position: Int,
-
-    @ColumnInfo(name = DbContract.Movies.COLUMN_NAME_IS_FAVORITE)
-    val isFavorite: Boolean
 )

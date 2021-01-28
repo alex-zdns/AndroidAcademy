@@ -23,6 +23,8 @@ class MoviesListViewModel(
     private val _mutableMoviesList = MutableLiveData<List<Movie>>(emptyList())
     val moviesList: LiveData<List<Movie>> get() = _mutableMoviesList
 
+    private var favoriteMovie: Set<Long> = emptySet()
+
     fun getMoviesFromDbAndServer() {
         viewModelScope.launch {
             getMoviesFromDb()
@@ -39,7 +41,8 @@ class MoviesListViewModel(
     private suspend fun getMoviesFromDb() {
             try {
                 _mutableState.value = State.Loading()
-                val moviesFromDb = repository.getAllMovie()
+                favoriteMovie = repository.getAllFavoriteMovie()
+                val moviesFromDb = repository.getPopularMovies()
                 _mutableMoviesList.value = moviesFromDb
                 _mutableState.value = State.Success()
             } catch (e: Exception) {
@@ -53,7 +56,7 @@ class MoviesListViewModel(
                 _mutableState.value = State.Loading()
                 val movies = loadMoviesFromServer()
                 _mutableMoviesList.value = movies
-                repository.saveAllMovie(movies)
+                repository.savePopularMovies(movies)
 
                 _mutableState.value = State.Success()
             } catch (e: Exception) {
@@ -70,10 +73,10 @@ class MoviesListViewModel(
         val moviesDto = movieApi.getPopularMovie().movies
             .filter { it.backdropPath != null && it.posterPath != null }
 
-        return mapMovie(moviesDto, genresMap, moviesList.value?.associateBy { it.id }?: emptyMap())
+        return mapMovie(moviesDto, genresMap)
     }
 
-    private fun mapMovie(moviesDto: List<MovieDto>, genres: Map<Int, GenreDto>, moviesOld: Map<Long, Movie>): List<Movie> =
+    private fun mapMovie(moviesDto: List<MovieDto>, genres: Map<Int, GenreDto>): List<Movie> =
         moviesDto.map { dto ->
             Movie(
                 id = dto.id,
@@ -87,14 +90,20 @@ class MoviesListViewModel(
                 genres = dto.genresIds
                     .map { genres[it] ?: throw IllegalArgumentException("Genre not found") }
                     .joinToString(separator = ", ") { it.name },
-                isFavorite = moviesOld[dto.id]?.isFavorite ?: false
+                isFavorite = favoriteMovie.contains(dto.id)
             )
         }
 
     fun onLikeHandle(movie: Movie) {
         movie.isFavorite = !movie.isFavorite
         viewModelScope.launch {
-            repository.setIsFavoriteValueById(movie)
+            if (movie.isFavorite) {
+                repository.addFavoriteMovieById(movie.id)
+            } else {
+                repository.removeFromFavoriteMovie(movie.id)
+            }
+
+            favoriteMovie = repository.getAllFavoriteMovie()
         }
     }
 

@@ -17,8 +17,21 @@ object DbContract {
         const val COLUMN_NAME_RATING_COUNT = "numberOfRatings"
         const val COLUMN_NAME_MIN_AGE = "minimumAge"
         const val COLUMN_NAME_GENRES = "genres"
-        const val COLUMN_NAME_POSITION = "position"
         const val COLUMN_NAME_IS_FAVORITE = "is_favorite"
+    }
+
+    object PopularMovies {
+        const val TABLE_NAME = "popular_movies"
+
+        const val COLUMN_NAME_POSITION = "position"
+        const val COLUMN_NAME_MOVIE_ID = "movie_id"
+    }
+
+    object FavoriteMovies {
+        const val TABLE_NAME = "favorite_movies"
+
+        const val COLUMN_NAME_ID = BaseColumns._ID
+        const val COLUMN_NAME_MOVIE_ID = "movie_id"
     }
 
     object Actors {
