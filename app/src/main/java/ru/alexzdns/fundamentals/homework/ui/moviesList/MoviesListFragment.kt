@@ -52,7 +52,7 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         viewModel.state.observe(this.viewLifecycleOwner, this::setState)
         viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateMoviesList)
 
-        if (viewModel.state.value is State.Default) viewModel.getMoviesFromDbAndServer()
+        if (viewModel.state.value is State.Default) viewModel.getMovies()
     }
 
     private fun setState(state: State) =
@@ -85,7 +85,7 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
 
 
     override fun onRefresh() {
-        viewModel.updateMovieFromServer()
+        viewModel.getMovies()
     }
 
 

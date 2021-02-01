@@ -25,45 +25,36 @@ class MoviesListViewModel(
 
     private var favoriteMovie: Set<Long> = emptySet()
 
-    fun getMoviesFromDbAndServer() {
+    fun getMovies() {
         viewModelScope.launch {
-            getMoviesFromDb()
-            getMoviesFromServer()
-        }
-    }
+            try {
+                _mutableState.value = State.Loading()
 
-    fun updateMovieFromServer() {
-        viewModelScope.launch {
-            getMoviesFromServer()
+                if (moviesList.value?.isEmpty() == true) {
+                    getMoviesFromDb()
+                }
+
+                getMoviesFromServer()
+                _mutableState.value = State.Success()
+            } catch (e: Exception) {
+                Log.e("loadMoviesFromDB", e.message ?: "")
+                e.printStackTrace()
+                _mutableState.value = State.Error()
+            }
         }
     }
 
     private suspend fun getMoviesFromDb() {
-            try {
-                _mutableState.value = State.Loading()
-                favoriteMovie = repository.getAllFavoriteMovie()
-                val moviesFromDb = repository.getPopularMovies()
-                _mutableMoviesList.value = moviesFromDb
-                _mutableState.value = State.Success()
-            } catch (e: Exception) {
-                Log.e("loadMoviesFromDB", e.message ?: "")
-                _mutableState.value = State.Error()
-            }
+        favoriteMovie = repository.getAllFavoriteMovie()
+        val moviesFromDb = repository.getPopularMovies()
+        _mutableMoviesList.value = moviesFromDb
     }
 
     private suspend fun getMoviesFromServer() {
-            try {
-                _mutableState.value = State.Loading()
-                val movies = loadMoviesFromServer()
-                _mutableMoviesList.value = movies
-                repository.savePopularMovies(movies)
-
-                _mutableState.value = State.Success()
-            } catch (e: Exception) {
-                Log.e("loadMoviesFromServer", e.message ?: "")
-                e.printStackTrace()
-                _mutableState.value = State.Error()
-            }
+        val movies = loadMoviesFromServer()
+        _mutableMoviesList.value = movies
+        repository.savePopularMovies(movies)
+        _mutableState.value = State.Success()
     }
 
     private suspend fun loadMoviesFromServer(): List<Movie> {
