@@ -13,10 +13,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import ru.alexzdns.fundamentals.homework.R
-import ru.alexzdns.fundamentals.homework.data.models.Actor
-import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.domain.models.Actor
+import ru.alexzdns.fundamentals.homework.domain.models.Movie
 import ru.alexzdns.fundamentals.homework.ui.movieDetails.MovieDetailsViewModel.State
 
 class MovieDetailsFragment : androidx.fragment.app.Fragment() {
@@ -51,6 +52,7 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
             val backdrop = it.findViewById<ImageView>(R.id.mdf_iv_movie_banner)
             Glide.with(it.context)
                 .load(movie.backdrop)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .apply(RequestOptions().fitCenter())
                 .into(backdrop)
 

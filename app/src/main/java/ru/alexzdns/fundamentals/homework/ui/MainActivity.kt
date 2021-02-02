@@ -2,7 +2,7 @@ package ru.alexzdns.fundamentals.homework.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.domain.models.Movie
 import ru.alexzdns.fundamentals.homework.ui.movieDetails.MovieDetailsFragment
 import ru.alexzdns.fundamentals.homework.ui.moviesList.MoviesListFragment
 

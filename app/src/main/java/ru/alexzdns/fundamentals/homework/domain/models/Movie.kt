@@ -1,4 +1,4 @@
-package ru.alexzdns.fundamentals.homework.data.models
+package ru.alexzdns.fundamentals.homework.domain.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -13,5 +13,6 @@ data class Movie(
     val ratings: Float,
     val numberOfRatings: Int,
     val minimumAge: Int,
-    val genres: String
+    val genres: String,
+    var isFavorite: Boolean = false
 ) : Parcelable

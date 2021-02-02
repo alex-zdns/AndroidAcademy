@@ -10,7 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.alexzdns.fundamentals.homework.R
-import ru.alexzdns.fundamentals.homework.data.models.Movie
+import ru.alexzdns.fundamentals.homework.domain.models.Movie
+import ru.alexzdns.fundamentals.homework.ui.moviesList.MoviesListViewModel.State
 
 class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private val viewModel: MoviesListViewModel by viewModels { MoviesListViewModelFactory() }
@@ -18,6 +19,17 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
     private var listenerMovieList: MovieListClickListener? = null
     private var recycler: RecyclerView? = null
     private var loader: SwipeRefreshLayout? = null
+
+    private val adapter = MoviesAdapter(object : MoviesAdapter.OnRecyclerMovieItemClicked {
+        override fun onBannerClick(movie: Movie) {
+            listenerMovieList?.openMovieDetailsFragment(movie)
+        }
+
+        override fun onLikeClick(movie: Movie) {
+            viewModel.onLikeHandle(movie)
+        }
+    })
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -32,29 +44,29 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         super.onViewCreated(view, savedInstanceState)
 
         recycler = view.findViewById(R.id.mlf_movie_list)
+        recycler?.adapter = adapter
+
         loader = view.findViewById(R.id.fml_swipe_container)
         loader?.setOnRefreshListener(this)
 
         viewModel.state.observe(this.viewLifecycleOwner, this::setState)
+        viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateMoviesList)
 
-        if (viewModel.state.value is MoviesListViewModel.State.Default) viewModel.getMovies()
+        if (viewModel.state.value is State.Default) viewModel.getMovies()
     }
 
-    private fun setState(state: MoviesListViewModel.State) =
+    private fun setState(state: State) =
         when (state) {
-            is MoviesListViewModel.State.Default -> {
+            is State.Default,
+            is State.Success-> {
                 setLoading(false)
             }
-            is MoviesListViewModel.State.Loading -> {
+            is State.Loading -> {
                 setLoading(true)
             }
-            is MoviesListViewModel.State.Error -> {
+            is State.Error -> {
                 setLoading(false)
                 Toast.makeText(context, getString(R.string.loading_movies_error_message), Toast.LENGTH_LONG).show()
-            }
-            is MoviesListViewModel.State.Success -> {
-                setupRecycler(state.movies)
-                setLoading(false)
             }
         }
 
@@ -62,9 +74,8 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         loader?.isRefreshing = loading
     }
 
-    private fun setupRecycler(movies: List<Movie>) {
-        val adapter = MoviesAdapter(movies, clickListener)
-        recycler?.adapter = adapter
+    private fun updateMoviesList(movies: List<Movie>) {
+        adapter.submitList(movies)
     }
 
     override fun onDetach() {
@@ -72,11 +83,6 @@ class MoviesListFragment : androidx.fragment.app.Fragment(), SwipeRefreshLayout.
         listenerMovieList = null
     }
 
-    private val clickListener = object : MoviesAdapter.OnRecyclerMovieItemClicked {
-        override fun onBannerClick(movie: Movie) {
-            listenerMovieList?.openMovieDetailsFragment(movie)
-        }
-    }
 
     override fun onRefresh() {
         viewModel.getMovies()

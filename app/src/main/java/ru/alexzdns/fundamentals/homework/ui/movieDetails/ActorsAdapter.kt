@@ -7,11 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import ru.alexzdns.fundamentals.homework.R
-import ru.alexzdns.fundamentals.homework.data.models.Actor
+import ru.alexzdns.fundamentals.homework.domain.models.Actor
 
 
 class ActorsAdapter(
@@ -40,6 +41,7 @@ class ActorsAdapter(
         fun bind(actor: Actor) {
             Glide.with(itemView.context)
                 .load(actor.picture)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .apply(imageOption)
                 .into(avatar)
 
