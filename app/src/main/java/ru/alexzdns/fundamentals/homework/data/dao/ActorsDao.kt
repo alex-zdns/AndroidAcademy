@@ -11,6 +11,6 @@ interface ActorsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveList(actorEntity: List<ActorEntity>)
 
-    @Query("SELECT * FROM actors WHERE movie_id == :movieId")
-    suspend fun getActorsByMovieId(movieId: Long): List<ActorEntity>
+    @Query("SELECT * FROM actors WHERE _id == :actorId")
+    suspend fun getActorsById(actorId: Int): ActorEntity
 }

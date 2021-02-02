@@ -6,8 +6,10 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import ru.alexzdns.fundamentals.homework.data.DbContract
 
-@Entity(tableName = DbContract.Actors.TABLE_NAME,
-    indices = [Index(DbContract.Actors.COLUMN_NAME_ID), Index(DbContract.Actors.COLUMN_NAME_MOVIE_ID)])
+@Entity(
+    tableName = DbContract.Actors.TABLE_NAME,
+    indices = [Index(DbContract.Actors.COLUMN_NAME_ID)]
+)
 data class ActorEntity(
     @ColumnInfo(name = DbContract.Actors.COLUMN_NAME_ID)
     @PrimaryKey
@@ -19,6 +21,4 @@ data class ActorEntity(
     @ColumnInfo(name = DbContract.Actors.COLUMN_NAME_PICTURE_PATCH)
     val picture: String,
 
-    @ColumnInfo(name = DbContract.Actors.COLUMN_NAME_MOVIE_ID)
-    val movieId: Long
-)
+    )

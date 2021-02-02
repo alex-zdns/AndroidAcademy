@@ -37,5 +37,5 @@ data class MovieEntity (
     val minimumAge: Int,
 
     @ColumnInfo(name = DbContract.Movies.COLUMN_NAME_GENRES)
-    val genres: String,
+    val genres: String
 )
