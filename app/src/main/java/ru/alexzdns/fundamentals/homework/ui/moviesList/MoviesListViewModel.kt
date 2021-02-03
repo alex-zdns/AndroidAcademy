@@ -6,16 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.alexzdns.fundamentals.homework.BuildConfig
 import ru.alexzdns.fundamentals.homework.data.repository.MoviesRepository
 import ru.alexzdns.fundamentals.homework.domain.models.Movie
 import ru.alexzdns.fundamentals.homework.network.MovieApi
-import ru.alexzdns.fundamentals.homework.network.dto.GenreDto
-import ru.alexzdns.fundamentals.homework.network.dto.MovieDto
+import ru.alexzdns.fundamentals.homework.network.MoviesLoader
 
 class MoviesListViewModel(
     private val repository: MoviesRepository,
-    private val movieApi: MovieApi
+    movieApi: MovieApi
 ) : ViewModel() {
     private val _mutableState = MutableLiveData<State>(State.Default())
     val state: LiveData<State> get() = _mutableState
@@ -23,6 +21,7 @@ class MoviesListViewModel(
     private val _mutableMoviesList = MutableLiveData<List<Movie>>(emptyList())
     val moviesList: LiveData<List<Movie>> get() = _mutableMoviesList
 
+    private val moviesLoader: MoviesLoader = MoviesLoader(movieApi)
     private var favoriteMovie: Set<Long> = emptySet()
 
     fun getMovies() {
@@ -51,39 +50,11 @@ class MoviesListViewModel(
     }
 
     private suspend fun getMoviesFromServer() {
-        val movies = loadMoviesFromServer()
+        val movies = moviesLoader.loadMoviesFromServer(favoriteMovie)
         _mutableMoviesList.value = movies
         repository.savePopularMovies(movies)
         _mutableState.value = State.Success()
     }
-
-    private suspend fun loadMoviesFromServer(): List<Movie> {
-        val genresMap = movieApi.getGenres().genres
-            .associateBy { it.id }
-
-        val moviesDto = movieApi.getPopularMovie().movies
-            .filter { it.backdropPath != null && it.posterPath != null }
-
-        return mapMovie(moviesDto, genresMap)
-    }
-
-    private fun mapMovie(moviesDto: List<MovieDto>, genres: Map<Int, GenreDto>): List<Movie> =
-        moviesDto.map { dto ->
-            Movie(
-                id = dto.id,
-                title = dto.title,
-                overview = dto.overview,
-                poster = BuildConfig.IMAGE_BASE_URL + BuildConfig.POSTER_SIZES_PATCH + dto.posterPath,
-                backdrop = BuildConfig.IMAGE_BASE_URL + BuildConfig.BACKDROP_SIZES_PATCH + dto.backdropPath,
-                ratings = dto.voteAverage / 2.0f,
-                numberOfRatings = dto.voteCount,
-                minimumAge = if (dto.adult) 16 else 13,
-                genres = dto.genresIds
-                    .map { genres[it] ?: throw IllegalArgumentException("Genre not found") }
-                    .joinToString(separator = ", ") { it.name },
-                isFavorite = favoriteMovie.contains(dto.id)
-            )
-        }
 
     fun onLikeHandle(movie: Movie) {
         movie.isFavorite = !movie.isFavorite
