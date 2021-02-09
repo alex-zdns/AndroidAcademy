@@ -29,9 +29,11 @@ class MoviesListViewModel(
             try {
                 _mutableState.value = State.Loading()
 
-                if (moviesList.value?.isEmpty() == true) {
-                    getMoviesFromDb()
-                }
+                //TODO add database support
+
+//                if (moviesList.value?.isEmpty() == true) {
+//                    getMoviesFromDb()
+//                }
 
                 getMoviesFromServer()
                 _mutableState.value = State.Success()
@@ -52,7 +54,11 @@ class MoviesListViewModel(
     private suspend fun getMoviesFromServer() {
         val movies = moviesLoader.loadMoviesFromServer(favoriteMovie)
         _mutableMoviesList.value = movies
-        repository.savePopularMovies(movies)
+
+        //TODO add save movies to BD
+
+
+        //repository.savePopularMovies(movies)
         _mutableState.value = State.Success()
     }
 
