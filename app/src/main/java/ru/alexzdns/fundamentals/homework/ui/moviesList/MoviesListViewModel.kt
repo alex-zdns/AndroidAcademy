@@ -24,6 +24,8 @@ class MoviesListViewModel(
     private val moviesLoader: MoviesLoader = MoviesLoader(movieApi)
     private var favoriteMovie: Set<Long> = emptySet()
 
+    var movieListPath: String = MovieLists.POPULAR.path
+
     fun getMovies() {
         viewModelScope.launch {
             try {
@@ -52,7 +54,7 @@ class MoviesListViewModel(
     }
 
     private suspend fun getMoviesFromServer() {
-        val movies = moviesLoader.loadMoviesFromServer(favoriteMovie)
+        val movies = moviesLoader.loadMoviesFromServer(favoriteMovie, movieListPath)
         _mutableMoviesList.value = movies
 
         //TODO add save movies to BD

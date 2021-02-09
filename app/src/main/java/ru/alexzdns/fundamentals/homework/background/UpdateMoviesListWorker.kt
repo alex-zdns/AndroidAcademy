@@ -11,6 +11,7 @@ import retrofit2.create
 import ru.alexzdns.fundamentals.homework.data.repository.MoviesRepository
 import ru.alexzdns.fundamentals.homework.network.MoviesLoader
 import ru.alexzdns.fundamentals.homework.network.NetworkModule
+import ru.alexzdns.fundamentals.homework.ui.moviesList.MovieLists
 
 class UpdateMoviesListWorker(
     private val context: Context,
@@ -22,7 +23,8 @@ class UpdateMoviesListWorker(
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             Log.i(this::class.simpleName, "Start update")
-            val movies = moviesLoader.loadMoviesFromServer(emptySet())
+            //TODO(переписать на цикл)
+            val movies = moviesLoader.loadMoviesFromServer(emptySet(), MovieLists.POPULAR.path)
 
             movies.forEach { cachingImage(it.poster) }
             movies.forEach { cachingImage(it.backdrop) }

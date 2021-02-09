@@ -5,12 +5,14 @@ import ru.alexzdns.fundamentals.homework.domain.models.Movie
 import ru.alexzdns.fundamentals.homework.network.dto.GenreDto
 import ru.alexzdns.fundamentals.homework.network.dto.MovieDto
 
-class MoviesLoader(private val movieApi: MovieApi) {
-    suspend fun loadMoviesFromServer(favoriteMovie: Set<Long>): List<Movie> {
+class MoviesLoader(
+    private val movieApi: MovieApi
+) {
+    suspend fun loadMoviesFromServer(favoriteMovie: Set<Long>, movieListPath: String): List<Movie> {
         val genresMap = movieApi.getGenres().genres
             .associateBy { it.id }
 
-        val moviesDto = movieApi.getPopularMovie().movies
+        val moviesDto = movieApi.getMovieList(path = movieListPath).movies
             .filter { it.backdropPath != null && it.posterPath != null }
 
         return mapMovie(moviesDto, genresMap, favoriteMovie)
