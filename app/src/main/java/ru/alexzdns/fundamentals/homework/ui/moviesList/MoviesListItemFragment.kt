@@ -1,5 +1,6 @@
 package ru.alexzdns.fundamentals.homework.ui.moviesList
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,16 +17,22 @@ class MoviesListItemFragment : androidx.fragment.app.Fragment(), SwipeRefreshLay
 
     private var recycler: RecyclerView? = null
     private var loader: SwipeRefreshLayout? = null
+    private var listenerMovieList: MovieListClickListener? = null
 
     private val adapter = MoviesAdapter(object : MoviesAdapter.OnRecyclerMovieItemClicked {
         override fun onBannerClick(movie: Movie) {
-            //listenerMovieList?.openMovieDetailsFragment(movie)
+            listenerMovieList?.openMovieDetailsFragment(movie)
         }
 
         override fun onLikeClick(movie: Movie) {
             viewModel.onLikeHandle(movie)
         }
     })
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listenerMovieList = context as? MovieListClickListener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -77,6 +84,11 @@ class MoviesListItemFragment : androidx.fragment.app.Fragment(), SwipeRefreshLay
         viewModel.getMovies()
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        listenerMovieList = null
+    }
+
     companion object {
         private const val MOVIE_LIST_PATH = "movieListPath"
 
@@ -86,5 +98,9 @@ class MoviesListItemFragment : androidx.fragment.app.Fragment(), SwipeRefreshLay
                 args.putString(MOVIE_LIST_PATH, moviesPath)
                 arguments = args
             }
+    }
+
+    interface MovieListClickListener {
+        fun openMovieDetailsFragment(movie: Movie)
     }
 }

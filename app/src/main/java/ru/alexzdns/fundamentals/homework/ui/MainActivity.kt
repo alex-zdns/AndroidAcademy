@@ -5,9 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import ru.alexzdns.fundamentals.homework.domain.models.Movie
 import ru.alexzdns.fundamentals.homework.ui.movieDetails.MovieDetailsFragment
 import ru.alexzdns.fundamentals.homework.ui.moviesList.MoviesListFragment
+import ru.alexzdns.fundamentals.homework.ui.moviesList.MoviesListItemFragment
 
 class MainActivity : AppCompatActivity(),
-    MoviesListFragment.MovieListClickListener,
+    MoviesListItemFragment.MovieListClickListener,
     MovieDetailsFragment.MovieDetailsClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {

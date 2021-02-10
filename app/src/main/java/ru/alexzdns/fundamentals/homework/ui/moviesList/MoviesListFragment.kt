@@ -1,6 +1,5 @@
 package ru.alexzdns.fundamentals.homework.ui.moviesList
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +8,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.alexzdns.fundamentals.homework.R
-import ru.alexzdns.fundamentals.homework.domain.models.Movie
 
 class MoviesListFragment : androidx.fragment.app.Fragment() {
-    private var listenerMovieList: MovieListClickListener? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listenerMovieList = context as? MovieListClickListener
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_movie_lists, container, false)
@@ -37,14 +28,4 @@ class MoviesListFragment : androidx.fragment.app.Fragment() {
         tabLayoutMediator.attach()
     }
 
-
-    override fun onDetach() {
-        super.onDetach()
-        listenerMovieList = null
-    }
-
-
-    interface MovieListClickListener {
-        fun openMovieDetailsFragment(movie: Movie)
-    }
 }
