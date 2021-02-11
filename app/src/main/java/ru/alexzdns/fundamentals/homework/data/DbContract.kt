@@ -19,13 +19,6 @@ object DbContract {
         const val COLUMN_NAME_GENRES = "genres"
     }
 
-    object PopularMovies {
-        const val TABLE_NAME = "popular_movies"
-
-        const val COLUMN_NAME_POSITION = "position"
-        const val COLUMN_NAME_MOVIE_ID = "movie_id"
-    }
-
     object FavoriteMovies {
         const val TABLE_NAME = "favorite_movies"
 
@@ -46,5 +39,26 @@ object DbContract {
 
         const val COLUMN_NAME_MOVIE_ID = "movie_id"
         const val COLUMN_NAME_ACTOR_IDS = "actor_ids"
+    }
+
+    object PopularMovies {
+        const val TABLE_NAME = "popular_movies"
+
+        const val COLUMN_NAME_POSITION = "position"
+        const val COLUMN_NAME_MOVIE_ID = "movie_id"
+    }
+
+    object TopRated {
+        const val TABLE_NAME = "top_rated"
+
+        const val COLUMN_NAME_POSITION = "position"
+        const val COLUMN_NAME_MOVIE_ID = "movie_id"
+    }
+
+    object NowPlaying {
+        const val TABLE_NAME = "now_playing"
+
+        const val COLUMN_NAME_POSITION = "position"
+        const val COLUMN_NAME_MOVIE_ID = "movie_id"
     }
 }

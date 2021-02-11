@@ -1,4 +1,4 @@
-package ru.alexzdns.fundamentals.homework.ui.moviesList
+package ru.alexzdns.fundamentals.homework.ui.moviesList.item
 
 import android.content.Context
 import android.os.Bundle

@@ -2,6 +2,8 @@ package ru.alexzdns.fundamentals.homework.ui.moviesList
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import ru.alexzdns.fundamentals.homework.ui.moviesList.item.MovieLists
+import ru.alexzdns.fundamentals.homework.ui.moviesList.item.MoviesListItemFragment
 
 class TabAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {

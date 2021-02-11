@@ -1,4 +1,4 @@
-package ru.alexzdns.fundamentals.homework.ui.moviesList
+package ru.alexzdns.fundamentals.homework.ui.moviesList.item
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

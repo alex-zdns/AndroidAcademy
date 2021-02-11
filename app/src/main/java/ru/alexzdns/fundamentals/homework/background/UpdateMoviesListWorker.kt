@@ -11,7 +11,7 @@ import retrofit2.create
 import ru.alexzdns.fundamentals.homework.data.repository.MoviesRepository
 import ru.alexzdns.fundamentals.homework.network.MoviesLoader
 import ru.alexzdns.fundamentals.homework.network.NetworkModule
-import ru.alexzdns.fundamentals.homework.ui.moviesList.MovieLists
+import ru.alexzdns.fundamentals.homework.ui.moviesList.item.MovieLists
 
 class UpdateMoviesListWorker(
     private val context: Context,
