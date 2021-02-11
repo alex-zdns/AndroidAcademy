@@ -13,6 +13,9 @@
     <string name="movie_duration">%d min</string>
     <string name="loading_movies_error_message">Error loading movie lists from internet</string>
     <string name="loading_actors_error_message">Error loading actors lists from internet</string>
+    <string name="popular_list_name">Popular</string>
+    <string name="top_rated_list_name">Top rated</string>
+    <string name="now_playing_list_name">Now playing</string>
 
     <plurals name="reviews_count">
         <item quantity="one">%d review</item>

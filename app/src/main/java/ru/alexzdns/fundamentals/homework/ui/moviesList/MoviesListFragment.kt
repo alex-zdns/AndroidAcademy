@@ -23,7 +23,7 @@ class MoviesListFragment : androidx.fragment.app.Fragment() {
 
         val tabLayout = view.findViewById<TabLayout>(R.id.mlf_tab_layout)
         val tabLayoutMediator = TabLayoutMediator(tabLayout, pager) { tab, position ->
-            tab.text = TabAdapter.itemList[position].nameList
+            tab.text = context?.getText(TabAdapter.itemList[position].nameStringId)
         }
         tabLayoutMediator.attach()
     }

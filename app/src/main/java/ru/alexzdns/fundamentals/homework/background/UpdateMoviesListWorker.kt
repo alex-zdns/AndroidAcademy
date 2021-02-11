@@ -23,13 +23,22 @@ class UpdateMoviesListWorker(
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             Log.i(this::class.simpleName, "Start update")
-            //TODO(переписать на цикл)
-            val movies = moviesLoader.loadMoviesFromServer(emptySet(), MovieLists.POPULAR.path)
 
-            movies.forEach { cachingImage(it.poster) }
-            movies.forEach { cachingImage(it.backdrop) }
+            val popularMovies = moviesLoader.loadMoviesFromServer(emptySet(), MovieLists.POPULAR.path)
+            popularMovies.forEach { cachingImage(it.poster) }
+            popularMovies.forEach { cachingImage(it.backdrop) }
+            repository.savePopularMovies(popularMovies)
 
-            repository.savePopularMovies(movies)
+            val topRatedMovies = moviesLoader.loadMoviesFromServer(emptySet(), MovieLists.TOP.path)
+            topRatedMovies.forEach { cachingImage(it.poster) }
+            topRatedMovies.forEach { cachingImage(it.backdrop) }
+            repository.saveTopRatedMovies(topRatedMovies)
+
+            val nowPlayingMovies = moviesLoader.loadMoviesFromServer(emptySet(), MovieLists.NOW_PLAYING.path)
+            nowPlayingMovies.forEach { cachingImage(it.poster) }
+            nowPlayingMovies.forEach { cachingImage(it.backdrop) }
+            repository.savePopularMovies(nowPlayingMovies)
+
             Log.i(this::class.simpleName, "Successful update")
             return@withContext Result.success()
         } catch (e: Exception) {

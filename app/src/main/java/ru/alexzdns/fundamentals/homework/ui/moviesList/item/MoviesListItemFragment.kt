@@ -48,7 +48,7 @@ class MoviesListItemFragment : androidx.fragment.app.Fragment(), SwipeRefreshLay
         loader?.setOnRefreshListener(this)
 
         arguments?.getString(MOVIE_LIST_PATH)?.let {
-            viewModel.movieListPath = it // TODO(Мне не нравится этот момент)
+            viewModel.movieListPath = it
         }
 
         viewModel.state.observe(this.viewLifecycleOwner, this::setState)
