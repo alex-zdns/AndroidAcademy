@@ -102,5 +102,6 @@ class MoviesListItemFragment : androidx.fragment.app.Fragment(), SwipeRefreshLay
 
     interface MovieListClickListener {
         fun openMovieDetailsFragment(movie: Movie)
+        fun openMovieDetailsFragment(movieId: Long)
     }
 }

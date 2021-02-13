@@ -10,7 +10,7 @@ import ru.alexzdns.fundamentals.homework.data.entity.*
 @Database(
     entities = [MovieEntity::class, ActorEntity::class, ActorsAndMovieEntity::class,
         FavoriteMovieEntity::class, PopularMovieEntity::class, TopRatedEntity::class, NowPlayingEntity::class],
-    version = 1
+    version = 2
 )
 abstract class MoviesAppDataBase : RoomDatabase() {
     abstract val moviesDao: MoviesDao

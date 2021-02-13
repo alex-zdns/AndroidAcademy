@@ -71,4 +71,14 @@ class MoviesRepository(applicationContext: Context) {
     suspend fun removeFromFavoriteMovie(movieId: Long) = withContext(Dispatchers.IO) {
         db.favoriteMovieDao.deleteById(movieId)
     }
+
+    suspend fun getMovieById(movieId: Long): Movie? {
+        val movieEntity = db.moviesDao.getMovieById(movieId)
+
+        return if (movieEntity == null) {
+            null
+        } else {
+            MovieMapper.toMovie(movieEntity, emptySet())
+        }
+    }
 }

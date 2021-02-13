@@ -1,5 +1,6 @@
 package ru.alexzdns.fundamentals.homework.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ru.alexzdns.fundamentals.homework.domain.models.Movie
@@ -18,6 +19,26 @@ class MainActivity : AppCompatActivity(),
             supportFragmentManager.beginTransaction()
                 .add(android.R.id.content, MoviesListFragment())
                 .commit()
+
+            intent?.let(::handleIntent)
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent != null) {
+            handleIntent(intent)
+        }
+    }
+
+    private fun handleIntent(intent: Intent) {
+        when (intent.action) {
+            Intent.ACTION_VIEW -> {
+                val id = intent.data?.lastPathSegment?.toLongOrNull()
+                if (id != null) {
+                    openMovieDetailsFragment(id)
+                }
+            }
         }
     }
 
@@ -25,6 +46,13 @@ class MainActivity : AppCompatActivity(),
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
             .add(android.R.id.content, MovieDetailsFragment.newInstance(movie))
+            .commit()
+    }
+
+    override fun openMovieDetailsFragment(movieId: Long) {
+        supportFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .add(android.R.id.content, MovieDetailsFragment.newInstance(movieId))
             .commit()
     }
 
