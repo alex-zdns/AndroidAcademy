@@ -16,6 +16,8 @@
     <string name="popular_list_name">Popular</string>
     <string name="top_rated_list_name">Top rated</string>
     <string name="now_playing_list_name">Now playing</string>
+    <string name="channel_new_movie">new movie</string>
+    <string name="channel_new_movies_description">All new movies</string>
 
     <plurals name="reviews_count">
         <item quantity="one">%d review</item>
