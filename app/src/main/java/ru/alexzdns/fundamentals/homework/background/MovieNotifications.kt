@@ -20,7 +20,7 @@ class MovieNotifications(private val context: Context) : Notifications {
             initialize()
         }
 
-    override fun initialize() {
+    private fun initialize() {
         if (notificationManagerCompat.getNotificationChannel(CHANNEL_NEW_MOVIES) == null) {
             val channel = NotificationChannelCompat.Builder(
                 CHANNEL_NEW_MOVIES,
