@@ -1,4 +1,4 @@
-package ru.alexzdns.fundamentals.homework.ui.moviesList
+package ru.alexzdns.fundamentals.homework.ui.moviesList.item
 
 import android.view.LayoutInflater
 import android.view.View

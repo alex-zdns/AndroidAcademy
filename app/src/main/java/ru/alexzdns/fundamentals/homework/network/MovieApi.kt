@@ -10,8 +10,8 @@ interface MovieApi {
     @GET("genre/movie/list")
     suspend fun getGenres(): GenresDTO
 
-    @GET("movie/popular")
-    suspend fun getPopularMovie(): MoviesDto
+    @GET("movie/{path}")
+    suspend fun getMovieList(@Path("path") path: String = "now_playing"): MoviesDto
 
     @GET("movie/{movie_id}/credits")
     suspend fun getCasts(@Path("movie_id") movieId: Long): CreditsDto

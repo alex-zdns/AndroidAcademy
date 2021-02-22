@@ -9,14 +9,20 @@ import ru.alexzdns.fundamentals.homework.data.entity.*
 
 @Database(
     entities = [MovieEntity::class, ActorEntity::class, ActorsAndMovieEntity::class,
-        PopularMovieEntity::class, FavoriteMovieEntity::class], version = 1
+        FavoriteMovieEntity::class, PopularMovieEntity::class, TopRatedEntity::class, NowPlayingEntity::class],
+    version = 2
 )
 abstract class MoviesAppDataBase : RoomDatabase() {
     abstract val moviesDao: MoviesDao
     abstract val actorsDao: ActorsDao
-    abstract val popularMovieDao: PopularMovieDao
+
     abstract val favoriteMovieDao: FavoriteMovieDao
     abstract val actorsAndMovieDao: ActorsAndMovieDao
+
+    abstract val popularMovieDao: PopularMovieDao
+    abstract val topRatedDao: TopRatedDao
+    abstract val nowPlayingDao: NowPlayingDao
+
 
     companion object {
         fun create(applicationContext: Context): MoviesAppDataBase = Room.databaseBuilder(

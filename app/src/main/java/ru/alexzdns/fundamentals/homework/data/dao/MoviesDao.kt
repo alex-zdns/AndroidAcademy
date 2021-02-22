@@ -15,5 +15,5 @@ interface MoviesDao {
     suspend fun insertMovies(movies: List<MovieEntity>)
 
     @Query("SELECT * FROM movies WHERE _id == :id")
-    suspend fun getMovieById(id: Long): MovieEntity
+    suspend fun getMovieById(id: Long): MovieEntity?
 }

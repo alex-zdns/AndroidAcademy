@@ -10,26 +10,34 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.alexzdns.fundamentals.homework.BuildConfig
 import ru.alexzdns.fundamentals.homework.data.repository.ActorsRepository
+import ru.alexzdns.fundamentals.homework.data.repository.MoviesRepository
 import ru.alexzdns.fundamentals.homework.domain.models.Actor
+import ru.alexzdns.fundamentals.homework.domain.models.Movie
 import ru.alexzdns.fundamentals.homework.network.MovieApi
 
+@Suppress("NAME_SHADOWING")
 class MovieDetailsViewModel(
-    private val repository: ActorsRepository,
+    private val actorsRepository: ActorsRepository,
+    private val moviesRepository: MoviesRepository,
+
     private val movieApi: MovieApi
     ) : ViewModel() {
     private val _mutableState = MutableLiveData<State>(State.Default())
     val state: LiveData<State> get() = _mutableState
 
+    private val _mutableMovie = MutableLiveData<Movie>()
+    val movie: LiveData<Movie> get() = _mutableMovie
+
     fun getActors(movieId: Long) {
         viewModelScope.launch {
             _mutableState.value = State.Loading()
             try {
-                val actorsFromDb = repository.getActorsByMovieId(movieId)
+                val actorsFromDb = actorsRepository.getActorsByMovieId(movieId)
                 _mutableState.value = State.Success(actorsFromDb)
 
                 val actors = loadActors(movieId)
                 _mutableState.value = State.Success(actors)
-                repository.saveActors(actors, movieId)
+                actorsRepository.saveActors(actors, movieId)
             } catch (e: Exception) {
                 Log.e("loadActors", e.message ?: "")
                 e.printStackTrace()
@@ -48,6 +56,16 @@ class MovieDetailsViewModel(
                     picture = BuildConfig.IMAGE_BASE_URL + BuildConfig.PROFILE_SIZES_PATCH + castDTO.profilePath
                 )
             }
+    }
+
+    fun getMovie(movieId: Long) {
+        viewModelScope.launch {
+            val movie = moviesRepository.getMovieById(movieId)
+
+            movie?.let {
+                _mutableMovie.value = it
+            }
+        }
     }
 
     sealed class State {

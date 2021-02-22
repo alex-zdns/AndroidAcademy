@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android Academy</string>
+    <string name="app_name">The Movie App</string>
     <string name="back">Back</string>
     <string name="storyline_heading">Storyline</string>
     <string name="cast_heading">Cast</string>
@@ -13,6 +13,11 @@
     <string name="movie_duration">%d min</string>
     <string name="loading_movies_error_message">Error loading movie lists from internet</string>
     <string name="loading_actors_error_message">Error loading actors lists from internet</string>
+    <string name="popular_list_name">Popular</string>
+    <string name="top_rated_list_name">Top rated</string>
+    <string name="now_playing_list_name">Now playing</string>
+    <string name="channel_new_movie">new movie</string>
+    <string name="channel_new_movies_description">All new movies</string>
 
     <plurals name="reviews_count">
         <item quantity="one">%d review</item>

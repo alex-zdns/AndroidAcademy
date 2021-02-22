@@ -1,0 +1,22 @@
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fml_swipe_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.moviesList.item.MoviesListItemFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mlf_movie_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="@integer/movies_list_span_count"
+
+        tools:itemCount="4"
+        tools:listitem="@layout/view_holder_movie" />
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

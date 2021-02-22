@@ -5,16 +5,16 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ru.alexzdns.fundamentals.homework.data.entity.MovieEntity
-import ru.alexzdns.fundamentals.homework.data.entity.PopularMovieEntity
+import ru.alexzdns.fundamentals.homework.data.entity.TopRatedEntity
 
 @Dao
-interface PopularMovieDao {
+interface TopRatedDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(movies: List<PopularMovieEntity>)
+    suspend fun insertAll(movies: List<TopRatedEntity>)
 
-    @Query("DELETE FROM popular_movies")
+    @Query("DELETE FROM top_rated")
     suspend fun clearTable()
 
-    @Query("SELECT movies.* FROM movies, popular_movies WHERE movies._id == popular_movies.movie_id ORDER BY popular_movies.position ")
+    @Query("SELECT movies.* FROM movies, top_rated WHERE movies._id == top_rated.movie_id ORDER BY top_rated.position ")
     suspend fun getMovies(): List<MovieEntity>
 }

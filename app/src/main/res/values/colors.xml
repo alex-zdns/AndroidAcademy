@@ -24,4 +24,6 @@
     <color name="film_running_time">#565665</color>
     <color name="movie_card_background">#222232</color>
     <color name="vhm_strokeColor">#3B3B4D7F</color>
+    <color name="mlf_tab_text">#6D6D80</color>
+    <color name="mlf_tab_indicator">#FF3365</color>
 </resources>

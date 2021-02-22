@@ -1,4 +1,4 @@
-package ru.alexzdns.fundamentals.homework.ui.moviesList
+package ru.alexzdns.fundamentals.homework.ui.moviesList.item
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -24,6 +24,8 @@ class MoviesListViewModel(
     private val moviesLoader: MoviesLoader = MoviesLoader(movieApi)
     private var favoriteMovie: Set<Long> = emptySet()
 
+    var movieListPath: String = MovieLists.POPULAR.path
+
     fun getMovies() {
         viewModelScope.launch {
             try {
@@ -45,15 +47,29 @@ class MoviesListViewModel(
 
     private suspend fun getMoviesFromDb() {
         favoriteMovie = repository.getAllFavoriteMovie()
-        val moviesFromDb = repository.getPopularMovies()
+        val moviesFromDb = when (movieListPath) {
+            MovieLists.POPULAR.path -> repository.getPopularMovies()
+            MovieLists.NOW_PLAYING.path -> repository.getNowPlayingMovies()
+            MovieLists.TOP.path -> repository.getTopRatedMovies()
+            else -> throw IllegalArgumentException("Unknown Movie List")
+        }
         _mutableMoviesList.value = moviesFromDb
     }
 
     private suspend fun getMoviesFromServer() {
-        val movies = moviesLoader.loadMoviesFromServer(favoriteMovie)
+        val movies = moviesLoader.loadMoviesFromServer(favoriteMovie, movieListPath)
         _mutableMoviesList.value = movies
-        repository.savePopularMovies(movies)
+        saveMovieToBD(movies)
         _mutableState.value = State.Success()
+    }
+
+    private suspend fun saveMovieToBD(movies: List<Movie>) {
+        when (movieListPath) {
+            MovieLists.POPULAR.path -> repository.savePopularMovies(movies)
+            MovieLists.NOW_PLAYING.path -> repository.saveNowPlayingMovies(movies)
+            MovieLists.TOP.path -> repository.saveTopRatedMovies(movies)
+            else -> throw IllegalArgumentException("Unknown Movie List")
+        }
     }
 
     fun onLikeHandle(movie: Movie) {

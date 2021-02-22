@@ -41,6 +41,11 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
             if (viewModel.state.value is State.Default) viewModel.getActors(movie.id)
         }
 
+        arguments?.getLong(MOVIE_ID)?.let { movieId ->
+            viewModel.movie.observe(this.viewLifecycleOwner, this::setupView)
+            viewModel.getMovie(movieId)
+        }
+
         val backButton = view.findViewById<TextView>(R.id.mdf_tv_back_button)
         backButton.setOnClickListener {
             listenerMovieDetails?.removeMovieDetailsFragment()
@@ -98,11 +103,19 @@ class MovieDetailsFragment : androidx.fragment.app.Fragment() {
 
     companion object {
         private const val MOVIE = "movie"
+        private const val MOVIE_ID = "movie_id"
 
         fun newInstance(movie: Movie): MovieDetailsFragment =
             MovieDetailsFragment().apply {
                 val args = Bundle()
                 args.putParcelable(MOVIE, movie)
+                arguments = args
+            }
+
+        fun newInstance(movieId: Long): MovieDetailsFragment =
+            MovieDetailsFragment().apply {
+                val args = Bundle()
+                args.putLong(MOVIE_ID, movieId)
                 arguments = args
             }
     }
